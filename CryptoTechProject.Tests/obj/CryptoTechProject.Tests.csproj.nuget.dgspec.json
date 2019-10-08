@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj": {}
+    "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj": {}
   },
   "projects": {
-    "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj": {
+    "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+        "projectUniqueName": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
         "projectName": "CryptoTechProject.Tests",
-        "projectPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
-        "packagesPath": "/Users/kat/.nuget/packages/",
-        "outputPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/obj/",
+        "projectPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+        "packagesPath": "/Users/tonygriffin/.nuget/packages/",
+        "outputPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject.Tests/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/kat/.config/NuGet/NuGet.Config"
+          "/Users/tonygriffin/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -25,8 +25,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj": {
-                "projectPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj"
+              "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
+                "projectPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj"
               }
             }
           }
@@ -43,6 +43,10 @@
             "NUnit": {
               "target": "Package",
               "version": "[3.12.0, )"
+            },
+            "dotenv.net": {
+              "target": "Package",
+              "version": "[1.0.6, )"
             }
           },
           "imports": [
@@ -58,17 +62,17 @@
         }
       }
     },
-    "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj": {
+    "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
+        "projectUniqueName": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
         "projectName": "CryptoTechProject",
-        "projectPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
-        "packagesPath": "/Users/kat/.nuget/packages/",
-        "outputPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/obj/",
+        "projectPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
+        "packagesPath": "/Users/tonygriffin/.nuget/packages/",
+        "outputPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/kat/.config/NuGet/NuGet.Config"
+          "/Users/tonygriffin/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -89,6 +93,12 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "dependencies": {
+            "dotenv.net": {
+              "target": "Package",
+              "version": "[1.0.6, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

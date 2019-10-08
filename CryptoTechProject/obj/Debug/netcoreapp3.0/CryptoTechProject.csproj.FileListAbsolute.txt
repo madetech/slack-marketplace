@@ -9,3 +9,14 @@
 /Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.AssemblyInfo.cs
 /Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.dll
 /Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.pdb
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.deps.json
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.runtimeconfig.json
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.runtimeconfig.dev.json
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.dll
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.csprojAssemblyReference.cache
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.AssemblyInfoInputs.cache
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.AssemblyInfo.cs
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.dll
+/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.pdb

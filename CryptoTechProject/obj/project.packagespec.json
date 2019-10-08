@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
+    "projectUniqueName": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
     "projectName": "CryptoTechProject",
-    "projectPath": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
-    "outputPath": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/obj/",
+    "projectPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
+    "outputPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/obj/",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
       "netcoreapp3.0"
@@ -25,6 +25,12 @@
   },
   "frameworks": {
     "netcoreapp3.0": {
+      "dependencies": {
+        "dotenv.net": {
+          "target": "Package",
+          "version": "[1.0.6, )"
+        }
+      },
       "imports": [
         "net461",
         "net462",

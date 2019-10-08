@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+    "projectUniqueName": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
     "projectName": "CryptoTechProject.Tests",
-    "projectPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
-    "outputPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/obj/",
+    "projectPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+    "outputPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject.Tests/obj/",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
       "netcoreapp3.0"
@@ -15,8 +15,8 @@
     "frameworks": {
       "netcoreapp3.0": {
         "projectReferences": {
-          "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj": {
-            "projectPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj"
+          "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
+            "projectPath": "/Users/tonygriffin/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj"
           }
         }
       }
@@ -33,6 +33,10 @@
         "NUnit": {
           "target": "Package",
           "version": "[3.12.0, )"
+        },
+        "dotenv.net": {
+          "target": "Package",
+          "version": "[1.0.6, )"
         }
       },
       "imports": [
