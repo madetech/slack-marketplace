@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v3.0": []
   },
   "packageFolders": {
-    "/Users/kat/.nuget/packages/": {}
+    "/Users/mariaastakhova/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
+      "projectUniqueName": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
       "projectName": "CryptoTechProject",
-      "projectPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
-      "packagesPath": "/Users/kat/.nuget/packages/",
-      "outputPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/obj/",
+      "projectPath": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
+      "packagesPath": "/Users/mariaastakhova/.nuget/packages/",
+      "outputPath": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/kat/.config/NuGet/NuGet.Config"
+        "/Users/mariaastakhova/.config/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
