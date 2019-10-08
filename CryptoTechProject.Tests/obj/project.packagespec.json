@@ -1,0 +1,50 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+    "projectName": "CryptoTechProject.Tests",
+    "projectPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+    "outputPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/obj/",
+    "projectStyle": "PackageReference",
+    "originalTargetFrameworks": [
+      "netcoreapp3.0"
+    ],
+    "sources": {
+      "https://api.nuget.org/v3/index.json": {}
+    },
+    "frameworks": {
+      "netcoreapp3.0": {
+        "projectReferences": {
+          "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj": {
+            "projectPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj"
+          }
+        }
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netcoreapp3.0": {
+      "dependencies": {
+        "NUnit": {
+          "target": "Package",
+          "version": "[3.12.0, )"
+        }
+      },
+      "imports": [
+        "net461",
+        "net462",
+        "net47",
+        "net471",
+        "net472",
+        "net48"
+      ],
+      "assetTargetFallback": true,
+      "warn": true
+    }
+  }
+}
