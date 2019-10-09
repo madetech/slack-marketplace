@@ -24,29 +24,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="255c354d-8c11-4348-a583-fa8fdbac39a8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CryptoTechProject/Gateway.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CryptoTechProject/ViewWorkshops.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/CryptoTechProject.Tests.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/CryptoTechProject.Tests.csproj.nuget.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/CryptoTechProject.Tests.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/CryptoTechProject.Tests.csproj.nuget.dgspec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/CryptoTechProject.Tests.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/CryptoTechProject.Tests.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/CryptoTechProject.Tests.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/CryptoTechProject.Tests.csproj.nuget.g.targets" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/CryptoTechProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/CryptoTechProject.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.runtimeconfig.dev.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.dgspec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.g.props" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/project.packagespec.json" afterDir="false" />
     </list>
@@ -60,13 +56,19 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/CryptoTechProject/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject/ViewWorkshops.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject/Gateway.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsTest.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/CryptoTechProject/Program.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject/ViewWorkshops.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject/Gateway.cs" />
       </list>
     </option>
   </component>
@@ -143,6 +145,7 @@
       <workItem from="1570568254792" duration="748000" />
       <workItem from="1570574505806" duration="137000" />
       <workItem from="1570574738049" duration="242000" />
+      <workItem from="1570608325072" duration="240000" />
     </task>
     <servers />
   </component>
