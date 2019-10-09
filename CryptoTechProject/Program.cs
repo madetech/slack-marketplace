@@ -11,15 +11,15 @@ namespace CryptoTechProject
 {
     class Program
     {
-        static HttpListener _httpListener = new HttpListener();
+        static HttpListener httpListener = new HttpListener();
         static void Main(string[] args)
         {
-            _httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/"); 
-            _httpListener.Start(); 
+            httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/"); 
+            httpListener.Start(); 
              
             while(true)
             { 
-                HttpListenerContext context = _httpListener.GetContext(); 
+                HttpListenerContext context = httpListener.GetContext(); 
 
                 HttpListenerResponse response = context.Response;
                         

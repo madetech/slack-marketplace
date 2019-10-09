@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "/Users/kat/RiderProjects/cryptotech/CryptoTechProject/CryptoTechProject.csproj": {}
+    "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {}
   },
   "projects": {
-    "/Users/kat/RiderProjects/cryptotech/CryptoTechProject/CryptoTechProject.csproj": {
+    "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/kat/RiderProjects/cryptotech/CryptoTechProject/CryptoTechProject.csproj",
+        "projectUniqueName": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
         "projectName": "CryptoTechProject",
-        "projectPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechProject/CryptoTechProject.csproj",
-        "packagesPath": "/Users/kat/.nuget/packages/",
-        "outputPath": "/Users/kat/RiderProjects/cryptotech/CryptoTechProject/obj/",
+        "projectPath": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
+        "packagesPath": "/Users/ninammarai/.nuget/packages/",
+        "outputPath": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/Users/kat/.config/NuGet/NuGet.Config"
+          "/Users/ninammarai/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"

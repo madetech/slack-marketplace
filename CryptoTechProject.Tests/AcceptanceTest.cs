@@ -10,7 +10,7 @@ namespace CryptoTechProject.Tests
     {
         [Test]
         public void WhenNoWorkshops_ViewWorkshops_ReturnsEmptyHash(){
-            Gateway gateway = new Gateway("{}");
+            Gateway gateway = new Gateway("");
             ViewWorkshops viewWorkshops = new ViewWorkshops(gateway);
             Assert.AreEqual(new JObject(), viewWorkshops.Execute());                
         }

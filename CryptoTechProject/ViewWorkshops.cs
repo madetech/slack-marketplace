@@ -2,16 +2,30 @@ using Newtonsoft.Json.Linq;
 
 namespace CryptoTechProject
 {
+    public interface IViewWorkshopsGateway
+    {
+        string All();
+    }
+    
     public class ViewWorkshops
     {
-        public ViewWorkshops(Gateway gateway)
+        private IViewWorkshopsGateway gateway;
+        public ViewWorkshops(IViewWorkshopsGateway viewGateway)
         {
-        
+            gateway = viewGateway;
         }
         
         public JObject Execute()
         {
-            return new JObject();
+            
+            if (gateway.All().Length == 0)
+            {
+                return new JObject();
+            }
+            JObject json = new JObject();
+            json.Add("name","Duplication");
+            return json;
+
         }
     }
 }
