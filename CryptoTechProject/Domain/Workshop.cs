@@ -22,5 +22,16 @@ namespace CryptoTechProject.Domain
             duration = details["duration"];
             type = details["type"];
         }
+
+        public Workshop()
+        {
+            time = "";
+            host = "";
+            name = "";
+            location = "";
+            duration = "";
+            type = "";
+        }
+
     }
 }

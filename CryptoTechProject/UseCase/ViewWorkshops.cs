@@ -1,10 +1,11 @@
+using CryptoTechProject.Domain;
 using Newtonsoft.Json.Linq;
 
 namespace CryptoTechProject
 {
     public interface IViewWorkshopsGateway
     {
-        string All();
+        Workshop All();
     }
     
     public class ViewWorkshops
@@ -15,16 +16,10 @@ namespace CryptoTechProject
             gateway = viewGateway;
         }
         
-        public JObject Execute()
+        public Workshop Execute()
         {
-            
-            if (gateway.All().Length == 0)
-            {
-                return new JObject();
-            }
-            JObject json = new JObject();
-            json.Add("name","Duplication");
-            return json;
+
+            return gateway.All();
 
         }
     }

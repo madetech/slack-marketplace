@@ -1,16 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
+using CryptoTechProject.Domain;
 
 namespace CryptoTechProject
 {
     public class Gateway : IViewWorkshopsGateway
     {
-        private string input;
-        public Gateway(string stringInput)
+        private Workshop input;
+        public Gateway(Workshop workshop)
         {
-            input = stringInput;
+            input = workshop;
         }
 
-        public string All()
+        public Workshop All()
         {
             return input;
         }

@@ -1,3 +1,4 @@
+using CryptoTechProject.Domain;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -10,17 +11,20 @@ namespace CryptoTechProject.Tests
         {
             [Test]
             public void ViewWorkshops_WhenNoWorkshops_ReturnsEmptyHash(){
-                Gateway viewWorkshopsGateway = new Gateway("");
+                Workshop workshop = new Workshop();
+                Gateway viewWorkshopsGateway = new Gateway(workshop);
                 ViewWorkshops viewWorkshops = new ViewWorkshops(viewWorkshopsGateway);
-                Assert.AreEqual(new JObject(), viewWorkshops.Execute());                
+                Assert.AreEqual(workshop, viewWorkshops.Execute());                
             }
             
             [Test]
+            [Ignore("")]
             public void ViewWorkshops_WhenOneWorkshop_ReturnsWorkshopJObject(){
-                Gateway viewWorkshopsGateway = new Gateway( "{\"name\":\"Duplicaton\"}");
+                Workshop workshop = new Workshop();
+                Gateway viewWorkshopsGateway = new Gateway( workshop);
                 ViewWorkshops viewWorkshops = new ViewWorkshops(viewWorkshopsGateway);
                 JObject json = new JObject();
-                //Workshop workshop = new Workshop();
+                //
                 json.Add("name","Duplication");
                 Assert.AreEqual(json, viewWorkshops.Execute());                
             }

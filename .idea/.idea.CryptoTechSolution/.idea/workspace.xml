@@ -28,9 +28,16 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/nunit_random_seed.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/nunit_random_seed.tmp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/Gateway.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/Gateway/Gateway.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/ViewWorkshops.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/UseCase/ViewWorkshops.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.pdb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -136,7 +143,7 @@
       <workItem from="1570574505806" duration="137000" />
       <workItem from="1570574738049" duration="242000" />
       <workItem from="1570608325072" duration="499000" />
-      <workItem from="1570609671715" duration="8988000" />
+      <workItem from="1570609671715" duration="9241000" />
     </task>
     <servers />
   </component>
