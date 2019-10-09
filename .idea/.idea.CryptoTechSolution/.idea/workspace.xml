@@ -24,9 +24,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="255c354d-8c11-4348-a583-fa8fdbac39a8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsTest.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/CryptoTechProject/Gateway.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/CryptoTechProject/ViewWorkshops.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/riderModule.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj" afterDir="false" />
@@ -38,6 +40,7 @@
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject/CryptoTechProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/CryptoTechProject.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.dgspec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/CryptoTechProject.csproj.nuget.g.props" afterDir="false" />
@@ -69,6 +72,7 @@
         <option value="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" />
         <option value="$PROJECT_DIR$/CryptoTechProject/ViewWorkshops.cs" />
         <option value="$PROJECT_DIR$/CryptoTechProject/Gateway.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsTest.cs" />
       </list>
     </option>
   </component>
@@ -145,7 +149,7 @@
       <workItem from="1570568254792" duration="748000" />
       <workItem from="1570574505806" duration="137000" />
       <workItem from="1570574738049" duration="242000" />
-      <workItem from="1570608325072" duration="240000" />
+      <workItem from="1570608325072" duration="499000" />
     </task>
     <servers />
   </component>

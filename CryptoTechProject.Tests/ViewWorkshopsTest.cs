@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace CryptoTechProject.Tests
 {
-    public class ViewWorkshops_Test
+    public class ViewWorkshopsTest
     {
         [TestFixture]
         public class AcceptanceTest
