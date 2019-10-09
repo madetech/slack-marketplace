@@ -24,16 +24,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="255c354d-8c11-4348-a583-fa8fdbac39a8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/CryptoTechProject/Domain/Workshop.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/HardCodedWorkshopsGatewayUnitTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CryptoTechProject/Boundary/GetWorkshopsResponse.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CryptoTechProject/Boundary/PresentableWorkshop.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CryptoTechSolution/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.Tests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.Tests.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.Tests.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.Tests.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/nunit_random_seed.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/bin/Debug/netcoreapp3.0/nunit_random_seed.tmp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/Gateway.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/Gateway/Gateway.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CryptoTechProject/ViewWorkshops.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/UseCase/ViewWorkshops.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject.Tests/obj/Debug/netcoreapp3.0/CryptoTechProject.Tests.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject/Domain/Workshop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/Domain/Workshop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject/Gateway/Gateway.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/Gateway/HardCodedWorkshopsGateway.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CryptoTechProject/UseCase/ViewWorkshops.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/UseCase/GetWorkshops.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.dll" beforeDir="false" afterPath="$PROJECT_DIR$/CryptoTechProject/obj/Debug/netcoreapp3.0/CryptoTechProject.dll" afterDir="false" />
@@ -49,22 +57,31 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsUnitTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/CryptoTechProject/Gateway/Gateway.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject/Gateway/HardCodedWorkshopsGateway.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CryptoTechProject/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject.Tests/HardCodedWorkshopsGatewayUnitTest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject/Boundary/PresentableWorkshop.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject/Boundary/GetWorkshopsResponse.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CryptoTechProject/Domain/Workshop.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/CryptoTechProject/UseCase/ViewWorkshops.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CryptoTechProject/UseCase/GetWorkshops.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/CryptoTechProject/Program.cs" />
-        <option value="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" />
         <option value="$PROJECT_DIR$/CryptoTechProject/Gateway.cs" />
         <option value="$PROJECT_DIR$/CryptoTechProject/ViewWorkshops.cs" />
         <option value="$PROJECT_DIR$/CryptoTechProject/Gateway/Gateway.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject/Boundary/ViewWorkshopsResponse.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject/UseCase/ViewWorkshops.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject/Boundary/PresentableWorkshop.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject.Tests/AcceptanceTest.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject.Tests/HardCodedWorkshopsGatewayUnitTest.cs" />
         <option value="$PROJECT_DIR$/CryptoTechProject/Domain/Workshop.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject/Gateway/HardCodedWorkshopsGateway.cs" />
+        <option value="$PROJECT_DIR$/CryptoTechProject/UseCase/GetWorkshops.cs" />
         <option value="$PROJECT_DIR$/CryptoTechProject.Tests/ViewWorkshopsTest.cs" />
       </list>
     </option>
@@ -143,7 +160,7 @@
       <workItem from="1570574505806" duration="137000" />
       <workItem from="1570574738049" duration="242000" />
       <workItem from="1570608325072" duration="499000" />
-      <workItem from="1570609671715" duration="9241000" />
+      <workItem from="1570609671715" duration="17882000" />
     </task>
     <servers />
   </component>

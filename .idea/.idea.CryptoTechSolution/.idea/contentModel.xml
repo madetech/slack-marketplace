@@ -13,12 +13,16 @@
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="CryptoTechProject" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
+        <e p="Boundary" t="Include">
+          <e p="GetWorkshopsResponse.cs" t="Include" />
+          <e p="PresentableWorkshop.cs" t="Include" />
+        </e>
         <e p="CryptoTechProject.csproj" t="IncludeRecursive" />
         <e p="Domain" t="Include">
           <e p="Workshop.cs" t="Include" />
         </e>
         <e p="Gateway" t="Include">
-          <e p="Gateway.cs" t="Include" />
+          <e p="HardCodedWorkshopsGateway.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -29,13 +33,14 @@
         </e>
         <e p="Program.cs" t="Include" />
         <e p="UseCase" t="Include">
-          <e p="ViewWorkshops.cs" t="Include" />
+          <e p="GetWorkshops.cs" t="Include" />
         </e>
       </e>
       <e p="CryptoTechProject.Tests" t="IncludeRecursive">
         <e p="AcceptanceTest.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="CryptoTechProject.Tests.csproj" t="IncludeRecursive" />
+        <e p="HardCodedWorkshopsGatewayUnitTest.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.0" t="Include">
