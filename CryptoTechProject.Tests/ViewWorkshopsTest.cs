@@ -20,6 +20,7 @@ namespace CryptoTechProject.Tests
                 Gateway viewWorkshopsGateway = new Gateway( "{\"name\":\"Duplicaton\"}");
                 ViewWorkshops viewWorkshops = new ViewWorkshops(viewWorkshopsGateway);
                 JObject json = new JObject();
+                //Workshop workshop = new Workshop();
                 json.Add("name","Duplication");
                 Assert.AreEqual(json, viewWorkshops.Execute());                
             }
