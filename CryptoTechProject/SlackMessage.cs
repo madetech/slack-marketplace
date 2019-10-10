@@ -4,6 +4,7 @@ namespace CryptoTechProject
 {
     public class SlackMessage
     {
+        
         abstract public class SlackMessageBlock
         {
         }
