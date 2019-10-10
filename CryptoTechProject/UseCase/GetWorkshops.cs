@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CryptoTechProject.Boundary;
 using CryptoTechProject.Domain;
 using Newtonsoft.Json.Linq;
@@ -26,24 +27,24 @@ namespace CryptoTechProject
                 {
                     PresentableWorkshops = new PresentableWorkshop[]{}
                 };
-            
-            return new GetWorkshopsResponse()
+
+            var getWorkshopsResponse = new GetWorkshopsResponse()
             {
-                PresentableWorkshops = new PresentableWorkshop[]
-                {
-                    new PresentableWorkshop()
-                    {
-                        Name = list[0].name,
-                        Host = list[0].host,
-                        Time = list[0].time,
-                        Location = list[0].location,
-                        Duration = list[0].duration,
-                        Type = list[0].type
-                    }
-                }
+                PresentableWorkshops = new PresentableWorkshop[list.Count]
             };
-            
+                for (int i = 0; i < list.Count; i++)
+                {
+                    getWorkshopsResponse.PresentableWorkshops[i] = new PresentableWorkshop()
+                    {
+                        Name = list[i].name,
+                        Host = list[i].host,
+                        Time = list[i].time,
+                        Location = list[i].location,
+                        Duration = list[i].duration,
+                        Type = list[i].type
+                    };
+                }
+                return getWorkshopsResponse;
         }
-        
     }
 }
