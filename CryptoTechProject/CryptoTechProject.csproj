@@ -10,4 +10,49 @@
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_UnmanagedRegistrationCache Remove="obj\CryptoTechProject.csproj.UnmanagedRegistration.cache" />
+      <_UnmanagedRegistrationCache Remove="obj\CryptoTechProject.csproj.UnmanagedRegistration.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ResolveComReferenceCache Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.csproj.ResolveComReference.cache" />
+      <_ResolveComReferenceCache Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.csproj.ResolveComReference.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <IntermediateAssembly Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.dll" />
+      <IntermediateAssembly Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DebugSymbolsIntermediatePath Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.pdb" />
+      <_DebugSymbolsIntermediatePath Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.pdb" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DeploymentManifestEntryPoint Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.dll" />
+      <_DeploymentManifestEntryPoint Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ApplicationManifest Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.dll.manifest" />
+      <ApplicationManifest Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.dll.manifest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DeployManifest Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.application" />
+      <DeployManifest Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.application" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ClsidMap Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.clsidmap" />
+      <ClsidMap Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.clsidmap" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <RegFreeComManifest Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.X.manifest" />
+      <RegFreeComManifest Remove="obj\Debug\netcoreapp3.0\CryptoTechProject.X.manifest" />
+    </ItemGroup>
+
 </Project>
