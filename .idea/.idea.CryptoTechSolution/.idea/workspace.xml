@@ -114,7 +114,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected=".NET Project.Default">
+  <component name="RunManager">
     <configuration name="Default" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/CryptoTechProject/bin/Debug/netcoreapp3.0/CryptoTechProject.dll" />
       <option name="PROGRAM_PARAMETERS" value="" />

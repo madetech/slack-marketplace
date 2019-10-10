@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ninammarai/repos/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj": {}
+    "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj": {}
   },
   "projects": {
-    "/Users/ninammarai/repos/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj": {
+    "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+        "projectUniqueName": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
         "projectName": "CryptoTechProject.Tests",
-        "projectPath": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
-        "packagesPath": "/Users/ninammarai/.nuget/packages/",
-        "outputPath": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject.Tests/obj/",
+        "projectPath": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+        "packagesPath": "/Users/tonygriffin/.nuget/packages/",
+        "outputPath": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject.Tests/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/Users/ninammarai/.config/NuGet/NuGet.Config"
+          "/Users/tonygriffin/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -28,8 +25,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
-                "projectPath": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj"
+              "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
+                "projectPath": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj"
               }
             }
           }
@@ -77,20 +74,17 @@
         }
       }
     },
-    "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
+    "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
+        "projectUniqueName": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
         "projectName": "CryptoTechProject",
-        "projectPath": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
-        "packagesPath": "/Users/ninammarai/.nuget/packages/",
-        "outputPath": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/obj/",
+        "projectPath": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
+        "packagesPath": "/Users/tonygriffin/.nuget/packages/",
+        "outputPath": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/Users/ninammarai/.config/NuGet/NuGet.Config"
+          "/Users/tonygriffin/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"

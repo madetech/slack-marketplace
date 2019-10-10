@@ -1,14 +1,11 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
+    "projectUniqueName": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
     "projectName": "CryptoTechProject",
-    "projectPath": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
-    "outputPath": "/Users/ninammarai/repos/crypto-tech/CryptoTechProject/obj/",
+    "projectPath": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
+    "outputPath": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/obj/",
     "projectStyle": "PackageReference",
-    "fallbackFolders": [
-      "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-    ],
     "originalTargetFrameworks": [
       "netcoreapp3.0"
     ],

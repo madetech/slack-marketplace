@@ -9,7 +9,8 @@
     <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/NUnit3.TestAdapter.dll" t="Include" />
     <e p="$USER_HOME$/.nuget/packages/nunit3testadapter/3.15.1/build/netcoreapp2.0/NUnit3.TestAdapter.pdb" t="Include" />
     <e p="$USER_HOME$/Library/Caches/Rider2019.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_CryptoTechSolution.-693402281.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_CryptoTechSolution.-374990100.00" t="ExcludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="CryptoTechProject" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
@@ -48,7 +49,7 @@
             </e>
           </e>
         </e>
-        <e p="ViewWorkshopsTest.cs" t="Include" />
+        <e p="ViewWorkshopsUnitTest.cs" t="Include" />
       </e>
       <e p="CryptoTechSolution.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />
