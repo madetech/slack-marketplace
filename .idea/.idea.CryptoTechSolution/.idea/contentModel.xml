@@ -16,6 +16,7 @@
           <e p="PresentableWorkshop.cs" t="Include" />
         </e>
         <e p="CryptoTechProject.csproj" t="IncludeRecursive" />
+        <e p="DeliveryMechanism.cs" t="Include" />
         <e p="Domain" t="Include">
           <e p="Workshop.cs" t="Include" />
         </e>
@@ -30,6 +31,7 @@
           </e>
         </e>
         <e p="Program.cs" t="Include" />
+        <e p="SlackMessage.cs" t="Include" />
         <e p="UseCase" t="Include">
           <e p="GetWorkshops.cs" t="Include" />
         </e>
@@ -38,6 +40,7 @@
         <e p="AcceptanceTest.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="CryptoTechProject.Tests.csproj" t="IncludeRecursive" />
+        <e p="DeliveryMechanismTest.cs" t="Include" />
         <e p="HardCodedWorkshopsGatewayUnitTest.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
