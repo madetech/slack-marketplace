@@ -23,6 +23,7 @@ namespace CryptoTechProject
                 HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
                 GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
 
+                
                 string the_json_to_give_to_slack = JsonConvert.SerializeObject(
                     new SlackMessage
                     {
@@ -43,14 +44,13 @@ namespace CryptoTechProject
                                 Type = "divider"
                             },
                             
-                            
                             new SlackMessage.SectionBlock()
                             {
                                 Text = new SlackMessage.SectionBlock.SectionBlockText
                                 {
                                     Type = "mrkdwn",
                                     Text = $"{workshops.PresentableWorkshops[0].Name}\n" +
-                                           $"{workshops.PresentableWorkshops[0].Time}" +
+                                           $"{workshops.PresentableWorkshops[0].Time.DateTime.ToString("MM/dd/yyyy hh:mm tt")}\n" +
                                            $"{workshops.PresentableWorkshops[0].Host}"
                                 }
                             },
@@ -61,7 +61,7 @@ namespace CryptoTechProject
                                 {
                                     Type = "mrkdwn",
                                     Text = $"{workshops.PresentableWorkshops[1].Name}\n" +
-                                           $"{workshops.PresentableWorkshops[1].Time}" +
+                                           $"{workshops.PresentableWorkshops[1].Time.DateTime.ToString("MM/dd/yyyy hh:mm tt")}\n" +
                                            $"{workshops.PresentableWorkshops[1].Host}"
                                 }
                             }
@@ -69,7 +69,8 @@ namespace CryptoTechProject
                         }
                     }
                 );
-                
+
+
                 byte[] responseArray = Encoding.UTF8.GetBytes(the_json_to_give_to_slack);
                 response.AddHeader("Content-type","application/json");
                 response.OutputStream.Write(responseArray, 0, responseArray.Length);

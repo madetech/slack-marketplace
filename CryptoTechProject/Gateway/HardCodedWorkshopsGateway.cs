@@ -14,7 +14,7 @@ namespace CryptoTechProject
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
             
             DateTime sourceDate2 = new DateTime(2019, 10, 18, 15, 30, 0);
-            DateTimeOffset time2 = new DateTimeOffset(sourceDate, 
+            DateTimeOffset time2 = new DateTimeOffset(sourceDate2, 
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate)); 
             
             return new List<Workshop>()
