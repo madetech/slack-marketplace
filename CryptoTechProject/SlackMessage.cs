@@ -19,8 +19,6 @@ namespace CryptoTechProject
             {
                 [JsonProperty("type")] public string Type;
 
-                [JsonProperty("emoji")] public bool Emoji;
-
                 [JsonProperty("text")] public string Text;
             }
 

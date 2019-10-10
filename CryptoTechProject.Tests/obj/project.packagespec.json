@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+    "projectUniqueName": "/Users/kat/RiderProjects/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
     "projectName": "CryptoTechProject.Tests",
-    "projectPath": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
-    "outputPath": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject.Tests/obj/",
+    "projectPath": "/Users/kat/RiderProjects/crypto-tech/CryptoTechProject.Tests/CryptoTechProject.Tests.csproj",
+    "outputPath": "/Users/kat/RiderProjects/crypto-tech/CryptoTechProject.Tests/obj/",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
       "netcoreapp3.0"
@@ -15,8 +15,8 @@
     "frameworks": {
       "netcoreapp3.0": {
         "projectReferences": {
-          "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj": {
-            "projectPath": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj"
+          "/Users/kat/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
+            "projectPath": "/Users/kat/RiderProjects/crypto-tech/CryptoTechProject/CryptoTechProject.csproj"
           }
         }
       }
