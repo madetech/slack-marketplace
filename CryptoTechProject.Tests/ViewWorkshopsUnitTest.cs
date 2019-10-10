@@ -24,7 +24,7 @@ namespace CryptoTechProject.Tests
             public void CanGetNoWorkshop()
             {
                 var response = new GetWorkshops(this).Execute(); 
-                Assert.AreEqual(0, response.PresentableWorkshops.Length);
+                Assert.IsEmpty(response.PresentableWorkshops);
             }
             
             [Test]
@@ -32,7 +32,7 @@ namespace CryptoTechProject.Tests
             {
                 _workshops.Add(new Workshop());
                 var response = new GetWorkshops(this).Execute(); 
-                Assert.AreEqual(1, response.PresentableWorkshops.Length);
+                Assert.IsNotEmpty(response.PresentableWorkshops);
             }
 
             public List<Workshop> All()

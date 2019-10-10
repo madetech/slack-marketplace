@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {}
+    "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj": {}
   },
   "projects": {
-    "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj": {
+    "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
+        "projectUniqueName": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
         "projectName": "CryptoTechProject",
-        "projectPath": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/CryptoTechProject.csproj",
-        "packagesPath": "/Users/tonygriffin/.nuget/packages/",
-        "outputPath": "/Users/tonygriffin/RiderProjects/Cryptotech/crypto-tech/CryptoTechProject/obj/",
+        "projectPath": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/CryptoTechProject.csproj",
+        "packagesPath": "/Users/mariaastakhova/.nuget/packages/",
+        "outputPath": "/Users/mariaastakhova/Documents/cryptotech/CryptoTechSolution/CryptoTechProject/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/tonygriffin/.config/NuGet/NuGet.Config"
+          "/Users/mariaastakhova/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
