@@ -14,6 +14,7 @@ namespace CryptoTechProject
     public class GetWorkshops
     {
         private IGetWorkshopsGateway gateway;
+        // Constructor below:
         public GetWorkshops(IGetWorkshopsGateway getGateway)
         {
             gateway = getGateway;
