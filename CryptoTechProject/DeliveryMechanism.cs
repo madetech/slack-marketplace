@@ -57,8 +57,8 @@ namespace CryptoTechProject
                 }
 
 
-                string the_json_to_give_to_slack = JsonConvert.SerializeObject(slackMessage);
-                byte[] responseArray = Encoding.UTF8.GetBytes(the_json_to_give_to_slack);
+                string theJsonToGiveToSlack = JsonConvert.SerializeObject(slackMessage);
+                byte[] responseArray = Encoding.UTF8.GetBytes(theJsonToGiveToSlack);
                 response.AddHeader("Content-type", "application/json");
                 response.OutputStream.Write(responseArray, 0, responseArray.Length);
 
