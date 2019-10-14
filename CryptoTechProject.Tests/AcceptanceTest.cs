@@ -15,17 +15,17 @@ namespace CryptoTechProject.Tests
             HardCodedWorkshopsGateway hardCodedWorkshopsGateway = new HardCodedWorkshopsGateway();
             GetWorkshops getWorkshops = new GetWorkshops(hardCodedWorkshopsGateway);
             GetWorkshopsResponse response = getWorkshops.Execute();
-            DateTime sourceDate = new DateTime(2008, 5, 1, 8, 30, 0);
+            DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
             DateTimeOffset time = new DateTimeOffset(sourceDate, 
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate)); 
             
-            Assert.AreEqual("Coding Black Females - Code Dojo",response.PresentableWorkshops[0].Name);
-            Assert.AreEqual("Made Tech",response.PresentableWorkshops[0].Host);
-            Assert.AreEqual(time, response.PresentableWorkshops[0].Time);
-            Assert.AreEqual("Made Tech O'Meara",response.PresentableWorkshops[0].Location);
-            Assert.AreEqual(10800/60,response.PresentableWorkshops[0].Duration);
-            Assert.AreEqual("Code Dojo",response.PresentableWorkshops[0].Type);
-            
+            Assert.AreEqual("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)", hardCodedWorkshopsGateway.All()[0].name);
+            Assert.AreEqual("Barry",hardCodedWorkshopsGateway.All()[0].host);
+            Assert.AreEqual(time, hardCodedWorkshopsGateway.All()[0].time);
+            Assert.AreEqual("Everest",hardCodedWorkshopsGateway.All()[0].location);
+            Assert.AreEqual(60,hardCodedWorkshopsGateway.All()[0].duration);
+            Assert.AreEqual("Seminar",hardCodedWorkshopsGateway.All()[0].type);
+
         }
         
         [Test]
@@ -33,21 +33,21 @@ namespace CryptoTechProject.Tests
             HardCodedWorkshopsGateway hardCodedWorkshopsGateway = new HardCodedWorkshopsGateway();
             GetWorkshops getWorkshops = new GetWorkshops(hardCodedWorkshopsGateway);
             GetWorkshopsResponse response = getWorkshops.Execute();
-            DateTime sourceDate = new DateTime(2008, 5, 1, 8, 30, 0);
+            DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
             DateTimeOffset time = new DateTimeOffset(sourceDate, 
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate)); 
-            
+
             DateTime sourceDate2 = new DateTime(2019, 10, 18, 15, 30, 0);
             DateTimeOffset time2 = new DateTimeOffset(sourceDate2, 
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate2)); 
 
-            Assert.AreEqual("Coding Black Females - Code Dojo",response.PresentableWorkshops[0].Name);
-            Assert.AreEqual("Made Tech",response.PresentableWorkshops[0].Host);
-            Assert.AreEqual(time, response.PresentableWorkshops[0].Time);
-            Assert.AreEqual("Made Tech O'Meara",response.PresentableWorkshops[0].Location);
-            Assert.AreEqual(10800/60,response.PresentableWorkshops[0].Duration);
-            Assert.AreEqual("Code Dojo",response.PresentableWorkshops[0].Type);
-            
+            Assert.AreEqual("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)", hardCodedWorkshopsGateway.All()[0].name);
+            Assert.AreEqual("Barry",hardCodedWorkshopsGateway.All()[0].host);
+            Assert.AreEqual(time, hardCodedWorkshopsGateway.All()[0].time);
+            Assert.AreEqual("Everest",hardCodedWorkshopsGateway.All()[0].location);
+            Assert.AreEqual(60,hardCodedWorkshopsGateway.All()[0].duration);
+            Assert.AreEqual("Seminar",hardCodedWorkshopsGateway.All()[0].type);
+  
             Assert.AreEqual("Account Leadership - Roles & Responsibilities",response.PresentableWorkshops[1].Name);
             Assert.AreEqual("Rory",response.PresentableWorkshops[1].Host);
             Assert.AreEqual(time2, response.PresentableWorkshops[1].Time);
