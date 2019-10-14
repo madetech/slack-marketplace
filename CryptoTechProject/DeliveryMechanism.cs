@@ -17,7 +17,6 @@ namespace CryptoTechProject
             while (true)
             {
                 HttpListenerContext context = httpListener.GetContext();
-
                 HttpListenerResponse response = context.Response;
 
                 HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();

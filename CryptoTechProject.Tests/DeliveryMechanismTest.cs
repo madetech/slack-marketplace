@@ -29,11 +29,11 @@ namespace CryptoTechProject.Tests
            
             dynamic deserializedSlackMessage = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(response));
 
-            string firstWorkshop =  deserializedSlackMessage.blocks[2].text.text.ToString();
+            string secondWorkshop =  deserializedSlackMessage.blocks[3].text.text.ToString();
             
-            Assert.True(firstWorkshop.Contains("Coding Black Females - Code Dojo"));
-            Assert.True(firstWorkshop.Contains("01/05/2008 08:30 AM"));
-            Assert.True(firstWorkshop.Contains("Made Tech"));
+            Assert.True(secondWorkshop.Contains("Account Leadership - Roles & Responsibilities"));
+            Assert.True(secondWorkshop.Contains("18/10/2019 03:30 PM"));
+            Assert.True(secondWorkshop.Contains("Rory"));
         }
     }
 }
