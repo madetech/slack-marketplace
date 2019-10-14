@@ -24,48 +24,55 @@ namespace CryptoTechProject
                 GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
 
 
-                SlackMessage slackMessage = new SlackMessage
-                {
-                    Blocks = new SlackMessage.SlackMessageBlock[workshops.PresentableWorkshops.Length + 2]
-                };
-
-                slackMessage.Blocks[0] = new SlackMessage.SectionBlock()
-                {
-                    Text = new SlackMessage.SectionBlock.SectionBlockText
-                    {
-                        Type = "mrkdwn",
-                        Text = "*Workshops*"
-                    }
-                };
-
-                slackMessage.Blocks[1] = new SlackMessage.DividerBlock()
-                {
-                    Type = "divider"
-                };
-
-                for (int i = 0; i < workshops.PresentableWorkshops.Length; i++)
-                {
-                    slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock()
-                    {
-                        Text = new SlackMessage.SectionBlock.SectionBlockText
-                        {
-                            Type = "mrkdwn",
-                            Text = $"{workshops.PresentableWorkshops[i].Name}\n" +
-                                   $"{workshops.PresentableWorkshops[i].Time.DateTime.ToString("dd/MM/yyyy hh:mm tt")}\n" +
-                                   $"{workshops.PresentableWorkshops[i].Host}"
-                        }
-                    };
-                }
+                var slackMessage = ToSlackMessage(workshops);
 
 
-                string the_json_to_give_to_slack = JsonConvert.SerializeObject(slackMessage);
-                byte[] responseArray = Encoding.UTF8.GetBytes(the_json_to_give_to_slack);
+                string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
+                byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
                 response.AddHeader("Content-type", "application/json");
                 response.OutputStream.Write(responseArray, 0, responseArray.Length);
 
                 response.KeepAlive = false;
                 response.Close();
             }
+        }
+
+        private static SlackMessage ToSlackMessage(GetWorkshopsResponse workshops)
+        {
+            SlackMessage slackMessage = new SlackMessage
+            {
+                Blocks = new SlackMessage.SlackMessageBlock[workshops.PresentableWorkshops.Length + 2]
+            };
+
+            slackMessage.Blocks[0] = new SlackMessage.SectionBlock
+            {
+                Text = new SlackMessage.SectionBlock.SectionBlockText
+                {
+                    Type = "mrkdwn",
+                    Text = "*Workshops*"
+                }
+            };
+
+            slackMessage.Blocks[1] = new SlackMessage.DividerBlock
+            {
+                Type = "divider"
+            };
+
+            for (int i = 0; i < workshops.PresentableWorkshops.Length; i++)
+            {
+                slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
+                {
+                    Text = new SlackMessage.SectionBlock.SectionBlockText
+                    {
+                        Type = "mrkdwn",
+                        Text = $"{workshops.PresentableWorkshops[i].Name}\n" +
+                               $"{workshops.PresentableWorkshops[i].Time.DateTime.ToString("dd/MM/yyyy hh:mm tt")}\n" +
+                               $"{workshops.PresentableWorkshops[i].Host}"
+                    }
+                };
+            }
+
+            return slackMessage;
         }
     }
 }
