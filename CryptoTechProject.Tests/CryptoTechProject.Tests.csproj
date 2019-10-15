@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="dotenv.net" Version="1.0.6" />
+      <PackageReference Include="FluentSimulator" Version="1.0.39" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3-beta2" />
       <PackageReference Include="NUnit" Version="3.12.0" />

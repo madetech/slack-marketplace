@@ -13,19 +13,20 @@ namespace CryptoTechProject.Tests
         [Test]
         public void CanRespondWithJson()
         {
+            var started = false;
             var thread = new Thread(() =>
             {
                 Environment.SetEnvironmentVariable("PORT", "5001");
                 //todo: consider passing a use case test double here 
                 var deliveryMechanism = new DeliveryMechanism();
-                deliveryMechanism.Run();
+                deliveryMechanism.Run(() => { started = true; });
             });
             thread.Start();
-            Thread.Sleep(5000);
+
+            SpinWait.SpinUntil(() => started);
 
             var webClient = new WebClient();
             var response = webClient.DownloadData("http://localhost:5001");
-
            
             dynamic deserializedSlackMessage = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(response));
 

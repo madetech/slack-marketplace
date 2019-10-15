@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Text;
 using CryptoTechProject.Boundary;
@@ -9,11 +10,11 @@ namespace CryptoTechProject
     {
         HttpListener httpListener = new HttpListener();
 
-        public void Run()
+        public void Run(Action onStarted)
         {
             httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
             httpListener.Start();
-
+            onStarted();
             while (true)
             {
                 HttpListenerContext context = httpListener.GetContext();

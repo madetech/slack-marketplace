@@ -14,7 +14,7 @@ namespace CryptoTechProject
     {
         static void Main(string[] args)
         {
-            new DeliveryMechanism().Run();
+            new DeliveryMechanism().Run((() => Console.WriteLine("Server Started")));
         }
     }
 }
