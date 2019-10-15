@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using CryptoTechProject.Domain;
+using Newtonsoft.Json;
 
 namespace CryptoTechProject
 {
@@ -21,26 +23,26 @@ namespace CryptoTechProject
         public List<Workshop> All()
 
         {
-            //WebClient webClient = new WebClient();
+            WebClient webClient = new WebClient();
+            webClient.QueryString.Add("api_key", _apiKey);
+            var response = webClient.DownloadString(_url+"v0/"+_tableId+"/Marketplace"  );
 
-            DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
+            AirtableResponse airtableResponse = JsonConvert.DeserializeObject<AirtableResponse>(response);
+            
+            DateTime sourceDate = new DateTime(2019, 09, 18, 17, 00, 0);
             DateTimeOffset time = new DateTimeOffset(sourceDate, 
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
-            
-            //webClient.QueryString.Add("api_key", _apiKey);
-
-            //var response = webClient.DownloadString(_url+_tableId+"/Marketplace"  );
-            
+            //return deserializedProduct;
             return new List<Workshop>()
             {
                 new Workshop()
                 {
-                    name = "Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)",
-                    host = "Barry",
-                    time = time,
-                    location = "Everest, 2nd Foor",
-                    duration = 60,
-                    type = "Seminar"
+                    name = airtableResponse.Records[0].Fields.Name,
+                    host = airtableResponse.Records[0].Fields.Host,
+                    time = airtableResponse.Records[0].Fields.Time,
+                    location = airtableResponse.Records[0].Fields.Location,
+                    duration = airtableResponse.Records[0].Fields.Duration,
+                    type = airtableResponse.Records[0].Fields.SessionType
                 },
             };
         }
