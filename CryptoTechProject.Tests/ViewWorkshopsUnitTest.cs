@@ -8,12 +8,10 @@ namespace CryptoTechProject.Tests
     public class ViewWorkshopsTest
     {
         [TestFixture]
-
-        
-        public class GetWorkshopsUnitTest: IGetWorkshopsGateway
+        public class GetWorkshopsUnitTest : IGetWorkshopsGateway
         {
             private List<Workshop> _workshops;
-            
+
             [SetUp]
             public void Setup()
             {
@@ -23,15 +21,15 @@ namespace CryptoTechProject.Tests
             [Test]
             public void CanGetNoWorkshop()
             {
-                var response = new GetWorkshops(this).Execute(); 
+                var response = new GetWorkshops(this).Execute();
                 Assert.IsEmpty(response.PresentableWorkshops);
             }
-            
+
             [Test]
             public void CanGetAWorkshop()
             {
                 _workshops.Add(new Workshop());
-                var response = new GetWorkshops(this).Execute(); 
+                var response = new GetWorkshops(this).Execute();
                 Assert.IsNotEmpty(response.PresentableWorkshops);
             }
 
@@ -40,8 +38,6 @@ namespace CryptoTechProject.Tests
                 return _workshops;
             }
         }
-        
-        
     }
 }
 /*
