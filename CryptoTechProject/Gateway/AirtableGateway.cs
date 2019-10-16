@@ -39,7 +39,7 @@ namespace CryptoTechProject
                     host = airtableResponse.Records[i].Fields.Host,
                     time = airtableResponse.Records[i].Fields.Time,
                     location = airtableResponse.Records[i].Fields.Location,
-                    duration = airtableResponse.Records[i].Fields.Duration,
+                    duration = airtableResponse.Records[i].Fields.Duration/60,
                     type = airtableResponse.Records[i].Fields.SessionType
                 };
                 allWorkshops.Add(workshop);

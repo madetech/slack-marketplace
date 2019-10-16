@@ -9,31 +9,64 @@ namespace CryptoTechProject.Tests
     [TestFixture]
     public class AcceptanceTest
     {
-        [Test]
-        public void CanGetHardcodedWorkshops()
-        {
-            HardCodedWorkshopsGateway hardCodedWorkshopsGateway = new HardCodedWorkshopsGateway();
-            GetWorkshops getWorkshops = new GetWorkshops(hardCodedWorkshopsGateway);
-            GetWorkshopsResponse response = getWorkshops.Execute();
-            DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
-            DateTimeOffset time = new DateTimeOffset(sourceDate,
-                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
+        private string AIRTABLE_API_KEY = "111";
+        private string TABLE_ID = "2";
+        private string AIRTABLE_URL = "http://localhost:8080/";
+        
+        AirtableSimulator airtableSimulator;
 
-            Assert.AreEqual("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)",
-                hardCodedWorkshopsGateway.All()[0].name);
-            Assert.AreEqual("Barry", hardCodedWorkshopsGateway.All()[0].host);
-            Assert.AreEqual(time, hardCodedWorkshopsGateway.All()[0].time);
-            Assert.AreEqual("Everest", hardCodedWorkshopsGateway.All()[0].location);
-            Assert.AreEqual(60, hardCodedWorkshopsGateway.All()[0].duration);
-            Assert.AreEqual("Seminar", hardCodedWorkshopsGateway.All()[0].type);
+        [SetUp]
+        public void SetUp()
+        {
+            airtableSimulator = new AirtableSimulator();
+            airtableSimulator.Start();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            airtableSimulator.Stop();
         }
 
         [Test]
-        public void CanGetTwoHardcodedWorkshops()
+        public void CanGetTwoAirtableWorkshops()
         {
-            HardCodedWorkshopsGateway hardCodedWorkshopsGateway = new HardCodedWorkshopsGateway();
-            GetWorkshops getWorkshops = new GetWorkshops(hardCodedWorkshopsGateway);
+            var expectedResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)")
+                .WithHost("Barry")
+                .WithCategories("Delivery")
+                .WithTime(2019, 10, 18, 13, 0, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                
+                .AddRecord(
+                    "reca7W6WxWubIR7CK",
+                    new DateTime(2019, 8, 27, 5, 24, 25)
+                )
+                .WithName("Account Leadership - Roles & Responsibilities")
+                .WithHost("Rory")
+                .WithCategories("Sales", "Workshop", "Life Skills", "Business")
+                .WithTime(2019, 10, 18, 14, 30, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest")
+                .WithSessionType("Workshop")
+                .Build();
+
+            airtableSimulator.SetUp(
+                TABLE_ID,
+                AIRTABLE_API_KEY,
+                expectedResponse
+            );
+
+
+            AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
+            GetWorkshops getWorkshops = new GetWorkshops(airtableGateway);
             GetWorkshopsResponse response = getWorkshops.Execute();
+
             DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
             DateTimeOffset time = new DateTimeOffset(sourceDate,
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
@@ -42,20 +75,22 @@ namespace CryptoTechProject.Tests
             DateTimeOffset time2 = new DateTimeOffset(sourceDate2,
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate2));
 
+            PresentableWorkshop[] presentableWorkshops = response.PresentableWorkshops;
+            
             Assert.AreEqual("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)",
-                hardCodedWorkshopsGateway.All()[0].name);
-            Assert.AreEqual("Barry", hardCodedWorkshopsGateway.All()[0].host);
-            Assert.AreEqual(time, hardCodedWorkshopsGateway.All()[0].time);
-            Assert.AreEqual("Everest", hardCodedWorkshopsGateway.All()[0].location);
-            Assert.AreEqual(60, hardCodedWorkshopsGateway.All()[0].duration);
-            Assert.AreEqual("Seminar", hardCodedWorkshopsGateway.All()[0].type);
+                presentableWorkshops[0].Name);
+            Assert.AreEqual("Barry", presentableWorkshops[0].Host);
+            Assert.AreEqual(time, presentableWorkshops[0].Time);
+            Assert.AreEqual("Everest, 2nd Foor", presentableWorkshops[0].Location);
+            Assert.AreEqual(60, presentableWorkshops[0].Duration);
+            Assert.AreEqual("Seminar", presentableWorkshops[0].Type);
 
             Assert.AreEqual("Account Leadership - Roles & Responsibilities", response.PresentableWorkshops[1].Name);
-            Assert.AreEqual("Rory", response.PresentableWorkshops[1].Host);
-            Assert.AreEqual(time2, response.PresentableWorkshops[1].Time);
-            Assert.AreEqual("Everest", response.PresentableWorkshops[1].Location);
-            Assert.AreEqual(60, response.PresentableWorkshops[1].Duration);
-            Assert.AreEqual("Workshop", response.PresentableWorkshops[1].Type);
+            Assert.AreEqual("Rory", presentableWorkshops[1].Host);
+            Assert.AreEqual(time2, presentableWorkshops[1].Time);
+            Assert.AreEqual("Everest", presentableWorkshops[1].Location);
+            Assert.AreEqual(60, presentableWorkshops[1].Duration);
+            Assert.AreEqual("Workshop", presentableWorkshops[1].Type);
         }
     }
 }

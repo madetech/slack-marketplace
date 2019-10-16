@@ -16,30 +16,40 @@ namespace CryptoTechProject.Tests
         private string AIRTABLE_API_KEY = "111";
         private string TABLE_ID = "2";
         private string AIRTABLE_URL = "http://localhost:8080/";
-        FluentSimulator simulator;
+        AirtableSimulator airtableSimulator;
 
 
         [SetUp]
         public void SetUp()
         {
-            simulator = new FluentSimulator("http://localhost:8080/");
-            simulator.Start();
+            airtableSimulator = new AirtableSimulator();
+            airtableSimulator.Start();
         }
 
         [TearDown]
         public void TearDown()
         {
-            //Stop the simulator
-            simulator.Stop();
+            airtableSimulator.Stop();
         }
 
         [Test]
         public void CanGetAWorkshop()
         {
-            string jsonString =
-                "{\"records\":[{\"id\":\"rec0d7vSGRLxzbUNz\",\"fields\":{\"Name\":\"Coding Black Females - Code Dojo\",\"Host\":\"Made Tech\",\"Location\":\"Made Tech O'Meara\",\"Time\":\"2019-09-18T17:00:00.000Z\",\"Duration\":10800,\"Session Type\":\"Code Dojo\",\"Categories\":[\"Meetup\"]},\"createdTime\":\"2019-09-18T09:29:25.000Z\"}]}";
-            simulator.Get("/v0/" + TABLE_ID + "/Marketplace").WithParameter("api_key", AIRTABLE_API_KEY)
-                .Responds(jsonString);
+            var expectedResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec0d7vSGRLxzbUNz",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Coding Black Females - Code Dojo")
+                .WithHost("Made Tech")
+                .WithCategories("Meetup")
+                .WithTime(2019, 9, 18, 17, 0, 0)
+                .WithDurationInSeconds(10800)
+                .WithLocation("Made Tech O'Meara'")
+                .WithSessionType("Code Dojo")
+                .Build();
+
+            airtableSimulator.SetUp(TABLE_ID, AIRTABLE_API_KEY, expectedResponse);
+
 
             AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
             var workshops = airtableGateway.All();
@@ -49,16 +59,43 @@ namespace CryptoTechProject.Tests
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
 
             Assert.True(workshops[0].name.Contains("Coding Black Females - Code Dojo"));
+            Assert.True(workshops[0].host.Contains("Made Tech"));
             Assert.AreEqual(workshops[0].time, time);
+            Assert.True(workshops[0].location.Contains("O'Meara"));
+            Assert.AreEqual(workshops[0].duration, 180);
+            Assert.True(workshops[0].type.Contains("Code Dojo"));
+
         }
 
         [Test]
         public void CanGetTwoWorkshops()
         {
-            string jsonString =
-                "{\"records\":[{\"id\":\"rec4rdaOkafgV1Bqm\",\"fields\":{\"Name\":\"Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)\",\"Host\":\"Barry\",\"Location\":\"Everest, 2nd Foor\",\"Time\":\"2019-10-18T13:00:00.000Z\",\"Duration\":3600,\"Session Type\":\"Seminar\",\"Categories\":[\"Delivery\"]},\"createdTime\":\"2019-08-22T08:25:28.000Z\"},{\"id\":\"reca7W6WxWubIR7CK\",\"fields\":{\"Name\":\"Account Leadership - Roles & Responsibilities\",\"Host\":\"Rory\",\"Location\":\"Everest\",\"Time\":\"2019-10-18T14:30:00.000Z\",\"Duration\":216000,\"Session Type\":\"Workshop\",\"Categories\":[\"Sales\",\"Workshop\",\"Life Skills\",\"Business\"]},\"createdTime\":\"2019-08-27T05:24:25.000Z\"}]}";
-            simulator.Get("/v0/" + TABLE_ID + "/Marketplace").WithParameter("api_key", AIRTABLE_API_KEY)
-                .Responds(jsonString);
+            var expectedResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)")
+                .WithHost("Barry")
+                .WithCategories("Delivery")
+                .WithTime(2019, 10, 18, 13, 0, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                
+                .AddRecord(
+                    "reca7W6WxWubIR7CK",
+                    new DateTime(2019, 8, 27, 5, 24, 25)
+                )
+                .WithName("Account Leadership - Roles & Responsibilities")
+                .WithHost("Rory")
+                .WithCategories("Sales", "Workshop", "Life Skills", "Business")
+                .WithTime(2019, 10, 18, 14, 30, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest")
+                .WithSessionType("Workshop")
+                .Build();
+
+            airtableSimulator.SetUp(TABLE_ID, AIRTABLE_API_KEY, expectedResponse);
 
             AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
             var workshops = airtableGateway.All();
