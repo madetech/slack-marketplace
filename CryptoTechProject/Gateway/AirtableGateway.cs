@@ -25,6 +25,7 @@ namespace CryptoTechProject
         {
             WebClient webClient = new WebClient();
             webClient.QueryString.Add("api_key", _apiKey);
+            webClient.QueryString.Add("maxRecords", "20");
             var response = webClient.DownloadString(_url + "v0/" + _tableId + "/Marketplace");
 
             AirtableResponse airtableResponse = JsonConvert.DeserializeObject<AirtableResponse>(response);
