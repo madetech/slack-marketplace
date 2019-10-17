@@ -19,7 +19,7 @@ public class AirtableResponse
         public string Host;
         public string Location;
         public string Name;
-        public DateTimeOffset Time;
+        public DateTime Time;
         public int Duration;
         [JsonProperty("Session Type")] public string SessionType;
         public string[] Categories;
