@@ -69,7 +69,9 @@ namespace CryptoTechProject
                         Type = "mrkdwn",
                         Text = $"{workshops.PresentableWorkshops[i].Name}\n" +
                                $"{workshops.PresentableWorkshops[i].Time.DateTime.ToString("dd/MM/yyyy hh:mm tt")}\n" +
-                               $"{workshops.PresentableWorkshops[i].Host}"
+                               $"{workshops.PresentableWorkshops[i].Host}\n"+
+                               $"{workshops.PresentableWorkshops[i].Location}"
+                               
                     }
                 };
             }
