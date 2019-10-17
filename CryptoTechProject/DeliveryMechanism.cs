@@ -2,11 +2,7 @@ using System;
 using System.Net;
 using System.Text;
 using CryptoTechProject.Boundary;
-using dotenv.net;
-using dotenv.net.Utilities;
 using Newtonsoft.Json;
-
-
 
 namespace CryptoTechProject
 {
@@ -17,7 +13,6 @@ namespace CryptoTechProject
         public void Run(Action onStarted)
         {
             httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
-            //httpListener.Prefixes.Add("http://localhost:5000/");
             httpListener.Start();
             onStarted();
             while (true)
@@ -25,14 +20,13 @@ namespace CryptoTechProject
                 HttpListenerContext context = httpListener.GetContext();
                 HttpListenerResponse response = context.Response;
 
-                //HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
-                AirtableGateway gateway = new AirtableGateway(
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
+                HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
                 GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
+
+
                 var slackMessage = ToSlackMessage(workshops);
-                
+
+
                 string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
                 byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
                 response.AddHeader("Content-type", "application/json");
