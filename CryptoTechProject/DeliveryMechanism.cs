@@ -13,6 +13,7 @@ namespace CryptoTechProject
         public void Run(Action onStarted)
         {
             httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
+            //httpListener.Prefixes.Add("http://localhost:5000/");
             httpListener.Start();
             onStarted();
             while (true)
@@ -24,6 +25,9 @@ namespace CryptoTechProject
                 AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
+                
+                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", INSERT_API_KEY, INSERT_TABLE_ID);
+                    
                 GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
 
                 var slackMessage = ToSlackMessage(workshops);
@@ -68,7 +72,7 @@ namespace CryptoTechProject
                     {
                         Type = "mrkdwn",
                         Text = $"{workshops.PresentableWorkshops[i].Name}\n" +
-                               $"{workshops.PresentableWorkshops[i].Time.DateTime.ToString("dd/MM/yyyy hh:mm tt")}\n" +
+                               $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
                                $"{workshops.PresentableWorkshops[i].Host}\n"+
                                $"{workshops.PresentableWorkshops[i].Location}"
                                
