@@ -40,7 +40,8 @@ namespace CryptoTechProject
                     {
                         Name = list[i].name,
                         Host = list[i].host,
-                        Time = list[i].time.ToLocalTime(),
+                       // Time = list[i].time.ToLocalTime(),
+                        Time = new DateTimeOffset(list[i].time, TimeSpan.Zero).ToOffset(TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(list[i].time)),
                         Location = list[i].location,
                         Duration = list[i].duration,
                         Type = list[i].type
