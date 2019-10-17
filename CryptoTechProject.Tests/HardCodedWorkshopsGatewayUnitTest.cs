@@ -11,9 +11,7 @@ namespace CryptoTechProject.Tests
         public void CanGetHardcodedWorkshops()
         {
             HardCodedWorkshopsGateway hardCodedWorkshopsGateway = new HardCodedWorkshopsGateway();
-            DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
-            DateTimeOffset time = new DateTimeOffset(sourceDate,
-                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
+            DateTime time = new DateTime(2019, 10, 18, 14, 00, 0);
 
             Assert.AreEqual("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)",
                 hardCodedWorkshopsGateway.All()[0].name);

@@ -9,13 +9,14 @@ namespace CryptoTechProject
     {
         public List<Workshop> All()
         {
-            DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
-            DateTimeOffset time = new DateTimeOffset(sourceDate,
-                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
+            DateTime time = new DateTime(2019, 10, 18, 14, 00, 0);
+           // DateTimeOffset time = new DateTimeOffset(sourceDate,
+            //    TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
+           // DateTime time = sourceDate;
 
-            DateTime sourceDate2 = new DateTime(2019, 10, 18, 15, 30, 0);
-            DateTimeOffset time2 = new DateTimeOffset(sourceDate2,
-                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate2));
+            DateTime time2 = new DateTime(2019, 10, 18, 15, 30, 0);
+            //DateTimeOffset time2 = new DateTimeOffset(sourceDate2,
+              //  TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate2));
 
             return new List<Workshop>()
             {

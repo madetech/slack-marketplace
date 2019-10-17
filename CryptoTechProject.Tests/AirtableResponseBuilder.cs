@@ -43,14 +43,13 @@ namespace CryptoTechProject.Tests
 
         public AirtableResponseBuilder WithTime(int year, int month, int day, int hours, int minutes, int seconds)
         {
-            _currentFields.Time = new DateTimeOffset(
+            _currentFields.Time = new DateTime(
                 year,
                 month,
                 day,
                 hours,
                 minutes,
-                seconds,
-                TimeSpan.Zero
+                seconds
             );
             return this;
         }

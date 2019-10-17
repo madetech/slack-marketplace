@@ -54,9 +54,7 @@ namespace CryptoTechProject.Tests
             AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
             var workshops = airtableGateway.All();
 
-            DateTime sourceDate = new DateTime(2019, 09, 18, 18, 00, 0);
-            DateTimeOffset time = new DateTimeOffset(sourceDate,
-                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
+            DateTime time = new DateTime(2019, 09, 18, 17, 00, 0);
 
             Assert.True(workshops[0].name.Contains("Coding Black Females - Code Dojo"));
             Assert.True(workshops[0].host.Contains("Made Tech"));
