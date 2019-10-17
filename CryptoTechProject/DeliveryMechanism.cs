@@ -20,9 +20,11 @@ namespace CryptoTechProject
                 HttpListenerContext context = httpListener.GetContext();
                 HttpListenerResponse response = context.Response;
 
-                HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
+                //HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
+                AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
+                    System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
+                    System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
                 GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
-
 
                 var slackMessage = ToSlackMessage(workshops);
 
