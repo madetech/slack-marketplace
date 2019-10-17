@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CryptoTechProject.Boundary;
@@ -40,7 +39,7 @@ namespace CryptoTechProject
                     {
                         Name = list[i].name,
                         Host = list[i].host,
-                        Time = list[i].time.ToLocalTime(),
+                        Time = list[i].time,
                         Location = list[i].location,
                         Duration = list[i].duration,
                         Type = list[i].type
