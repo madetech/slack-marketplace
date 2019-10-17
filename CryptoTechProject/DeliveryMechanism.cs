@@ -20,16 +20,9 @@ namespace CryptoTechProject
                 HttpListenerContext context = httpListener.GetContext();
                 HttpListenerResponse response = context.Response;
 
-                /*HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
-                GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();*/
-
-                //https://api.airtable.com/v0/apppGaPfIFW8nmf4T/Marketplace?maxRecords=0&view=Upcoming&api_key=keyFfgviAZnwbXCxZ
-
-                AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
-
+                HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
                 GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
+
 
                 var slackMessage = ToSlackMessage(workshops);
 
@@ -59,13 +52,13 @@ namespace CryptoTechProject
                     Text = "*Workshops*"
                 }
             };
+
             slackMessage.Blocks[1] = new SlackMessage.DividerBlock
             {
                 Type = "divider"
             };
-            for (int i = 0;
-                i < workshops.PresentableWorkshops.Length;
-                i++)
+
+            for (int i = 0; i < workshops.PresentableWorkshops.Length; i++)
             {
                 slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
                 {
