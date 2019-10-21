@@ -12,22 +12,18 @@ namespace CryptoTechProject
 
         public void Run(Action onStarted)
         {
-            //httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
-            httpListener.Prefixes.Add("http://localhost:1234/");
+            httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
             httpListener.Start();
             onStarted();
             while (true)
             {
                 HttpListenerContext context = httpListener.GetContext();
                 HttpListenerResponse response = context.Response;
-
-                //HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
-               /*AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));*/
                 
-                AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "keyZqU8PXE97s45Jw", "apppGaPfIFW8nmf4T");
-                    
+                AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
+                    System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
+                    System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
+               
                 GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
 
                 var slackMessage = ToSlackMessage(workshops);
