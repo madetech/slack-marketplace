@@ -25,6 +25,24 @@ namespace CryptoTechProject
             [JsonProperty("type")] public string Type = "section";
 
             [JsonProperty("text")] public SectionBlockText Text;
+            
+            
+            
+            
+        }
+
+        public class ContextBlock : SlackMessageBlock
+        {
+            public class ElementsBlock
+            {
+                [JsonProperty("type")] public string Type;
+
+                [JsonProperty("text")] public string Text;
+            }
+            
+            [JsonProperty("type")] public string Type = "context";
+
+            [JsonProperty("elements")] public ElementsBlock[] Elements;
         }
 
         [JsonProperty("blocks")] public SlackMessageBlock[] Blocks;
