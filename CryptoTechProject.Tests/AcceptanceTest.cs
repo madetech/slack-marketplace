@@ -91,5 +91,31 @@ namespace CryptoTechProject.Tests
             Assert.AreEqual(60, presentableWorkshops[1].Duration);
             Assert.AreEqual("Workshop", presentableWorkshops[1].Type);
         }
+        
+        [Test]
+        public void AddsUserToAirtableTable()
+        {
+            var expectedResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)")
+                .WithHost("Barry")
+                .WithCategories("Delivery")
+                .WithTime(2019, 10, 18, 13, 0, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                .Build();
+            
+            AirtableGateway gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
+            BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway);
+            FunctionalPayload payload = new FunctionalPayload();
+            payload.User = "Maria";
+            payload.Workshop = "Workshop Name";
+            attend.Execute(payload);
+            Assert.AreEqual(attend.Execute(payload), "Confirmed");
+            //gateway.All().Atendees;
+        }
     }
 }

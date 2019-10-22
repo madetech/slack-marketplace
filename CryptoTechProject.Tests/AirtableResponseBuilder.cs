@@ -77,5 +77,7 @@ namespace CryptoTechProject.Tests
             {
                 Records = _records.ToArray()
             };
+
+       
     }
 }

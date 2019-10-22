@@ -1,16 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
+using System.Web;
 using CryptoTechProject.Boundary;
 using Newtonsoft.Json;
+
 
 namespace CryptoTechProject
 {
     public class DeliveryMechanism
     {
         HttpListener httpListener = new HttpListener();
-
         public void Run(Action onStarted)
         {
             httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
@@ -23,25 +26,41 @@ namespace CryptoTechProject
                 HttpListenerRequest request = context.Request;
                 HttpListenerResponse response = context.Response;
                 
-                var body = new StreamReader(context.Request.InputStream).ReadToEnd();
-                Console.Write(body);
                 
-                
+
                  AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
+                  System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
+                 System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
+
+               // AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "API_KEY",
+                   // "TABLE_ID");
                 
-               // AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "API_KEY", "TABLE_ID");
-                    
-                GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
+                
+                if(request.Url.ToString().Contains("attend"))
+                {
+                    var body = new StreamReader(context.Request.InputStream).ReadToEnd();
 
-                var slackMessage = ToSlackMessage(workshops);
+                    var bodyString = HttpUtility.ParseQueryString(body);
 
+                    Dictionary<string, string> dictionary = bodyString.Keys.Cast<string>()
+                        .ToDictionary(k => k, k => bodyString[k]);
 
-                string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
-                byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
-                response.AddHeader("Content-type", "application/json");
-                response.OutputStream.Write(responseArray, 0, responseArray.Length);
+                    SlackButtonPayload payload =
+                        JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
+                    Console.WriteLine(payload.User.Name);
+                }
+                else
+                {
+                    GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
+                    var slackMessage = ToSlackMessage(workshops);
+                    string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
+                    byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
+                    response.AddHeader("Content-type", "application/json");
+                    response.OutputStream.Write(responseArray, 0, responseArray.Length);
+
+                    Console.WriteLine("no payload");
+                }
+
 
                 response.KeepAlive = false;
                 response.Close();
@@ -78,7 +97,7 @@ namespace CryptoTechProject
                         Type = "mrkdwn",
                         Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
                                $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
-                               $"{workshops.PresentableWorkshops[i].Host}\n"+
+                               $"{workshops.PresentableWorkshops[i].Host}\n" +
                                $"{workshops.PresentableWorkshops[i].Location}"
                     },
                     Accessory = new SlackMessage.SectionBlock.AccessoryBlock
@@ -88,8 +107,8 @@ namespace CryptoTechProject
                             Type = "plain_text",
                             Text = "Attend"
                         },
-                        
-                        Value = "mark_attendance_button_id"
+
+                        Value = workshops.PresentableWorkshops[i].Name
                     }
                 };
             }

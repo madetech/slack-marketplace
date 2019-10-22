@@ -13,5 +13,6 @@ namespace CryptoTechProject.Domain
         public string location { get; set; }
         public int duration { get; set; }
         public string type { get; set; }
+        
     }
 }
