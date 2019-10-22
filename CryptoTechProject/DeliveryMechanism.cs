@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using CryptoTechProject.Boundary;
@@ -19,14 +20,18 @@ namespace CryptoTechProject
             while (true)
             {
                 HttpListenerContext context = httpListener.GetContext();
+                HttpListenerRequest request = context.Request;
                 HttpListenerResponse response = context.Response;
-
-                //HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
-                AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
+                
+                var body = new StreamReader(context.Request.InputStream).ReadToEnd();
+                Console.Write(body);
+                
+                
+                 AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
                 
-                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", INSERT_API_KEY, INSERT_TABLE_ID);
+               // AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "API_KEY", "TABLE_ID");
                     
                 GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
 
@@ -50,9 +55,9 @@ namespace CryptoTechProject
                 Blocks = new SlackMessage.SlackMessageBlock[workshops.PresentableWorkshops.Length + 2]
             };
 
-            slackMessage.Blocks[0] = new SlackMessage.SectionBlock
+            slackMessage.Blocks[0] = new SlackMessage.TitleSectionBlock
             {
-                Text = new SlackMessage.SectionBlock.SectionBlockText
+                Text = new SlackMessage.SectionBlockText
                 {
                     Type = "mrkdwn",
                     Text = "*Workshops*"
@@ -68,14 +73,23 @@ namespace CryptoTechProject
             {
                 slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
                 {
-                    Text = new SlackMessage.SectionBlock.SectionBlockText
+                    Text = new SlackMessage.SectionBlockText
                     {
                         Type = "mrkdwn",
-                        Text = $"{workshops.PresentableWorkshops[i].Name}\n" +
+                        Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
                                $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
                                $"{workshops.PresentableWorkshops[i].Host}\n"+
                                $"{workshops.PresentableWorkshops[i].Location}"
-                               
+                    },
+                    Accessory = new SlackMessage.SectionBlock.AccessoryBlock
+                    {
+                        Text = new SlackMessage.SectionBlockText
+                        {
+                            Type = "plain_text",
+                            Text = "Attend"
+                        },
+                        
+                        Value = "mark_attendance_button_id"
                     }
                 };
             }
