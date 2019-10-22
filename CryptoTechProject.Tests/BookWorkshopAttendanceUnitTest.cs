@@ -11,9 +11,9 @@ namespace CryptoTechProject.Tests
         {
             HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
             BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway);
-            FunctionalPayload payload = new FunctionalPayload();
+            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
             payload.User = "Maria";
-            payload.Workshop = "Workshop Name";
+            payload.Id = "Workshop Name";
             Assert.AreEqual(attend.Execute(payload), "Confirmed");
             //gateway.All().Atendees;
         }

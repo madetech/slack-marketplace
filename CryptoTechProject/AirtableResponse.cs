@@ -23,6 +23,7 @@ public class AirtableResponse
         public int Duration;
         [JsonProperty("Session Type")] public string SessionType;
         public string[] Categories;
-       
+        public string Attendees;
+
     }
 }

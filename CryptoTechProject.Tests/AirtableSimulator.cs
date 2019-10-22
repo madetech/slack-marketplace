@@ -4,7 +4,7 @@ namespace CryptoTechProject.Tests
 {
     public class AirtableSimulator
     {
-        private FluentSimulator simulator;
+        public FluentSimulator simulator;
         public string maxRecords = "20";
 
         public AirtableSimulator() => simulator = new FluentSimulator("http://localhost:8080/");

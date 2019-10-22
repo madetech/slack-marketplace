@@ -40,5 +40,10 @@ namespace CryptoTechProject
                 }
             };
         }
+
+        public void Save(Workshop workshop)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

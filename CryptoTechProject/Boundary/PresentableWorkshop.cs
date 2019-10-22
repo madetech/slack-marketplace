@@ -4,6 +4,7 @@ namespace CryptoTechProject.Boundary
 {
     public class PresentableWorkshop
     {
+        public string ID { get; set; }
         public DateTimeOffset Time { get; set; }
 
         public string Host { get; set; }

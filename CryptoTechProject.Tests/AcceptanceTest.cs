@@ -108,13 +108,23 @@ namespace CryptoTechProject.Tests
                 .WithSessionType("Seminar")
                 .Build();
             
+            airtableSimulator.SetUp(
+                TABLE_ID,
+                AIRTABLE_API_KEY,
+                expectedResponse
+            );
+            
             AirtableGateway gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
             BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway);
-            FunctionalPayload payload = new FunctionalPayload();
+            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
             payload.User = "Maria";
-            payload.Workshop = "Workshop Name";
+            payload.Id = "ID000";
             attend.Execute(payload);
-            Assert.AreEqual(attend.Execute(payload), "Confirmed");
+            
+            var requests = airtableSimulator.simulator.ReceivedRequests;
+            var sentEmployee = requests[0].BodyAs<AirtableResponse>();
+            
+            Assert.AreEqual("Maria", sentEmployee.Records[0].Fields.Attendees);
             //gateway.All().Atendees;
         }
     }

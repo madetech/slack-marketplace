@@ -10,6 +10,7 @@ namespace CryptoTechProject
     public interface IGetWorkshopsGateway
     {
         List<Workshop> All();
+        void Save(Workshop workshop);
     }
     
     public class GetWorkshops
@@ -38,6 +39,7 @@ namespace CryptoTechProject
                 {
                     getWorkshopsResponse.PresentableWorkshops[i] = new PresentableWorkshop()
                     {
+                        ID = list[i].id,
                         Name = list[i].name,
                         Host = list[i].host,
                        // Time = list[i].time.ToLocalTime(),

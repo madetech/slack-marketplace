@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using CryptoTechProject.Domain;
 using Newtonsoft.Json;
+
 
 namespace CryptoTechProject
 {
@@ -38,17 +40,35 @@ namespace CryptoTechProject
             {
                 Workshop workshop = new Workshop()
                 {
+                    id = airtableResponse.Records[i].ID,
                     name = airtableResponse.Records[i].Fields.Name,
                     host = airtableResponse.Records[i].Fields.Host,
                     time = airtableResponse.Records[i].Fields.Time,
                     location = airtableResponse.Records[i].Fields.Location,
                     duration = airtableResponse.Records[i].Fields.Duration/60,
-                    type = airtableResponse.Records[i].Fields.SessionType
+                    type = airtableResponse.Records[i].Fields.SessionType,
+                    attendees = airtableResponse.Records[i].Fields.Attendees
                 };
                 allWorkshops.Add(workshop);
             }
 
             return allWorkshops;
+        }
+
+        public void Save(Workshop workshop)
+        {/*
+           // string data = "anything";
+            WebClient client = new WebClient();
+            //client.Encoding = System.Text.Encoding.UTF8;
+            //string reply = client.UploadString(_url, "PATCH", "keepForever = true");
+            
+            
+            // add Maria to the airtable?
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Patch, _url);
+            request.Content = new StringContent("sdf");
+            var client = new HttpClient();
+            //client.SendRequestAsync(request);
+*/
         }
     }
 }

@@ -5,12 +5,14 @@ namespace CryptoTechProject
     public class SlackButtonPayload
     {
         [JsonProperty("user")] public User User;
-       // [JsonProperty("actions")] public Actions Actions;
+        [JsonProperty("actions")] public Actions[] Actions;
     }
 
     public class User
     {
         [JsonProperty("name")] public string Name;
+        [JsonProperty("id")] public string UserID;
+        
     }
 
     public class Actions

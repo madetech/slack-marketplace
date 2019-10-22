@@ -1,5 +1,6 @@
 using System.IO.Enumeration;
 using CryptoTechProject.Boundary;
+using CryptoTechProject.Domain;
 
 namespace CryptoTechProject
 {        
@@ -12,12 +13,17 @@ namespace CryptoTechProject
             Gateway = gateway;
         }
 
-        public string Execute(FunctionalPayload payload)
+        public string Execute(BookWorkshopAttendanceRequest request)
         {
-
             //if (Gateway.find(payload.Workshop).Atendees.Include(payload.Name))
             
-            //Gateway.save(payload);
+            // payload to doman payload here:
+            Workshop workshop = new Workshop();
+            workshop.attendees = request.User;
+            workshop.id = request.Id;
+            //the_workshop = Gateway.find(ID)
+            
+            Gateway.Save(workshop);
             return "Confirmed";
         }
     }
