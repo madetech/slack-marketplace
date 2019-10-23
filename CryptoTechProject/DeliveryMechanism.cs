@@ -32,25 +32,22 @@ namespace CryptoTechProject
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
 
-                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "API_KEY",
-                 // "TABLE_ID");
-
-
+               // AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "api_key,
+                //  "table_id");
 
 
                 if (request.Url.ToString().Contains("attend"))
                 {
-                    var body = new StreamReader(context.Request.InputStream).ReadToEnd();
+                    var payload = new StreamReader(context.Request.InputStream).ReadToEnd();
 
-                    var bodyString = HttpUtility.ParseQueryString(body);
+                    var payloadString = HttpUtility.ParseQueryString(payload);
 
-                    Dictionary<string, string> dictionary = bodyString.Keys.Cast<string>()
-                        .ToDictionary(k => k, k => bodyString[k]);
+                    Dictionary<string, string> dictionary = payloadString.Keys.Cast<string>()
+                        .ToDictionary(k => k, k => payloadString[k]);
 
-                    SlackButtonPayload payload =
+                    SlackButtonPayload deserialisedPayload =
                         JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
-                    Console.WriteLine(payload.Actions[0].Value);
-
+                    Console.WriteLine(deserialisedPayload.Actions[0].Value);
                 }
                 else
                 {

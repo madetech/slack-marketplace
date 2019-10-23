@@ -59,26 +59,22 @@ namespace CryptoTechProject
 
         public void Save(Workshop workshop)
         {
-            WebRequest airtableRequest = WebRequest.Create("http://localhost:8080/");
-            airtableRequest.Method = "PATCH";
-            airtableRequest.Headers.Add("Authorization","Bearer API_KEY_GOES_HERE" );
-            airtableRequest.ContentType = "application/json";
+            
             AirtableRequest patchData = new AirtableRequest
             {
-                ID = "recxAicGB8fU6PT0l",
+                ID = workshop.id,
                 Fields = new Fields()
                 {
-                    Attendees = "Seaweed"
+                    Attendees = workshop.attendees
                 }
 
             };
             string jsonPatchData = JsonConvert.SerializeObject(patchData);
-            byte[] bytes = Encoding.UTF8.GetBytes(jsonPatchData);
-            airtableRequest.ContentLength = bytes.Length;
-            Stream dataStream = airtableRequest.GetRequestStream();
-            dataStream.Write(bytes, 0, bytes.Length);
-            dataStream.Close();
 
+            WebClient client = new WebClient();
+            client.Encoding = System.Text.Encoding.UTF8;
+            string responseConfirmation = client.UploadString ("http://localhost:8080/", "PATCH", jsonPatchData);
         }
+        
     }
 }

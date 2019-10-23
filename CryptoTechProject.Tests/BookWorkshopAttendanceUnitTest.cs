@@ -13,7 +13,7 @@ namespace CryptoTechProject.Tests
             BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway);
             BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
             payload.User = "Maria";
-            payload.Id = "Workshop Name";
+            payload.WorkshopId = "Workshop Name";
             Assert.AreEqual(attend.Execute(payload), "Confirmed");
             //gateway.All().Atendees;
         }

@@ -20,7 +20,7 @@ namespace CryptoTechProject
             // payload to domain payload here:
             Workshop workshop = new Workshop();
             workshop.attendees = request.User;
-            workshop.id = request.Id;
+            workshop.id = request.WorkshopId;
             //the_workshop = Gateway.find(ID)
             
             Gateway.Save(workshop);

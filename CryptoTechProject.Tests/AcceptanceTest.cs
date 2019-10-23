@@ -20,6 +20,7 @@ namespace CryptoTechProject.Tests
         {
             airtableSimulator = new AirtableSimulator();
             airtableSimulator.Start();
+            airtableSimulator.simulator.Patch("/").Responds("Hello World!");
         }
 
         [TearDown]
@@ -118,7 +119,7 @@ namespace CryptoTechProject.Tests
             BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway);
             BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
             payload.User = "Maria";
-            payload.Id = "ID000";
+            payload.WorkshopId = "ID000";
             attend.Execute(payload);
             
             var requests = airtableSimulator.simulator.ReceivedRequests;
