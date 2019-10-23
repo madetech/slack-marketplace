@@ -122,9 +122,10 @@ namespace CryptoTechProject.Tests
             attend.Execute(payload);
             
             var requests = airtableSimulator.simulator.ReceivedRequests;
-            var sentEmployee = requests[0].BodyAs<AirtableResponse>();
+            Console.WriteLine(requests);
+            var sentEmployee = requests[0].BodyAs<AirtableRequest>();
             
-            Assert.AreEqual("Maria", sentEmployee.Records[0].Fields.Attendees);
+            Assert.AreEqual("Maria", sentEmployee.Fields.Attendees);
             //gateway.All().Atendees;
         }
     }
