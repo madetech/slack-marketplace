@@ -1,17 +1,13 @@
-using System;
 using System.Net.Http;
-using Newtonsoft.Json;
 
 namespace CryptoTechProject.Boundary
 {
     public class AirtableRequest
     {
-        [JsonProperty("id")] public string ID;
-        [JsonProperty("fields")] public Fields Fields;
-    }
+        HttpMethod method;
 
-    public class Fields
-    {
-        public string Attendees;
+        public AirtableResponse content { get; set; }
+
+        //PATCH https://api.airtable.com/v0/appOF2mB9E8R6AyMH/Marketplace \
     }
 }

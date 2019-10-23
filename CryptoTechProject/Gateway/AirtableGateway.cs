@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using CryptoTechProject.Boundary;
 using CryptoTechProject.Domain;
 using Newtonsoft.Json;
 
@@ -28,7 +26,7 @@ namespace CryptoTechProject
 
         {
             WebClient webClient = new WebClient();
-           
+
             webClient.QueryString.Add("maxRecords", "20");
             webClient.QueryString.Add("api_key", _apiKey);
             webClient.QueryString.Add("view", "Upcoming");
@@ -58,27 +56,19 @@ namespace CryptoTechProject
         }
 
         public void Save(Workshop workshop)
-        {
-            WebRequest airtableRequest = WebRequest.Create("http://localhost:8080/");
-            airtableRequest.Method = "PATCH";
-            airtableRequest.Headers.Add("Authorization","Bearer API_KEY_GOES_HERE" );
-            airtableRequest.ContentType = "application/json";
-            AirtableRequest patchData = new AirtableRequest
-            {
-                ID = "recxAicGB8fU6PT0l",
-                Fields = new Fields()
-                {
-                    Attendees = "Seaweed"
-                }
-
-            };
-            string jsonPatchData = JsonConvert.SerializeObject(patchData);
-            byte[] bytes = Encoding.UTF8.GetBytes(jsonPatchData);
-            airtableRequest.ContentLength = bytes.Length;
-            Stream dataStream = airtableRequest.GetRequestStream();
-            dataStream.Write(bytes, 0, bytes.Length);
-            dataStream.Close();
-
+        {/*
+           // string data = "anything";
+            WebClient client = new WebClient();
+            //client.Encoding = System.Text.Encoding.UTF8;
+            //string reply = client.UploadString(_url, "PATCH", "keepForever = true");
+            
+            
+            // add Maria to the airtable?
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Patch, _url);
+            request.Content = new StringContent("sdf");
+            var client = new HttpClient();
+            //client.SendRequestAsync(request);
+*/
         }
     }
 }

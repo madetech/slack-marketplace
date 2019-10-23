@@ -17,7 +17,7 @@ namespace CryptoTechProject
         {
             //if (Gateway.find(payload.Workshop).Atendees.Include(payload.Name))
             
-            // payload to domain payload here:
+            // payload to doman payload here:
             Workshop workshop = new Workshop();
             workshop.attendees = request.User;
             workshop.id = request.Id;
