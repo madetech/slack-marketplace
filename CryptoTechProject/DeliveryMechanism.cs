@@ -17,8 +17,8 @@ namespace CryptoTechProject
 
         public void Run(Action onStarted)
         {
-            httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
-            //httpListener.Prefixes.Add("http://localhost:5000/");
+            //httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
+            httpListener.Prefixes.Add("http://localhost:5000/");
             httpListener.Start();
             onStarted();
             while (true)
@@ -28,12 +28,11 @@ namespace CryptoTechProject
                 HttpListenerResponse response = context.Response;
 
 
-                AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
+                /*AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
+                    System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));*/
 
-               // AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "api_key,
-                //  "table_id");
+                AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "Airtable_API_here", "Table_ID");
 
 
                 if (request.Url.ToString().Contains("attend"))
@@ -48,6 +47,18 @@ namespace CryptoTechProject
                     SlackButtonPayload deserialisedPayload =
                         JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
                     Console.WriteLine(deserialisedPayload.Actions[0].Value);
+                    Console.WriteLine("--------------------------------------------");
+
+                    BookWorkshopAttendanceRequest bookWorkshopAttendanceRequest = new BookWorkshopAttendanceRequest()
+                    {
+                        User = deserialisedPayload.User.Name,
+                        WorkshopId = deserialisedPayload.Actions[0].Value
+                    };
+                    
+                    BookWorkshopAttendance bookWorkshopAttendance = new BookWorkshopAttendance(gateway);
+                  bookWorkshopAttendance.Execute(bookWorkshopAttendanceRequest);
+                    Console.WriteLine("but did it add?");
+
                 }
                 else
                 {
@@ -57,7 +68,6 @@ namespace CryptoTechProject
                     byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
                     response.AddHeader("Content-type", "application/json");
                     response.OutputStream.Write(responseArray, 0, responseArray.Length);
-
                     Console.WriteLine("no payload");
                 }
 

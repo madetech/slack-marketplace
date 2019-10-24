@@ -61,18 +61,26 @@ namespace CryptoTechProject
             
             AirtableRequest patchData = new AirtableRequest
             {
-                ID = workshop.id,
-                Fields = new Fields()
-                {
-                    Attendees = workshop.attendees
+                Records = new Record[] {
+                    new Record()
+                    {
+                        ID = workshop.id,
+                        Fields = new Fields()
+                        {
+                            Attendees = workshop.attendees
+                        }  
+                    }
                 }
 
             };
             string jsonPatchData = JsonConvert.SerializeObject(patchData);
-
+            Console.WriteLine(jsonPatchData);
             WebClient client = new WebClient();
             client.Encoding = System.Text.Encoding.UTF8;
-            string responseConfirmation = client.UploadString ("http://localhost:8080/", "PATCH", jsonPatchData);
+            client.Headers.Add("Authorization", "Bearer " + _apiKey);
+            client.Headers.Add("Content-Type","application/json");
+            string responseConfirmation = client.UploadString (_url + "v0/"+_tableId + "/Marketplace", "PATCH", jsonPatchData);
+           // string responseConfirmation = client.UploadString ("http://localhost:8080/", "PATCH", jsonPatchData);
         }
         
     }
