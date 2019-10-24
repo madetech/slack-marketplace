@@ -7,24 +7,20 @@ namespace CryptoTechProject
     
     public class BookWorkshopAttendance
     {
-        private IGetWorkshopsGateway Gateway;
-        public BookWorkshopAttendance(IGetWorkshopsGateway gateway)
+        private ISaveWorkshopsGateway Gateway;
+        public BookWorkshopAttendance(ISaveWorkshopsGateway gateway)
         {
             Gateway = gateway;
         }
 
         public string Execute(BookWorkshopAttendanceRequest request)
-        {
-            //if (Gateway.find(payload.Workshop).Atendees.Include(payload.Name))
-            
-            // payload to doman payload here:
-            Workshop workshop = new Workshop();
-            workshop.attendees = request.User;
-            workshop.id = request.Id;
-            //the_workshop = Gateway.find(ID)
-            
-            Gateway.Save(workshop);
-            return "Confirmed";
-        }
-    }
-}
+         {
+             Workshop workshop = new Workshop();
+             workshop.attendees = request.User;
+             workshop.id = request.WorkshopId;
+             
+             Gateway.Save(workshop);
+             return "Confirmed";
+         }
+     }
+ }

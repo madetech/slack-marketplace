@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using CryptoTechProject.Boundary;
 using CryptoTechProject.Domain;
 using Newtonsoft.Json;
 
 
 namespace CryptoTechProject
 {
-    public class AirtableGateway : IGetWorkshopsGateway
+    public class AirtableGateway : IWorkshopsGateway
     {
         private string _url;
         private string _apiKey;
@@ -56,19 +57,31 @@ namespace CryptoTechProject
         }
 
         public void Save(Workshop workshop)
-        {/*
-           // string data = "anything";
+        {
+            
+            AirtableRequest patchData = new AirtableRequest
+            {
+                Records = new Record[] {
+                    new Record()
+                    {
+                        ID = workshop.id,
+                        Fields = new Fields()
+                        {
+                            Attendees = workshop.attendees
+                        }  
+                    }
+                }
+
+            };
+            string jsonPatchData = JsonConvert.SerializeObject(patchData);
+            Console.WriteLine(jsonPatchData);
             WebClient client = new WebClient();
-            //client.Encoding = System.Text.Encoding.UTF8;
-            //string reply = client.UploadString(_url, "PATCH", "keepForever = true");
-            
-            
-            // add Maria to the airtable?
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Patch, _url);
-            request.Content = new StringContent("sdf");
-            var client = new HttpClient();
-            //client.SendRequestAsync(request);
-*/
+            client.Encoding = System.Text.Encoding.UTF8;
+            client.Headers.Add("Authorization", "Bearer " + _apiKey);
+            client.Headers.Add("Content-Type","application/json");
+            string responseConfirmation = client.UploadString (_url + "v0/"+_tableId + "/Marketplace", "PATCH", jsonPatchData);
+           // string responseConfirmation = client.UploadString ("http://localhost:8080/", "PATCH", jsonPatchData);
         }
+        
     }
 }

@@ -1,25 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using CryptoTechProject.Boundary;
-using CryptoTechProject.Domain;
 using Newtonsoft.Json.Linq;
 
 namespace CryptoTechProject
 {
-    public interface IGetWorkshopsGateway
-    {
-        List<Workshop> All();
-        void Save(Workshop workshop);
-    }
-    
     public class GetWorkshops
     {
-        private IGetWorkshopsGateway gateway;
+        private IWorkshopsGateway gateway;
         // Constructor below:
-        public GetWorkshops(IGetWorkshopsGateway getGateway)
+        public GetWorkshops(IWorkshopsGateway gateway)
         {
-            gateway = getGateway;
+            this.gateway = gateway;
         }
         
         public GetWorkshopsResponse Execute()

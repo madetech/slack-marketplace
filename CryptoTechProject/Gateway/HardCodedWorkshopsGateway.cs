@@ -5,7 +5,7 @@ using CryptoTechProject.Domain;
 
 namespace CryptoTechProject
 {
-    public class HardCodedWorkshopsGateway : IGetWorkshopsGateway
+    public class HardCodedWorkshopsGateway : IWorkshopsGateway
     {
         public List<Workshop> All()
         {
@@ -43,7 +43,7 @@ namespace CryptoTechProject
 
         public void Save(Workshop workshop)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

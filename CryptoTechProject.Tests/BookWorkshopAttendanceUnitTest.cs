@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+using System.Net;
 using CryptoTechProject.Boundary;
+using CryptoTechProject.Domain;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace CryptoTechProject.Tests
@@ -13,12 +17,33 @@ namespace CryptoTechProject.Tests
             BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway);
             BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
             payload.User = "Maria";
-            payload.Id = "Workshop Name";
+            payload.WorkshopId = "Workshop Name";
             Assert.AreEqual(attend.Execute(payload), "Confirmed");
-            //gateway.All().Atendees;
         }
-        
-       
-        
+
+        public class SpyGateway : ISaveWorkshopsGateway
+        {
+            public Workshop lastSavedWorkshop;
+            
+            public void Save(Workshop workshop)
+            {
+                lastSavedWorkshop = workshop;
+            }
+        }
+
+        [Test]
+        public void SpecificObjectIsCreatedProperly()
+        {
+            SpyGateway spy = new SpyGateway();
+            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy);
+            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
+            payload.User = "Seaweed";
+            payload.WorkshopId = "Seaweed on holiday";
+            bookAttendance.Execute(payload);
+            Assert.AreEqual("Seaweed",spy.lastSavedWorkshop.attendees);
+            Assert.AreEqual("Seaweed on holiday",spy.lastSavedWorkshop.id);
+        }
+
+
     }
 }
