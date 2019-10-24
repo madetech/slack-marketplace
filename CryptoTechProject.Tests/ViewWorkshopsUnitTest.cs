@@ -8,7 +8,7 @@ namespace CryptoTechProject.Tests
     public class ViewWorkshopsTest
     {
         [TestFixture]
-        public class GetWorkshopsUnitTest : IGetWorkshopsGateway
+        public class WorkshopsUnitTest : IWorkshopsGateway
         {
             private List<Workshop> _workshops;
 
