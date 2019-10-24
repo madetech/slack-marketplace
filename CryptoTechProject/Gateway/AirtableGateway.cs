@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -28,7 +27,7 @@ namespace CryptoTechProject
 
         {
             WebClient webClient = new WebClient();
-           
+
             webClient.QueryString.Add("maxRecords", "20");
             webClient.QueryString.Add("api_key", _apiKey);
             webClient.QueryString.Add("view", "Upcoming");
