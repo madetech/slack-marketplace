@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text;
+using CryptoTechProject.Boundary;
 using CryptoTechProject.Domain;
 using NUnit.Framework;
 using FluentSim;
@@ -62,7 +63,6 @@ namespace CryptoTechProject.Tests
             Assert.True(workshops[0].location.Contains("O'Meara"));
             Assert.AreEqual(workshops[0].duration, 180);
             Assert.True(workshops[0].type.Contains("Code Dojo"));
-
         }
 
         [Test]
@@ -79,7 +79,6 @@ namespace CryptoTechProject.Tests
                 .WithDurationInSeconds(3600)
                 .WithLocation("Everest, 2nd Foor")
                 .WithSessionType("Seminar")
-                
                 .AddRecord(
                     "reca7W6WxWubIR7CK",
                     new DateTime(2019, 8, 27, 5, 24, 25)
@@ -100,6 +99,70 @@ namespace CryptoTechProject.Tests
 
             Assert.True(workshops[0].name.Contains("Team Performance:"));
             Assert.True(workshops[1].name.Contains("Account Leadership"));
+        }
+        
+        [Test]
+        public void CanFindWorkshopByID()
+        {
+            var expectedResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)")
+                .WithHost("Barry")
+                .WithCategories("Delivery")
+                .WithTime(2019, 10, 18, 13, 0, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                .Build();
+
+            airtableSimulator.SetUpFind(TABLE_ID, AIRTABLE_API_KEY, expectedResponse.Records[0], "rec4rdaOkafgV1Bqm");
+
+            AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
+            Workshop workshop = airtableGateway.Find("rec4rdaOkafgV1Bqm");
+            
+            Assert.AreEqual(workshop.name, "Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)");
+            Assert.AreEqual(workshop.host, "Barry");
+            Assert.AreEqual(workshop.time, new DateTime(2019, 10, 18, 13, 0, 0));
+            Assert.AreEqual(workshop.location,"Everest, 2nd Foor");
+            Assert.AreEqual(workshop.type, "Seminar");
+            Assert.AreEqual(workshop.duration, 3600/60);
+
+        }
+        
+        
+        [Test]
+        public void SendsCorrectAirtableRequest()
+        {
+            var expectedResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)")
+                .WithHost("Barry")
+                .WithCategories("Delivery")
+                .WithTime(2019, 10, 18, 13, 0, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                .Build();
+
+            airtableSimulator.SetUpFind(TABLE_ID, AIRTABLE_API_KEY, expectedResponse.Records[0], "rec4rdaOkafgV1Bqm");
+
+            AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
+            Workshop workshop = airtableGateway.Find("rec4rdaOkafgV1Bqm");
+            
+            Assert.AreEqual(workshop.name, "Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)");
+            Assert.AreEqual(workshop.host, "Barry");
+            Assert.AreEqual(workshop.time, new DateTime(2019, 10, 18, 13, 0, 0));
+            Assert.AreEqual(workshop.location,"Everest, 2nd Foor");
+            Assert.AreEqual(workshop.type, "Seminar");
+            Assert.AreEqual(workshop.duration, 3600/60);
+
+            var requests = airtableSimulator.simulator.ReceivedRequests;
+
+            Assert.AreEqual("Bearer 111", requests[0].Headers["Authorization"]);
         }
     }
 }

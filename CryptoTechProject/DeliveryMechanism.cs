@@ -31,7 +31,7 @@ namespace CryptoTechProject
                 AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_API_KEY"),
                     System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_TABLE_ID"));
-                
+
                 /*AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));*/
@@ -51,18 +51,16 @@ namespace CryptoTechProject
                     SlackButtonPayload deserialisedPayload =
                         JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
                     Console.WriteLine(deserialisedPayload.Actions[0].Value);
-                    Console.WriteLine("--------------------------------------------");
 
                     BookWorkshopAttendanceRequest bookWorkshopAttendanceRequest = new BookWorkshopAttendanceRequest()
                     {
                         User = deserialisedPayload.User.Name,
                         WorkshopId = deserialisedPayload.Actions[0].Value
                     };
-                    
-                    BookWorkshopAttendance bookWorkshopAttendance = new BookWorkshopAttendance(gateway);
-                  bookWorkshopAttendance.Execute(bookWorkshopAttendanceRequest);
-                    Console.WriteLine("but did it add?");
 
+                    BookWorkshopAttendance bookWorkshopAttendance = new BookWorkshopAttendance(gateway);
+                    bookWorkshopAttendance.Execute(bookWorkshopAttendanceRequest);
+                    Console.WriteLine("but did it add?");
                 }
                 else
                 {

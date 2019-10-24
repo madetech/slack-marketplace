@@ -12,7 +12,6 @@ namespace CryptoTechProject
     {
         [JsonProperty("name")] public string Name;
         [JsonProperty("id")] public string UserID;
-        
     }
 
     public class Actions

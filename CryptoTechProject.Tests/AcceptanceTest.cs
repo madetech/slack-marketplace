@@ -12,7 +12,7 @@ namespace CryptoTechProject.Tests
         private string AIRTABLE_API_KEY = "111";
         private string TABLE_ID = "2";
         private string AIRTABLE_URL = "http://localhost:8080/";
-        
+
         AirtableSimulator airtableSimulator;
 
         [SetUp]
@@ -20,7 +20,7 @@ namespace CryptoTechProject.Tests
         {
             airtableSimulator = new AirtableSimulator();
             airtableSimulator.Start();
-            airtableSimulator.simulator.Patch("/").Responds("Hello World!");
+            airtableSimulator.simulator.Patch("/v0/" + TABLE_ID + "/Marketplace").Responds("Seaweed");
         }
 
         [TearDown]
@@ -43,7 +43,6 @@ namespace CryptoTechProject.Tests
                 .WithDurationInSeconds(3600)
                 .WithLocation("Everest, 2nd Foor")
                 .WithSessionType("Seminar")
-                
                 .AddRecord(
                     "reca7W6WxWubIR7CK",
                     new DateTime(2019, 8, 27, 5, 24, 25)
@@ -69,14 +68,16 @@ namespace CryptoTechProject.Tests
             GetWorkshopsResponse response = getWorkshops.Execute();
 
             DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
-            DateTimeOffset time = new DateTimeOffset(sourceDate, TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
-            
-            
+            DateTimeOffset time = new DateTimeOffset(sourceDate,
+                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
+
+
             DateTime sourceDate2 = new DateTime(2019, 10, 18, 15, 30, 0);
-            DateTimeOffset time2 = new DateTimeOffset(sourceDate2, TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate2));
+            DateTimeOffset time2 = new DateTimeOffset(sourceDate2,
+                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate2));
 
             PresentableWorkshop[] presentableWorkshops = response.PresentableWorkshops;
-            
+
             Assert.AreEqual("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)",
                 presentableWorkshops[0].Name);
             Assert.AreEqual("Barry", presentableWorkshops[0].Host);
@@ -92,7 +93,7 @@ namespace CryptoTechProject.Tests
             Assert.AreEqual(60, presentableWorkshops[1].Duration);
             Assert.AreEqual("Workshop", presentableWorkshops[1].Type);
         }
-        
+
         [Test]
         public void AddsUserToAirtableTable()
         {
@@ -108,25 +109,25 @@ namespace CryptoTechProject.Tests
                 .WithLocation("Everest, 2nd Foor")
                 .WithSessionType("Seminar")
                 .Build();
-            
+
             airtableSimulator.SetUp(
                 TABLE_ID,
                 AIRTABLE_API_KEY,
                 expectedResponse
             );
-            
+
             AirtableGateway gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
             BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway);
             BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
             payload.User = "Maria";
             payload.WorkshopId = "ID000";
             attend.Execute(payload);
-            
+
             var requests = airtableSimulator.simulator.ReceivedRequests;
             Console.WriteLine(requests);
             var sentEmployee = requests[0].BodyAs<AirtableRequest>();
-            
-            Assert.AreEqual("Maria", sentEmployee.Records[0].Fields.Attendees);
+
+            Assert.AreEqual("Maria", sentEmployee.Records[0].Fields.Attendees[0]);
         }
     }
 }

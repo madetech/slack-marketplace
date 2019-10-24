@@ -45,15 +45,3 @@ namespace CryptoTechProject.Tests
         }
     }
 }
-/*
-
-"{\"id\":\"rec0d7vSGRLxzbUNz\"," +
-"Name\":\"Coding Black Females - Code Dojo\"," +
-"\"Host\":\"Made Tech\"," +
-"\"Location\":\"Made Tech O'Meara\"," +
-"\"Time\":\"2019-09-18T17:00:00.000Z\"," +
-"\"Duration\":10800," +
-"\"Session Type\":\"Code Dojo\"," +
-"\"Categories\":[" +
-"\"Meetup\"]}," +
-"\"createdTime\":\"2019-09-18T09:29:25.000Z\" }"*/

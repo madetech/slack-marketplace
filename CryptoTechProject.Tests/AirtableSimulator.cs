@@ -19,5 +19,12 @@ namespace CryptoTechProject.Tests
                 .WithParameter("api_key", AIRTABLE_API_KEY)
                 .WithParameter("view", "Upcoming")
                 .Responds(expectedResponse);
+        
+        public void SetUpFind(string TABLE_ID, string AIRTABLE_API_KEY, AirtableResponse.WorkshopRecord expectedResponse, string workshopID) =>
+            simulator.Get("/v0/" + TABLE_ID + "/Marketplace/" + workshopID)
+                .WithHeader("Authorization", "Bearer " + AIRTABLE_API_KEY)
+                .WithHeader("Content-Type", "application/json")
+                .Responds(expectedResponse);
+        
     }
 }

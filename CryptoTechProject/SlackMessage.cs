@@ -13,21 +13,21 @@ namespace CryptoTechProject
             [JsonProperty("type")] public string Type = "divider";
         }
 
-        
+
         public class SectionBlockText
         {
             [JsonProperty("type")] public string Type;
 
             [JsonProperty("text")] public string Text;
         }
-        
+
         public class TitleSectionBlock : SlackMessageBlock
         {
             [JsonProperty("type")] public string Type = "section";
 
             [JsonProperty("text")] public SectionBlockText Text;
         }
-        
+
         public class SectionBlock : SlackMessageBlock
         {
             public class AccessoryBlock
@@ -35,16 +35,15 @@ namespace CryptoTechProject
                 [JsonProperty("type")] public string Type = "button";
 
                 [JsonProperty("text")] public SectionBlockText Text;
-                
+
                 [JsonProperty("value")] public string Value;
-            } 
-            
+            }
+
             [JsonProperty("type")] public string Type = "section";
 
             [JsonProperty("text")] public SectionBlockText Text;
-            
-            [JsonProperty("accessory")] public AccessoryBlock Accessory;
 
+            [JsonProperty("accessory")] public AccessoryBlock Accessory;
         }
 
         [JsonProperty("blocks")] public SlackMessageBlock[] Blocks;

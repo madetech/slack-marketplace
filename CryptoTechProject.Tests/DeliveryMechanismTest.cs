@@ -28,11 +28,11 @@ namespace CryptoTechProject.Tests
 
             var webClient = new WebClient();
             var response = webClient.DownloadData("http://localhost:5001");
-           
+
             dynamic deserializedSlackMessage = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(response));
 
-            string secondWorkshop =  deserializedSlackMessage.blocks[3].text.text.ToString();
-            
+            string secondWorkshop = deserializedSlackMessage.blocks[3].text.text.ToString();
+
             Assert.True(secondWorkshop.Contains("Account Leadership - Roles & Responsibilities"));
             Assert.True(secondWorkshop.Contains("18/10/2019 03:30 PM"));
             Assert.True(secondWorkshop.Contains("Rory"));

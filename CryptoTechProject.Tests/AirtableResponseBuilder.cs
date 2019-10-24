@@ -79,7 +79,7 @@ namespace CryptoTechProject.Tests
             };
 
 
-        public AirtableResponseBuilder WithAttendees(string attendees)
+        public AirtableResponseBuilder WithAttendees(List<string> attendees)
         {
             _currentFields.Attendees = attendees;
             return this;
