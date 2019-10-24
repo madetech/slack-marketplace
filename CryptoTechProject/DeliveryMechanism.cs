@@ -17,8 +17,8 @@ namespace CryptoTechProject
 
         public void Run(Action onStarted)
         {
-            //httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
-            httpListener.Prefixes.Add("http://localhost:5000/");
+            httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
+            //httpListener.Prefixes.Add("http://localhost:5000/");
             httpListener.Start();
             onStarted();
             while (true)
@@ -28,11 +28,15 @@ namespace CryptoTechProject
                 HttpListenerResponse response = context.Response;
 
 
+                AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
+                    System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_API_KEY"),
+                    System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_TABLE_ID"));
+                
                 /*AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));*/
 
-                AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "Airtable_API_here", "Table_ID");
+                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "Airtable_API_here", "Table_ID");
 
 
                 if (request.Url.ToString().Contains("attend"))
