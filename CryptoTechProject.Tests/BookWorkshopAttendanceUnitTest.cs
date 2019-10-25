@@ -23,7 +23,14 @@ namespace CryptoTechProject.Tests
 
         public class SpyGateway : ISaveWorkshopsGateway
         {
-            public Workshop lastSavedWorkshop;
+            public Workshop lastSavedWorkshop = new Workshop()
+            {
+                id = "1234",
+                attendees = new List<string>()
+                {
+                    "Bing"
+                }
+            };
 
             public void Save(Workshop workshop)
             {
@@ -43,5 +50,20 @@ namespace CryptoTechProject.Tests
             Assert.AreEqual("Seaweed", spy.lastSavedWorkshop.attendees[0]);
             Assert.AreEqual("Seaweed on holiday", spy.lastSavedWorkshop.id);
         }
+
+        [Test]
+        public void SaveNewAttendeeToWorkshopWithExistingAttendees()
+        {
+            SpyGateway spy = new SpyGateway();
+            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy);
+            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
+            payload.User = "Seaweed";
+            payload.WorkshopId = "Seaweed on holiday";
+            bookAttendance.Execute(payload);
+            Assert.AreEqual("Seaweed", spy.lastSavedWorkshop.attendees[0]);
+            Assert.AreEqual("Seaweed on holiday", spy.lastSavedWorkshop.id);
+            
+        }
+        
     }
 }

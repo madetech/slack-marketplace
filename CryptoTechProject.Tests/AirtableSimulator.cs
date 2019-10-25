@@ -13,7 +13,7 @@ namespace CryptoTechProject.Tests
 
         public void Stop() => simulator.Stop();
 
-        public void SetUp(string TABLE_ID, string AIRTABLE_API_KEY, AirtableResponse expectedResponse) =>
+        public void SetUpAll(string TABLE_ID, string AIRTABLE_API_KEY, AirtableResponse expectedResponse) =>
             simulator.Get("/v0/" + TABLE_ID + "/Marketplace")
                 .WithParameter("maxRecords", maxRecords)
                 .WithParameter("api_key", AIRTABLE_API_KEY)
@@ -25,6 +25,10 @@ namespace CryptoTechProject.Tests
                 .WithHeader("Authorization", "Bearer " + AIRTABLE_API_KEY)
                 .WithHeader("Content-Type", "application/json")
                 .Responds(expectedResponse);
-        
+
+        public void SetUpSave(string TABLE_ID, string AIRTABLE_API_KEY) =>
+            simulator.Patch("/v0/" + TABLE_ID + "/Marketplace/")
+                .WithHeader("Authorization", "Bearer " + AIRTABLE_API_KEY)
+                .WithHeader("Content-Type", "application/json");
     }
 }

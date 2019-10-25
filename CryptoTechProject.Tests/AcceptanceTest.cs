@@ -56,7 +56,7 @@ namespace CryptoTechProject.Tests
                 .WithSessionType("Workshop")
                 .Build();
 
-            airtableSimulator.SetUp(
+            airtableSimulator.SetUpAll(
                 TABLE_ID,
                 AIRTABLE_API_KEY,
                 expectedResponse
@@ -110,7 +110,7 @@ namespace CryptoTechProject.Tests
                 .WithSessionType("Seminar")
                 .Build();
 
-            airtableSimulator.SetUp(
+            airtableSimulator.SetUpAll(
                 TABLE_ID,
                 AIRTABLE_API_KEY,
                 expectedResponse

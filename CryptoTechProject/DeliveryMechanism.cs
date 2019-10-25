@@ -36,7 +36,7 @@ namespace CryptoTechProject
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));*/
 
-                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "Airtable_API_here", "Table_ID");
+                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "COPY_AIRTABLE_API_KEY", "COPY_AIRTABLE_TABLE_ID");
 
 
                 if (request.Url.ToString().Contains("attend"))
@@ -72,8 +72,7 @@ namespace CryptoTechProject
                     response.OutputStream.Write(responseArray, 0, responseArray.Length);
                     Console.WriteLine("no payload");
                 }
-
-
+                
                 response.KeepAlive = false;
                 response.Close();
             }

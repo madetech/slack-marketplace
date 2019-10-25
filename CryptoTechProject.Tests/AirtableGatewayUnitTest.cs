@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -49,7 +50,7 @@ namespace CryptoTechProject.Tests
                 .WithSessionType("Code Dojo")
                 .Build();
 
-            airtableSimulator.SetUp(TABLE_ID, AIRTABLE_API_KEY, expectedResponse);
+            airtableSimulator.SetUpAll(TABLE_ID, AIRTABLE_API_KEY, expectedResponse);
 
 
             AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
@@ -92,7 +93,7 @@ namespace CryptoTechProject.Tests
                 .WithSessionType("Workshop")
                 .Build();
 
-            airtableSimulator.SetUp(TABLE_ID, AIRTABLE_API_KEY, expectedResponse);
+            airtableSimulator.SetUpAll(TABLE_ID, AIRTABLE_API_KEY, expectedResponse);
 
             AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
             var workshops = airtableGateway.All();
@@ -163,6 +164,30 @@ namespace CryptoTechProject.Tests
             var requests = airtableSimulator.simulator.ReceivedRequests;
 
             Assert.AreEqual("Bearer 111", requests[0].Headers["Authorization"]);
+            Assert.AreEqual("application/json", requests[0].Headers["Content-type"]);
         }
+        
+        [Test]
+        public void CanAddAttendeeToAWorkshopWithNoAttendees()
+        {
+            airtableSimulator.SetUpSave(TABLE_ID, AIRTABLE_API_KEY);
+            
+            Workshop workshopParameter = new Workshop()
+            {
+                id = "aaa",
+                attendees = new List<string>(){"Maria"} 
+            };
+            
+            AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
+            airtableGateway.Save(workshopParameter);
+            var requests = airtableSimulator.simulator.ReceivedRequests;
+           
+            var receivedRequest = requests[0].BodyAs<AirtableRequest>();
+            
+            Assert.AreEqual(receivedRequest.Records[0].Fields.Attendees[0], "Maria");
+            Assert.AreEqual(requests[0].ContentType, "application/json");
+            Assert.AreEqual(requests[0].Headers["Authorization"], "Bearer " + AIRTABLE_API_KEY);
+        }
+        
     }
 }
