@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CryptoTechProject.Boundary;
 using CryptoTechProject.Domain;
 using Newtonsoft.Json.Linq;
@@ -20,7 +21,6 @@ namespace CryptoTechProject.Tests
         {
             airtableSimulator = new AirtableSimulator();
             airtableSimulator.Start();
-            airtableSimulator.simulator.Patch("/v0/" + TABLE_ID + "/Marketplace").Responds("Seaweed");
         }
 
         [TearDown]
@@ -108,16 +108,14 @@ namespace CryptoTechProject.Tests
                 .WithDurationInSeconds(3600)
                 .WithLocation("Everest, 2nd Foor")
                 .WithSessionType("Seminar")
+                .WithAttendees(new List<string>())
                 .Build();
 
-            airtableSimulator.SetUpAll(
-                TABLE_ID,
-                AIRTABLE_API_KEY,
-                expectedResponse
-            );
+            airtableSimulator.SetUpFind(TABLE_ID, AIRTABLE_API_KEY, expectedResponse.Records[0], "ID000");
+            airtableSimulator.SetUpSave(TABLE_ID, AIRTABLE_API_KEY);
 
             AirtableGateway gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
-            BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway);
+            BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway, gateway);
             BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
             payload.User = "Maria";
             payload.WorkshopId = "ID000";
@@ -125,7 +123,7 @@ namespace CryptoTechProject.Tests
 
             var requests = airtableSimulator.simulator.ReceivedRequests;
             Console.WriteLine(requests);
-            var sentEmployee = requests[0].BodyAs<AirtableRequest>();
+            var sentEmployee = requests[1].BodyAs<AirtableRequest>();
 
             Assert.AreEqual("Maria", sentEmployee.Records[0].Fields.Attendees[0]);
         }

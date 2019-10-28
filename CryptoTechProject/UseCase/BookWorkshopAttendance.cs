@@ -10,11 +10,6 @@ namespace CryptoTechProject
         private ISaveWorkshopsGateway Saver;
         private IFindWorkshopGateway Finder;
 
-        public BookWorkshopAttendance(ISaveWorkshopsGateway gateway)
-        {
-            Saver = gateway;
-        }
-
         public BookWorkshopAttendance(ISaveWorkshopsGateway gateway, IFindWorkshopGateway stub)
         {
             Saver = gateway;

@@ -29,6 +29,7 @@ namespace CryptoTechProject.Tests
         public void SetUpSave(string TABLE_ID, string AIRTABLE_API_KEY) =>
             simulator.Patch("/v0/" + TABLE_ID + "/Marketplace/")
                 .WithHeader("Authorization", "Bearer " + AIRTABLE_API_KEY)
-                .WithHeader("Content-Type", "application/json");
+                .WithHeader("Content-Type", "application/json")
+                .Responds("Seaweed");
     }
 }

@@ -10,27 +10,9 @@ namespace CryptoTechProject.Tests
     [TestFixture]
     public class BookWorkshopAttendanceUnitTest
     {
-        [Test]
-        public void ConfirmsUserAttendance()
-        {
-            HardCodedWorkshopsGateway gateway = new HardCodedWorkshopsGateway();
-            BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway);
-            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
-            payload.User = "Maria";
-            payload.WorkshopId = "Workshop Name";
-            Assert.AreEqual(attend.Execute(payload), "Confirmed");
-        }
-
         public class SpyGateway : ISaveWorkshopsGateway
         {
-            public Workshop lastSavedWorkshop = new Workshop()
-            {
-                id = "1234",
-                attendees = new List<string>()
-                {
-                    "Bing"
-                }
-            };
+            public Workshop lastSavedWorkshop;
 
             public void Save(Workshop workshop)
             {
@@ -38,32 +20,57 @@ namespace CryptoTechProject.Tests
             }
         }
 
-        [Test]
-        public void SpecificObjectIsCreatedProperly()
+        public class FindSpyStub : IFindWorkshopGateway
         {
+            public Workshop existingWorkshop;
+            public string lastWorkShopId;
+
+            public Workshop Find(string workshopID)
+            {
+                lastWorkShopId = workshopID;
+                return existingWorkshop;
+            }
+        }
+
+        [Test]
+        public void SaveNewAttendeeToWorkshopWithNoExistingAttendees()
+        {
+            FindSpyStub findSpyStub = new FindSpyStub();
+            findSpyStub.existingWorkshop = new Workshop()
+            {
+                attendees = new List<string>()
+            };
             SpyGateway spy = new SpyGateway();
-            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy);
+            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy, findSpyStub);
             BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
             payload.User = "Seaweed";
             payload.WorkshopId = "Seaweed on holiday";
-            bookAttendance.Execute(payload);
+            var response = bookAttendance.Execute(payload);
             Assert.AreEqual("Seaweed", spy.lastSavedWorkshop.attendees[0]);
-            Assert.AreEqual("Seaweed on holiday", spy.lastSavedWorkshop.id);
+            Assert.AreEqual("Confirmed", response);
+            Assert.AreEqual("Seaweed on holiday", findSpyStub.lastWorkShopId);
         }
 
         [Test]
         public void SaveNewAttendeeToWorkshopWithExistingAttendees()
         {
+            FindSpyStub findSpyStub = new FindSpyStub();
+            findSpyStub.existingWorkshop = new Workshop()
+            {
+                attendees = new List<string>()
+                {
+                    "Cait"
+                }
+            };
             SpyGateway spy = new SpyGateway();
-            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy);
+            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy, findSpyStub);
             BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
             payload.User = "Seaweed";
-            payload.WorkshopId = "Seaweed on holiday";
+            payload.WorkshopId = "16";
             bookAttendance.Execute(payload);
-            Assert.AreEqual("Seaweed", spy.lastSavedWorkshop.attendees[0]);
-            Assert.AreEqual("Seaweed on holiday", spy.lastSavedWorkshop.id);
-            
+            Assert.AreEqual("Seaweed", spy.lastSavedWorkshop.attendees[1]);
+            Assert.AreEqual("Cait", spy.lastSavedWorkshop.attendees[0]);
+            Assert.AreEqual("16", findSpyStub.lastWorkShopId);
         }
-        
     }
 }

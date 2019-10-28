@@ -17,8 +17,8 @@ namespace CryptoTechProject
 
         public void Run(Action onStarted)
         {
-            httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
-            //httpListener.Prefixes.Add("http://localhost:5000/");
+            //httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
+            httpListener.Prefixes.Add("http://localhost:5000/");
             httpListener.Start();
             onStarted();
             while (true)
@@ -28,15 +28,15 @@ namespace CryptoTechProject
                 HttpListenerResponse response = context.Response;
 
 
-                AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
+               /* AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_API_KEY"),
-                    System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_TABLE_ID"));
+                    System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_TABLE_ID"));*/
 
                 /*AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));*/
 
-                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "API_KEY", "TABLE_ID");
+                AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "keyPxyorUZEhDho9A", "appOF2mB9E8R6AyMH");
 
 
                 if (request.Url.ToString().Contains("attend"))
@@ -58,7 +58,7 @@ namespace CryptoTechProject
                         WorkshopId = deserialisedPayload.Actions[0].Value
                     };
 
-                    BookWorkshopAttendance bookWorkshopAttendance = new BookWorkshopAttendance(gateway);
+                    BookWorkshopAttendance bookWorkshopAttendance = new BookWorkshopAttendance(gateway, gateway);
                     bookWorkshopAttendance.Execute(bookWorkshopAttendanceRequest);
                     Console.WriteLine("but did it add?");
                 }

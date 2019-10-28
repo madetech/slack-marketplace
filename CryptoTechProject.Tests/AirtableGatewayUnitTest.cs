@@ -184,9 +184,10 @@ namespace CryptoTechProject.Tests
            
             var receivedRequest = requests[0].BodyAs<AirtableRequest>();
             
-            Assert.AreEqual(receivedRequest.Records[0].Fields.Attendees[0], "Maria");
-            Assert.AreEqual(requests[0].ContentType, "application/json");
-            Assert.AreEqual(requests[0].Headers["Authorization"], "Bearer " + AIRTABLE_API_KEY);
+            Assert.AreEqual("Maria", receivedRequest.Records[0].Fields.Attendees[0]);
+            Assert.AreEqual(true, receivedRequest.Records[0].Typecast);
+            Assert.AreEqual("application/json", requests[0].ContentType);
+            Assert.AreEqual("Bearer " + AIRTABLE_API_KEY, requests[0].Headers["Authorization"]);
         }
         
     }
