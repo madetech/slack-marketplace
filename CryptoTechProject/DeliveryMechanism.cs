@@ -36,7 +36,7 @@ namespace CryptoTechProject
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));*/
 
-                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "COPY_AIRTABLE_API_KEY", "COPY_AIRTABLE_TABLE_ID");
+                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "API_KEY", "TABLE_ID");
 
 
                 if (request.Url.ToString().Contains("attend"))

@@ -7,20 +7,25 @@ namespace CryptoTechProject
 {
     public class BookWorkshopAttendance
     {
-        private ISaveWorkshopsGateway Gateway;
+        private ISaveWorkshopsGateway Saver;
+        private IFindWorkshopGateway Finder;
 
         public BookWorkshopAttendance(ISaveWorkshopsGateway gateway)
         {
-            Gateway = gateway;
+            Saver = gateway;
+        }
+
+        public BookWorkshopAttendance(ISaveWorkshopsGateway gateway, IFindWorkshopGateway stub)
+        {
+            Saver = gateway;
+            Finder = stub;
         }
 
         public string Execute(BookWorkshopAttendanceRequest request)
         {
-            Workshop workshop = new Workshop();
-            workshop.attendees = new List<string> {request.User};
-            workshop.id = request.WorkshopId;
-
-            Gateway.Save(workshop);
+            Workshop workshop = Finder.Find(request.WorkshopId);
+            workshop.attendees.Add(request.User);
+            Saver.Save(workshop);
             return "Confirmed";
         }
     }

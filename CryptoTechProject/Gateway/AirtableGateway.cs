@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace CryptoTechProject
 {
-    public class AirtableGateway : IWorkshopsGateway
+    public class AirtableGateway : IWorkshopsGateway, IFindWorkshopGateway
     {
         private string _url;
         private string _apiKey;
