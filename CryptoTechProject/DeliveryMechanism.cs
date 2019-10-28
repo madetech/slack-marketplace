@@ -51,6 +51,7 @@ namespace CryptoTechProject
                     SlackButtonPayload deserialisedPayload =
                         JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
                     Console.WriteLine(deserialisedPayload.Actions[0].Value);
+                    Console.WriteLine(deserialisedPayload.ResponseURL);
 
                     BookWorkshopAttendanceRequest bookWorkshopAttendanceRequest = new BookWorkshopAttendanceRequest()
                     {
