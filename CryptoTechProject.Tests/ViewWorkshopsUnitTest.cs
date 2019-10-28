@@ -38,7 +38,7 @@ namespace CryptoTechProject.Tests
                 return _workshops;
             }
 
-            public void Save(Workshop workshop)
+            public void Update(Workshop workshop)
             {
                 throw new System.NotImplementedException();
             }

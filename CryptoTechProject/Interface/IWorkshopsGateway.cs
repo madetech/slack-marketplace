@@ -3,7 +3,7 @@ using CryptoTechProject.Domain;
 
 namespace CryptoTechProject
 {
-    public interface IWorkshopsGateway : ISaveWorkshopsGateway
+    public interface IWorkshopsGateway : IUpdateWorkshopsGateway
     {
         List<Workshop> All();
     }

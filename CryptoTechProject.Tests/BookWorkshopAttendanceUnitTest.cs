@@ -10,11 +10,11 @@ namespace CryptoTechProject.Tests
     [TestFixture]
     public class BookWorkshopAttendanceUnitTest
     {
-        public class SpyGateway : ISaveWorkshopsGateway
+        public class SpyGateway : IUpdateWorkshopsGateway
         {
             public Workshop lastSavedWorkshop;
 
-            public void Save(Workshop workshop)
+            public void Update(Workshop workshop)
             {
                 lastSavedWorkshop = workshop;
             }

@@ -41,7 +41,7 @@ namespace CryptoTechProject
             };
         }
 
-        public void Save(Workshop workshop)
+        public void Update(Workshop workshop)
         {
         }
     }

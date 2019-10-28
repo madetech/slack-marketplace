@@ -56,7 +56,7 @@ namespace CryptoTechProject
             return allWorkshops;
         }
 
-        public void Save(Workshop workshop)
+        public void Update(Workshop workshop)
         {
             AirtableRequest patchData = new AirtableRequest
             {

@@ -179,7 +179,7 @@ namespace CryptoTechProject.Tests
             };
             
             AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
-            airtableGateway.Save(workshopParameter);
+            airtableGateway.Update(workshopParameter);
             var requests = airtableSimulator.simulator.ReceivedRequests;
            
             var receivedRequest = requests[0].BodyAs<AirtableRequest>();
