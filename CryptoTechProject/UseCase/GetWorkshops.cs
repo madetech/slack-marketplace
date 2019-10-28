@@ -40,7 +40,8 @@ namespace CryptoTechProject
                         .FindSystemTimeZoneById("Europe/London").GetUtcOffset(list[i].time)),
                     Location = list[i].location,
                     Duration = list[i].duration,
-                    Type = list[i].type
+                    Type = list[i].type,
+                    Attendees = list[i].attendees
                 };
             }
 

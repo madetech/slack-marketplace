@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace CryptoTechProject.Boundary
 {
@@ -12,5 +13,6 @@ namespace CryptoTechProject.Boundary
         public string Location { get; set; }
         public int Duration { get; set; }
         public string Type { get; set; }
+        public List<string> Attendees { get; set; }
     }
 }

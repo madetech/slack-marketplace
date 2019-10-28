@@ -109,7 +109,7 @@ namespace CryptoTechProject
                         Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
                                $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
                                $"{workshops.PresentableWorkshops[i].Host}\n" +
-                               $"{workshops.PresentableWorkshops[i].Location}"
+                               $"Current number of attendees: {workshops.PresentableWorkshops[i].Attendees.Count}"
                     },
                     Accessory = new SlackMessage.SectionBlock.AccessoryBlock
                     {
