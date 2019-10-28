@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Web;
 using CryptoTechProject.Boundary;
@@ -61,6 +62,19 @@ namespace CryptoTechProject
 
                     BookWorkshopAttendance bookWorkshopAttendance = new BookWorkshopAttendance(gateway, gateway);
                     bookWorkshopAttendance.Execute(bookWorkshopAttendanceRequest);
+
+                    ResponseThing responseThing = new ResponseThing()
+                    {
+                        Text = "HELLO"
+                    };
+
+                    string responseThingJSON = JsonConvert.SerializeObject(responseThing);
+                    
+                    WebClient client = new WebClient();
+                    client.Headers.Add("Content-Type", "application/json");
+                    client.UploadString(deserialisedPayload.ResponseURL, "POST", responseThingJSON);
+
+                    
                     Console.WriteLine("but did it add?");
                 }
                 else
