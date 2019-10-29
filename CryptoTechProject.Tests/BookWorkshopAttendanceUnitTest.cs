@@ -41,11 +41,11 @@ namespace CryptoTechProject.Tests
                 attendees = new List<string>()
             };
             SpyGateway spy = new SpyGateway();
-            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy, findSpyStub);
-            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
+            ToggleWorkshopAttendance toggleAttendance = new ToggleWorkshopAttendance(spy, findSpyStub);
+            ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
             payload.User = "Seaweed";
             payload.WorkshopId = "Seaweed on holiday";
-            var response = bookAttendance.Execute(payload);
+            var response = toggleAttendance.Execute(payload);
             Assert.AreEqual("Seaweed", spy.lastSavedWorkshop.attendees[0]);
             Assert.AreEqual("Confirmed", response);
             Assert.AreEqual("Seaweed on holiday", findSpyStub.lastWorkShopId);
@@ -63,11 +63,11 @@ namespace CryptoTechProject.Tests
                 }
             };
             SpyGateway spy = new SpyGateway();
-            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy, findSpyStub);
-            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
+            ToggleWorkshopAttendance toggleAttendance = new ToggleWorkshopAttendance(spy, findSpyStub);
+            ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
             payload.User = "Seaweed";
             payload.WorkshopId = "16";
-            bookAttendance.Execute(payload);
+            toggleAttendance.Execute(payload);
             Assert.AreEqual("Seaweed", spy.lastSavedWorkshop.attendees[1]);
             Assert.AreEqual("Cait", spy.lastSavedWorkshop.attendees[0]);
             Assert.AreEqual("16", findSpyStub.lastWorkShopId);
@@ -85,11 +85,11 @@ namespace CryptoTechProject.Tests
                 }
             };
             SpyGateway spy = new SpyGateway();
-            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy, findSpyStub);
-            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
+            ToggleWorkshopAttendance toggleAttendance = new ToggleWorkshopAttendance(spy, findSpyStub);
+            ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
             payload.User = "Maria";
             payload.WorkshopId = "16";
-            bookAttendance.Execute(payload);
+            toggleAttendance.Execute(payload);
             Assert.IsFalse(spy.lastSavedWorkshop.attendees.Contains("Maria"));
             Assert.AreEqual("16", findSpyStub.lastWorkShopId);
         }

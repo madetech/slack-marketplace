@@ -43,14 +43,14 @@ namespace CryptoTechProject
                         JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
                     Console.WriteLine(deserialisedPayload.Actions[0].Value);
 
-                    BookWorkshopAttendanceRequest bookWorkshopAttendanceRequest = new BookWorkshopAttendanceRequest()
+                    ToggleWorkshopAttendanceRequest toggleWorkshopAttendanceRequest = new ToggleWorkshopAttendanceRequest()
                     {
                         User = deserialisedPayload.User.Name,
                         WorkshopId = deserialisedPayload.Actions[0].Value
                     };
 
-                    BookWorkshopAttendance bookWorkshopAttendance = new BookWorkshopAttendance(gateway, gateway);
-                    bookWorkshopAttendance.Execute(bookWorkshopAttendanceRequest);
+                    ToggleWorkshopAttendance toggleWorkshopAttendance = new ToggleWorkshopAttendance(gateway, gateway);
+                    toggleWorkshopAttendance.Execute(toggleWorkshopAttendanceRequest);
                     Console.WriteLine("but did it add?");
                 }
                 else

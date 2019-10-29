@@ -115,8 +115,8 @@ namespace CryptoTechProject.Tests
             airtableSimulator.SetUpSave(TABLE_ID, AIRTABLE_API_KEY);
 
             AirtableGateway gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
-            BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway, gateway);
-            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
+            ToggleWorkshopAttendance attend = new ToggleWorkshopAttendance(gateway, gateway);
+            ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
             payload.User = "Maria";
             payload.WorkshopId = "ID000";
             attend.Execute(payload);
@@ -149,8 +149,8 @@ namespace CryptoTechProject.Tests
             airtableSimulator.SetUpSave(TABLE_ID, AIRTABLE_API_KEY);
 
             AirtableGateway gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
-            BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway, gateway);
-            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
+            ToggleWorkshopAttendance attend = new ToggleWorkshopAttendance(gateway, gateway);
+            ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
             payload.User = "Maria";
             payload.WorkshopId = "ID000";
             attend.Execute(payload);

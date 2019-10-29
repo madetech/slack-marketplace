@@ -5,25 +5,25 @@ using CryptoTechProject.Domain;
 
 namespace CryptoTechProject
 {
-    public class BookWorkshopAttendance
+    public class ToggleWorkshopAttendance
     {
-        private IUpdateWorkshopsGateway Saver;
+        private IUpdateWorkshopsGateway Updater;
         private IFindWorkshopGateway Finder;
 
-        public BookWorkshopAttendance(IUpdateWorkshopsGateway gateway, IFindWorkshopGateway stub)
+        public ToggleWorkshopAttendance(IUpdateWorkshopsGateway gateway, IFindWorkshopGateway stub)
         {
-            Saver = gateway;
+            Updater = gateway;
             Finder = stub;
         }
 
-        public string Execute(BookWorkshopAttendanceRequest request)
+        public string Execute(ToggleWorkshopAttendanceRequest request)
         {
             Workshop workshop = Finder.Find(request.WorkshopId);
             if (workshop.attendees.Contains(request.User))
                 workshop.attendees.Remove(request.User);
             else
                 workshop.attendees.Add(request.User);
-            Saver.Update(workshop);
+            Updater.Update(workshop);
             return "Confirmed";
         }
     }
