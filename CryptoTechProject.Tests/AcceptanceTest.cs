@@ -127,5 +127,39 @@ namespace CryptoTechProject.Tests
 
             Assert.AreEqual("Maria", sentEmployee.Records[0].Fields.Attendees[0]);
         }
+        
+        [Test]
+        public void RemovesUserFromAirtableTable()
+        {
+            var expectedResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)")
+                .WithHost("Barry")
+                .WithCategories("Delivery")
+                .WithTime(2019, 10, 18, 13, 0, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                .WithAttendees(new List<string>(){"Maria", "Kat"})
+                .Build();
+
+            airtableSimulator.SetUpFind(TABLE_ID, AIRTABLE_API_KEY, expectedResponse.Records[0], "ID000");
+            airtableSimulator.SetUpSave(TABLE_ID, AIRTABLE_API_KEY);
+
+            AirtableGateway gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
+            BookWorkshopAttendance attend = new BookWorkshopAttendance(gateway, gateway);
+            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
+            payload.User = "Maria";
+            payload.WorkshopId = "ID000";
+            attend.Execute(payload);
+
+            var requests = airtableSimulator.simulator.ReceivedRequests;
+            Console.WriteLine(requests);
+            var sentEmployee = requests[1].BodyAs<AirtableRequest>();
+
+            Assert.IsFalse(sentEmployee.Records[0].Fields.Attendees.Contains("Maria"));
+        }
     }
 }

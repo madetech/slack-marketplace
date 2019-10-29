@@ -19,7 +19,10 @@ namespace CryptoTechProject
         public string Execute(BookWorkshopAttendanceRequest request)
         {
             Workshop workshop = Finder.Find(request.WorkshopId);
-            workshop.attendees.Add(request.User);
+            if (workshop.attendees.Contains(request.User))
+                workshop.attendees.Remove(request.User);
+            else
+                workshop.attendees.Add(request.User);
             Saver.Update(workshop);
             return "Confirmed";
         }

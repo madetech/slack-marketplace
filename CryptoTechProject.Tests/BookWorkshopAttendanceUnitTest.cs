@@ -72,5 +72,26 @@ namespace CryptoTechProject.Tests
             Assert.AreEqual("Cait", spy.lastSavedWorkshop.attendees[0]);
             Assert.AreEqual("16", findSpyStub.lastWorkShopId);
         }
+        
+        [Test]
+        public void RemovesAttendeeIfAlreadyInWorkshopAttendees()
+        {
+            FindSpyStub findSpyStub = new FindSpyStub();
+            findSpyStub.existingWorkshop = new Workshop()
+            {
+                attendees = new List<string>()
+                {
+                    "Cait", "Maria"
+                }
+            };
+            SpyGateway spy = new SpyGateway();
+            BookWorkshopAttendance bookAttendance = new BookWorkshopAttendance(spy, findSpyStub);
+            BookWorkshopAttendanceRequest payload = new BookWorkshopAttendanceRequest();
+            payload.User = "Maria";
+            payload.WorkshopId = "16";
+            bookAttendance.Execute(payload);
+            Assert.IsFalse(spy.lastSavedWorkshop.attendees.Contains("Maria"));
+            Assert.AreEqual("16", findSpyStub.lastWorkShopId);
+        }
     }
 }
