@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CryptoTechProject
 {
-    public class GetWorkshops
+    public class GetWorkshops : IGetWorkshops
     {
         private IWorkshopsGateway gateway;
 

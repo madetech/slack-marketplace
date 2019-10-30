@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.IO.Enumeration;
 using CryptoTechProject.Boundary;
 using CryptoTechProject.Domain;
 
 namespace CryptoTechProject
 {
-    public class ToggleWorkshopAttendance
+    public class ToggleWorkshopAttendance : IToggleWorkshopAttendance
     {
         private IUpdateWorkshopsGateway Updater;
         private IFindWorkshopGateway Finder;
