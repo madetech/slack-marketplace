@@ -14,10 +14,21 @@ namespace CryptoTechProject
     public class DeliveryMechanism
     {
         HttpListener httpListener = new HttpListener();
+        
+        private IToggleWorkshopAttendance _toggleWorkshopAttendance;
+        private IGetWorkshops _getWorkshops;
+        private readonly string _port;
+
+        public DeliveryMechanism(IToggleWorkshopAttendance toggleWorkshopAttendance, IGetWorkshops getWorkshops, string port)
+        {
+            _toggleWorkshopAttendance = toggleWorkshopAttendance;
+            _getWorkshops = getWorkshops;
+            _port = port;
+        }
 
         public void Run(Action onStarted)
         {
-            httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
+            httpListener.Prefixes.Add($"http://+:{_port}/");
             httpListener.Start();
             onStarted();
             while (true)
@@ -25,10 +36,6 @@ namespace CryptoTechProject
                 HttpListenerContext context = httpListener.GetContext();
                 HttpListenerRequest request = context.Request;
                 HttpListenerResponse response = context.Response;
-                
-                AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
-                    System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_API_KEY"),
-                    System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_TABLE_ID"));
 
                 if (request.Url.ToString().Contains("attend"))
                 {
@@ -49,13 +56,13 @@ namespace CryptoTechProject
                         WorkshopId = deserialisedPayload.Actions[0].Value
                     };
 
-                    ToggleWorkshopAttendance toggleWorkshopAttendance = new ToggleWorkshopAttendance(gateway, gateway);
-                    toggleWorkshopAttendance.Execute(toggleWorkshopAttendanceRequest);
+                    _toggleWorkshopAttendance.Execute(toggleWorkshopAttendanceRequest);
                     Console.WriteLine("but did it add?");
                 }
                 else
                 {
-                    GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
+                    
+                    GetWorkshopsResponse workshops = _getWorkshops.Execute();
                     var slackMessage = ToSlackMessage(workshops);
                     string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
                     byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);

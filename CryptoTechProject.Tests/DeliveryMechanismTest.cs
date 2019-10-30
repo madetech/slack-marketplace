@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading;
-using Newtonsoft.Json;
+using CryptoTechProject.Boundary;
 using NUnit.Framework;
 
 namespace CryptoTechProject.Tests
@@ -10,32 +10,101 @@ namespace CryptoTechProject.Tests
     [TestFixture]
     public class DeliveryMechanismTest
     {
-        [Ignore("Trying different gateway")]
         [Test]
-        public void CanRespondWithJson()
+        public void CanGetNoWorkshopsAsSlackMessage()
         {
             var started = false;
+            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysNoWorkshops(), "5051");
             var thread = new Thread(() =>
             {
-                Environment.SetEnvironmentVariable("PORT", "5001");
-                //todo: consider passing a use case test double here 
-                var deliveryMechanism = new DeliveryMechanism();
                 deliveryMechanism.Run(() => { started = true; });
             });
             thread.Start();
-
             SpinWait.SpinUntil(() => started);
-
             var webClient = new WebClient();
-            var response = webClient.DownloadData("http://localhost:5001");
+            var responseBody = webClient.DownloadString("http://localhost:5051/");
 
-            dynamic deserializedSlackMessage = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(response));
+            Assert.AreEqual(
+                "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"}]}",
+                responseBody
+                );
+            
+        }
+        
+        [Test]
+        public void CanGetThreeWorkshopsAsSlackMessage()
+        {
+            var started = false;
+            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysThreeWorkshops(), "5052");
+            var thread = new Thread(() =>
+            {
+                deliveryMechanism.Run(() => { started = true; });
+            });
+            thread.Start();
+            SpinWait.SpinUntil(() => started);
+            var webClient = new WebClient();
+            var responseBody = webClient.DownloadString("http://localhost:5052/");
 
-            string secondWorkshop = deserializedSlackMessage.blocks[3].text.text.ToString();
+            Assert.AreEqual(
+                "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2017 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2015 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}",
+                responseBody
+            );
+        }
+        
+        [Test]
+        public void CanBookAttendance()
+        {
+            var started = false;
+            var deliveryMechanism = new DeliveryMechanism(null, null, "5052");
+            var thread = new Thread(() =>
+            {
+                deliveryMechanism.Run(() => { started = true; });
+            });
+            thread.Start();
+            SpinWait.SpinUntil(() => started);
+            
+            
 
-            Assert.True(secondWorkshop.Contains("Account Leadership - Roles & Responsibilities"));
-            Assert.True(secondWorkshop.Contains("18/10/2019 03:30 PM"));
-            Assert.True(secondWorkshop.Contains("Rory"));
+            
+        }
+    }
+
+    public class AlwaysThreeWorkshops : IGetWorkshops
+    {
+        public GetWorkshopsResponse Execute()
+        {
+            return new GetWorkshopsResponse
+            {
+                PresentableWorkshops = new []
+                {
+                    new PresentableWorkshop
+                    {
+                        Time = new DateTimeOffset(2017, 1, 1, 1, 1, 1, TimeSpan.Zero),
+                        Attendees = new List<string>()
+                    },
+                    new PresentableWorkshop
+                    {
+                        Time = new DateTimeOffset(2019, 1, 1, 1, 1, 1, TimeSpan.Zero),
+                        Attendees = new List<string>()
+                    },
+                    new PresentableWorkshop
+                    {
+                        Time = new DateTimeOffset(2015, 1, 1, 1, 1, 1, TimeSpan.Zero),
+                        Attendees = new List<string>()
+                    }
+                }
+            };
+        }
+    }
+    
+    public class AlwaysNoWorkshops : IGetWorkshops
+    {
+        public GetWorkshopsResponse Execute()
+        {
+            return new GetWorkshopsResponse
+            {
+                PresentableWorkshops = new PresentableWorkshop[]{}
+            };
         }
     }
 }
