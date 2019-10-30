@@ -19,7 +19,6 @@ namespace CryptoTechProject
         public void Run(Action onStarted)
         {
             httpListener.Prefixes.Add($"http://+:{System.Environment.GetEnvironmentVariable("PORT")}/");
-            //httpListener.Prefixes.Add("http://localhost:5000/");
             httpListener.Start();
             onStarted();
             while (true)
@@ -31,61 +30,46 @@ namespace CryptoTechProject
 
                 AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_API_KEY"),
-                    System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_TABLE_ID")); 
-
-                /*AirtableGateway gateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
-                    System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));*/
-
-                //AirtableGateway gateway = new AirtableGateway("https://api.airtable.com/", "COPY_API_KEY", "COPY_TABLE_ID");
-
+                    System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_TABLE_ID"));
 
                 if (request.Url.ToString().Contains("attend"))
                 {
-                    var payload = new StreamReader(context.Request.InputStream).ReadToEnd();
 
-                    var payloadString = HttpUtility.ParseQueryString(payload);
-
-                    Dictionary<string, string> dictionary = payloadString.Keys.Cast<string>()
-                        .ToDictionary(k => k, k => payloadString[k]);
-
-                    SlackButtonPayload deserialisedPayload =
-                        JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
-                    Console.WriteLine(deserialisedPayload.Actions[0].Value);
-                    Console.WriteLine(deserialisedPayload.ResponseURL);
-
+                    string payload = new StreamReader(context.Request.InputStream).ReadToEnd();
+                    var deserialisedPayload = DeserializeSlackButtonPayload(payload);
+                    
                     BookWorkshopAttendanceRequest bookWorkshopAttendanceRequest = new BookWorkshopAttendanceRequest()
                     {
                         User = deserialisedPayload.User.Name,
-                        WorkshopId = deserialisedPayload.Actions[0].Value
+                        WorkshopId = deserialisedPayload.Actions[0].Value,
                     };
 
                     BookWorkshopAttendance bookWorkshopAttendance = new BookWorkshopAttendance(gateway, gateway);
                     bookWorkshopAttendance.Execute(bookWorkshopAttendanceRequest);
-
-                    ResponseThing responseThing = new ResponseThing()
-                    {
-                        Text = "HELLO"
-                    };
-
-                    string responseThingJSON = JsonConvert.SerializeObject(responseThing);
                     
+                    var jsonForSlack = SetupAndSendResponseToSlack(gateway, deserialisedPayload.User.Name, response);
+
                     WebClient client = new WebClient();
                     client.Headers.Add("Content-Type", "application/json");
-                    client.UploadString(deserialisedPayload.ResponseURL, "POST", responseThingJSON);
+                    client.UploadString(deserialisedPayload.ResponseURL, "POST", jsonForSlack);
 
-                    
-                    Console.WriteLine("but did it add?");
+                  
                 }
                 else
                 {
-                    GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
-                    var slackMessage = ToSlackMessage(workshops);
-                    string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
+                    var payload = new StreamReader(context.Request.InputStream).ReadToEnd();
+
+                    var payloadString = HttpUtility.ParseQueryString(payload);
+                    
+                    string user = payloadString.Get("user_name");
+                    
+                    var jsonForSlack = SetupAndSendResponseToSlack(gateway, user, response);
+                    
                     byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
                     response.AddHeader("Content-type", "application/json");
                     response.OutputStream.Write(responseArray, 0, responseArray.Length);
                     Console.WriteLine("no payload");
+                    
                 }
                 
                 response.KeepAlive = false;
@@ -93,7 +77,30 @@ namespace CryptoTechProject
             }
         }
 
-        private static SlackMessage ToSlackMessage(GetWorkshopsResponse workshops)
+        private static SlackButtonPayload DeserializeSlackButtonPayload(string payload)
+        {
+            var payloadString = HttpUtility.ParseQueryString(payload);
+
+            Dictionary<string, string> dictionary = payloadString.Keys.Cast<string>()
+                .ToDictionary(k => k, k => payloadString[k]);
+
+            SlackButtonPayload deserialisedPayload =
+                JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
+            return deserialisedPayload;
+        }
+
+        private static string SetupAndSendResponseToSlack(AirtableGateway gateway, string deserialisedPayload,
+            HttpListenerResponse response)
+        {
+            GetWorkshopsResponse workshops = new GetWorkshops(gateway).Execute();
+
+            var slackMessage = ToSlackMessage(workshops, deserialisedPayload);
+            string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
+            
+            return jsonForSlack;
+        }
+
+        private static SlackMessage ToSlackMessage(GetWorkshopsResponse workshops, String User)
         {
             SlackMessage slackMessage = new SlackMessage
             {
@@ -116,6 +123,12 @@ namespace CryptoTechProject
 
             for (int i = 0; i < workshops.PresentableWorkshops.Length; i++)
             {
+                string buttonValue;
+                if (workshops.PresentableWorkshops[i].Attendees.Contains(User))
+                    buttonValue = "Unattend";
+                else
+                    buttonValue = "Attend";
+                
                 slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
                 {
                     Text = new SlackMessage.SectionBlockText
@@ -131,14 +144,15 @@ namespace CryptoTechProject
                         Text = new SlackMessage.SectionBlockText
                         {
                             Type = "plain_text",
-                            Text = "Attend"
+                            Text = buttonValue
                         },
 
                         Value = workshops.PresentableWorkshops[i].ID
                     }
                 };
             }
-
+            
+            
             return slackMessage;
         }
     }

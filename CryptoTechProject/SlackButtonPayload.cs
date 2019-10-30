@@ -19,4 +19,5 @@ namespace CryptoTechProject
     {
         [JsonProperty("value")] public string Value;
     }
+
 }
