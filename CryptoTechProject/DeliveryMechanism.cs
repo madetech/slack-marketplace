@@ -39,41 +39,56 @@ namespace CryptoTechProject
 
                 if (request.Url.ToString().Contains("attend"))
                 {
-                    var payload = new StreamReader(context.Request.InputStream).ReadToEnd();
-
-                    var payloadString = HttpUtility.ParseQueryString(payload);
-
-                    Dictionary<string, string> dictionary = payloadString.Keys.Cast<string>()
-                        .ToDictionary(k => k, k => payloadString[k]);
-
-                    SlackButtonPayload deserialisedPayload =
-                        JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
-                    Console.WriteLine(deserialisedPayload.Actions[0].Value);
-
-                    ToggleWorkshopAttendanceRequest toggleWorkshopAttendanceRequest = new ToggleWorkshopAttendanceRequest()
-                    {
-                        User = deserialisedPayload.User.Name,
-                        WorkshopId = deserialisedPayload.Actions[0].Value
-                    };
-
-                    _toggleWorkshopAttendance.Execute(toggleWorkshopAttendanceRequest);
-                    Console.WriteLine("but did it add?");
+                    ToggleAttendance(context);
                 }
                 else
                 {
-                    
-                    GetWorkshopsResponse workshops = _getWorkshops.Execute();
-                    var slackMessage = ToSlackMessage(workshops);
-                    string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
-                    byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
-                    response.AddHeader("Content-type", "application/json");
-                    response.OutputStream.Write(responseArray, 0, responseArray.Length);
-                    Console.WriteLine("no payload");
+                    new GetWorkshopController().GetWorkshops(response, _getWorkshops);
                 }
                 
                 response.KeepAlive = false;
                 response.Close();
             }
+        }
+
+        class GetWorkshopController
+        {
+            public void GetWorkshops(HttpListenerResponse response, IGetWorkshops getWorkshops)
+            {
+                GetWorkshopsResponse workshops = getWorkshops.Execute();
+                var slackMessage = ToSlackMessage(workshops);
+                string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
+                byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
+                response.AddHeader("Content-type", "application/json");
+                response.OutputStream.Write(responseArray, 0, responseArray.Length);
+                Console.WriteLine("no payload");
+            }
+        }
+        
+
+        private void ToggleAttendance(HttpListenerContext context)
+        {
+            var payload = new StreamReader(context.Request.InputStream).ReadToEnd();
+
+            var payloadString = HttpUtility.ParseQueryString(payload);
+
+            Dictionary<string, string> dictionary = payloadString
+                .Keys
+                .Cast<string>()
+                .ToDictionary(k => k, k => payloadString[k]);
+
+            SlackButtonPayload deserialisedPayload =
+                JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
+            Console.WriteLine(deserialisedPayload.Actions[0].Value);
+
+            ToggleWorkshopAttendanceRequest toggleWorkshopAttendanceRequest = new ToggleWorkshopAttendanceRequest()
+            {
+                User = deserialisedPayload.User.Name,
+                WorkshopId = deserialisedPayload.Actions[0].Value
+            };
+
+            _toggleWorkshopAttendance.Execute(toggleWorkshopAttendanceRequest);
+            Console.WriteLine("but did it add?");
         }
 
         private static SlackMessage ToSlackMessage(GetWorkshopsResponse workshops)
