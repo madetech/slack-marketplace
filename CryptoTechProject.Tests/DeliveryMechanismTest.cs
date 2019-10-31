@@ -4,12 +4,19 @@ using System.Net;
 using System.Threading;
 using CryptoTechProject.Boundary;
 using NUnit.Framework;
+using FluentSim;
+ 
 
 namespace CryptoTechProject.Tests
 {
     [TestFixture]
     public class DeliveryMechanismTest
+    
     {
+        public FluentSimulator simulator;
+        
+        
+        
         [Test]
         public void CanGetNoWorkshopsAsSlackMessage()
         {
@@ -77,6 +84,12 @@ namespace CryptoTechProject.Tests
         [Test]
         public void CanDeliverSlackMessageWithCorrectButton()
         {
+            FluentSimulator slackSimulator = new FluentSimulator("http://localhost:8081/");
+            string request_url_path =
+                "/actions/T0B0XJCTC/814613123445/YDP2bi3aPQWs2eFE3LKj58XC";
+            slackSimulator.Post(request_url_path).Responds("");
+            slackSimulator.Start();
+            
             var started = false;
             var spyToggleWorkshopAttendance = new SpyToggleWorkshopAttendance();
             var spyGetWorkshop = new StubGetWorkshop();
@@ -91,13 +104,17 @@ namespace CryptoTechProject.Tests
             
             var webClient = new WebClient();
             webClient.UploadString("http://localhost:5054/attend","POST", "payload=%7B%22type%22%3A%22block_actions%22%2C%22team%22%3A%7B%22id%22%3A%22T0B0XJCTC%22%2C%22domain%22%3A%22madetechteam%22%7D%2C%22user%22%3A%7B%22id%22%3A%22UHN295AA0%22%2C%22username%22%3A%22tony%22%2C%22name%22%3A%22tony%22%2C%22team_id%22%3A%22T0B0XJCTC%22%7D%2C%22api_app_id%22%3A%22ANSD6N533%22%2C%22token%22%3A%22ceHc4m6dPr63SPqswlFQsfhD%22%2C%22container%22%3A%7B%22type%22%3A%22message%22%2C%22message_ts%22%3A%221572428564.002300%22%2C%22channel_id%22%3A%22CDCQLNMEF%22%2C%22is_ephemeral%22%3Atrue%7D%2C%22trigger_id%22%3A%22801820457346.11031624930.ef92ce73dd2d8e76340af4f241c28b1e%22%2C%22channel%22%3A%7B%22id%22%3A%22CDCQLNMEF%22%2C%22name%22%3A%22academy-2019-sum-aut%22%7D%2C%22response_url%22%3A%22https%3A%5C%2F%5C%2Fhooks.slack.com%5C%2Factions%5C%2FT0B0XJCTC%5C%2F814613123445%5C%2FYDP2bi3aPQWs2eFE3LKj58XC%22%2C%22actions%22%3A%5B%7B%22action_id%22%3A%22%3DtU%22%2C%22block_id%22%3A%223Yv%2Bu%22%2C%22text%22%3A%7B%22type%22%3A%22plain_text%22%2C%22text%22%3A%22Attend%22%2C%22emoji%22%3Atrue%7D%2C%22value%22%3A%22recWTcxEQVKjwpIIf%22%2C%22type%22%3A%22button%22%2C%22action_ts%22%3A%221572428585.731525%22%7D%5D%7D");
-
             
-            var anotherWebClient = new WebClient();
-            var responseBody = anotherWebClient.DownloadString("http://localhost:5054/");
+
+            //var anotherWebClient = new WebClient();
+            //var responseBody = anotherWebClient.DownloadString("http://localhost:5054/");
             // DESERIALISE INTO SLACK MESSAGE
             // ACCESS BUTTON TEXT
-            Assert.IsTrue(responseBody.Contains("Unattend"));
+            var slacksReceivedRequest = slackSimulator.ReceivedRequests;
+            //Assert.IsTrue(responseBody.Contains("Unattend"));
+            Assert.AreEqual("",slacksReceivedRequest[0]);
+            
+            slackSimulator.Stop();
         }
     }
 
