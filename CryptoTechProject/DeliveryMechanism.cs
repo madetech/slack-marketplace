@@ -39,11 +39,22 @@ namespace CryptoTechProject
 
                 if (request.Url.ToString().Contains("attend"))
                 {
-                    ToggleAttendance(context);
+                    SlackButtonPayload deserialisedPayload = ToggleAttendance(context);
+                    string user = deserialisedPayload.User.Name;
+                    var jsonForSlack = new GetWorkshopController().GetWorkshops(response, _getWorkshops, user);
+                    
+                    WebClient client = new WebClient();
+                    client.Headers.Add("Content-Type", "application/json");
+                    client.UploadString(deserialisedPayload.ResponseURL, "POST", jsonForSlack);
                 }
                 else
                 {
-                    new GetWorkshopController().GetWorkshops(response, _getWorkshops);
+                    var payload = new StreamReader(context.Request.InputStream).ReadToEnd();
+
+                    var payloadString = HttpUtility.ParseQueryString(payload);
+                    
+                    string user = payloadString.Get("user_name");
+                    new GetWorkshopController().GetWorkshops(response, _getWorkshops, user);
                 }
                 
                 response.KeepAlive = false;
@@ -53,20 +64,20 @@ namespace CryptoTechProject
 
         class GetWorkshopController
         {
-            public void GetWorkshops(HttpListenerResponse response, IGetWorkshops getWorkshops)
+            public string GetWorkshops(HttpListenerResponse response, IGetWorkshops getWorkshops, string user)
             {
                 GetWorkshopsResponse workshops = getWorkshops.Execute();
-                var slackMessage = ToSlackMessage(workshops);
+                var slackMessage = ToSlackMessage(workshops, user);
                 string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
                 byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
                 response.AddHeader("Content-type", "application/json");
                 response.OutputStream.Write(responseArray, 0, responseArray.Length);
-                Console.WriteLine("no payload");
+                return jsonForSlack;
             }
         }
         
 
-        private void ToggleAttendance(HttpListenerContext context)
+        private SlackButtonPayload ToggleAttendance(HttpListenerContext context)
         {
             var payload = new StreamReader(context.Request.InputStream).ReadToEnd();
 
@@ -79,7 +90,6 @@ namespace CryptoTechProject
 
             SlackButtonPayload deserialisedPayload =
                 JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
-            Console.WriteLine(deserialisedPayload.Actions[0].Value);
 
             ToggleWorkshopAttendanceRequest toggleWorkshopAttendanceRequest = new ToggleWorkshopAttendanceRequest()
             {
@@ -88,10 +98,10 @@ namespace CryptoTechProject
             };
 
             _toggleWorkshopAttendance.Execute(toggleWorkshopAttendanceRequest);
-            Console.WriteLine("but did it add?");
+            return deserialisedPayload;
         }
 
-        private static SlackMessage ToSlackMessage(GetWorkshopsResponse workshops)
+        private static SlackMessage ToSlackMessage(GetWorkshopsResponse workshops, string user)
         {
             SlackMessage slackMessage = new SlackMessage
             {
@@ -114,6 +124,11 @@ namespace CryptoTechProject
 
             for (int i = 0; i < workshops.PresentableWorkshops.Length; i++)
             {
+                string buttonValue;
+                if (workshops.PresentableWorkshops[i].Attendees.Contains(user))
+                    buttonValue = "Unattend";
+                else
+                    buttonValue = "Attend";
                 slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
                 {
                     Text = new SlackMessage.SectionBlockText
@@ -129,7 +144,7 @@ namespace CryptoTechProject
                         Text = new SlackMessage.SectionBlockText
                         {
                             Type = "plain_text",
-                            Text = "Attend"
+                            Text = buttonValue
                         },
 
                         Value = workshops.PresentableWorkshops[i].ID
