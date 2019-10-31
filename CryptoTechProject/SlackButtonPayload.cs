@@ -6,6 +6,8 @@ namespace CryptoTechProject
     {
         [JsonProperty("user")] public User User;
         [JsonProperty("actions")] public Actions[] Actions;
+
+        [JsonProperty("response_url")] public string ResponseURL;
     }
 
     public class User

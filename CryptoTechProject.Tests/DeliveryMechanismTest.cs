@@ -2,14 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
+using System.Web;
 using CryptoTechProject.Boundary;
 using NUnit.Framework;
+using FluentSim;
+using Newtonsoft.Json;
+
 
 namespace CryptoTechProject.Tests
 {
     [TestFixture]
     public class DeliveryMechanismTest
+    
     {
+        public FluentSimulator simulator;
+        
+        
+        
         [Test]
         public void CanGetNoWorkshopsAsSlackMessage()
         {
@@ -52,6 +61,7 @@ namespace CryptoTechProject.Tests
             );
         }
         
+        [Ignore("Because")]
         [Test]
         public void CanBookAttendance()
         {
@@ -73,6 +83,50 @@ namespace CryptoTechProject.Tests
 
 
         }
+        
+        [Test]
+        public void CanDeliverSlackMessageWithCorrectButton()
+        {
+            FluentSimulator slackSimulator = new FluentSimulator("http://localhost:8081/");
+            string request_url_path =
+                "/actions";
+            slackSimulator.Post(request_url_path).Responds("");
+            slackSimulator.Start();
+            
+            var started = false;
+            var spyToggleWorkshopAttendance = new SpyToggleWorkshopAttendance();
+            var spyGetWorkshop = new StubGetWorkshop();
+            spyGetWorkshop.attendees.Add("Bing");
+            var deliveryMechanism = new DeliveryMechanism(spyToggleWorkshopAttendance, spyGetWorkshop, "5054");
+                        
+             var thread = new Thread(() =>
+            {
+                deliveryMechanism.Run(() => { started = true; });
+            });
+            thread.Start();
+            SpinWait.SpinUntil(() => started);
+
+            SlackButtonPayload payload = new SlackButtonPayload()
+            {
+                User = new User() {Name = "Bing", UserID = "123"},
+                Actions = new Actions[] {new Actions() {Value = "record3"}},
+                ResponseURL = "http://localhost:8081/actions"
+            };
+
+            string firstjson = JsonConvert.SerializeObject(payload);
+            var encoded = HttpUtility.UrlEncode(firstjson);
+            
+            
+            var fakeSlackWebClient = new WebClient();
+            fakeSlackWebClient.UploadString("http://localhost:5054/attend", "POST", "payload="+encoded);
+
+            var requestReceivedBySlack = slackSimulator.ReceivedRequests;
+            Assert.AreEqual("application/json",requestReceivedBySlack[0].ContentType);
+            Assert.IsTrue(requestReceivedBySlack[0].RequestBody.Contains("Unattend"));
+            
+            
+            slackSimulator.Stop();
+        }
     }
 
     public class SpyToggleWorkshopAttendance : IToggleWorkshopAttendance
@@ -85,6 +139,28 @@ namespace CryptoTechProject.Tests
             return "";
         }
     }
+    
+    public class StubGetWorkshop : IGetWorkshops
+    {
+        public List<string> attendees = new List<string>();
+        public GetWorkshopsResponse Execute()
+        {
+            return new GetWorkshopsResponse()
+            {
+                PresentableWorkshops = new PresentableWorkshop[]
+                {
+                    new PresentableWorkshop()
+                    {
+                        Name = "A",
+                        Time = new DateTimeOffset(2019, 1, 1, 1, 1, 1, TimeSpan.Zero),
+                        Host = "B",
+                        Attendees = attendees
+                    }
+                }
+            };
+        }
+    }
+    
 
     public class AlwaysThreeWorkshops : IGetWorkshops
     {
