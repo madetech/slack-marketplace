@@ -13,7 +13,7 @@ namespace CryptoTechProject.Tests
 
         public void Stop() => simulator.Stop();
 
-        public void SetUpAll(string TABLE_ID, string AIRTABLE_API_KEY, AirtableResponse expectedResponse) =>
+        public void SetUpAll(AirtableResponse expectedResponse, string TABLE_ID, string AIRTABLE_API_KEY) =>
             simulator.Get("/v0/" + TABLE_ID + "/Marketplace")
                 .WithParameter("maxRecords", maxRecords)
                 .WithParameter("api_key", AIRTABLE_API_KEY)
