@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Web;
 using CryptoTechProject.Boundary;
@@ -14,12 +15,13 @@ namespace CryptoTechProject
     public class DeliveryMechanism
     {
         HttpListener httpListener = new HttpListener();
-        
+
         private IToggleWorkshopAttendance _toggleWorkshopAttendance;
         private IGetWorkshops _getWorkshops;
         private readonly string _port;
 
-        public DeliveryMechanism(IToggleWorkshopAttendance toggleWorkshopAttendance, IGetWorkshops getWorkshops, string port)
+        public DeliveryMechanism(IToggleWorkshopAttendance toggleWorkshopAttendance, IGetWorkshops getWorkshops,
+            string port)
         {
             _toggleWorkshopAttendance = toggleWorkshopAttendance;
             _getWorkshops = getWorkshops;
@@ -42,7 +44,7 @@ namespace CryptoTechProject
                     SlackButtonPayload deserialisedPayload = ToggleAttendance(context);
                     string user = deserialisedPayload.User.Name;
                     var jsonForSlack = new GetWorkshopController().GetWorkshops(response, _getWorkshops, user);
-                    
+
                     WebClient client = new WebClient();
                     client.Headers.Add("Content-Type", "application/json");
                     client.UploadString(deserialisedPayload.ResponseURL, "POST", jsonForSlack);
@@ -52,11 +54,11 @@ namespace CryptoTechProject
                     var payload = new StreamReader(context.Request.InputStream).ReadToEnd();
 
                     var payloadString = HttpUtility.ParseQueryString(payload);
-                    
+
                     string user = payloadString.Get("user_name");
                     new GetWorkshopController().GetWorkshops(response, _getWorkshops, user);
                 }
-                
+
                 response.KeepAlive = false;
                 response.Close();
             }
@@ -75,7 +77,7 @@ namespace CryptoTechProject
                 return jsonForSlack;
             }
         }
-        
+
 
         private SlackButtonPayload ToggleAttendance(HttpListenerContext context)
         {
@@ -83,6 +85,7 @@ namespace CryptoTechProject
 
             var payloadString = HttpUtility.ParseQueryString(payload);
 
+            HttpUtility.UrlEncode(payload);
             Dictionary<string, string> dictionary = payloadString
                 .Keys
                 .Cast<string>()
@@ -129,27 +132,51 @@ namespace CryptoTechProject
                     buttonValue = "Unattend";
                 else
                     buttonValue = "Attend";
-                slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
+                if (workshops.PresentableWorkshops[i].Type == "Workshop")
                 {
-                    Text = new SlackMessage.SectionBlockText
-                    {
-                        Type = "mrkdwn",
-                        Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
-                               $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
-                               $"{workshops.PresentableWorkshops[i].Host}\n" +
-                               $"Current number of attendees: {workshops.PresentableWorkshops[i].Attendees.Count}"
-                    },
-                    Accessory = new SlackMessage.SectionBlock.AccessoryBlock
+                    slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
                     {
                         Text = new SlackMessage.SectionBlockText
                         {
-                            Type = "plain_text",
-                            Text = buttonValue
+                            Type = "mrkdwn",
+                            Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
+                                   $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
+                                   $"{workshops.PresentableWorkshops[i].Host}\n" +
+                                   $"Current number of attendees: {workshops.PresentableWorkshops[i].Attendees.Count}"
                         },
+                        Accessory = new SlackMessage.SectionBlock.AccessoryBlock
+                        {
+                            Text = new SlackMessage.SectionBlockText
+                            {
+                                Type = "plain_text",
+                                Text = buttonValue
+                            },
 
-                        Value = workshops.PresentableWorkshops[i].ID
-                    }
-                };
+                            Value = workshops.PresentableWorkshops[i].ID
+                        }
+                    };
+                }
+
+                else
+                {
+                    string textContent = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
+                                         $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
+                                         $"{workshops.PresentableWorkshops[i].Host}\n";
+                    if (workshops.PresentableWorkshops[i].Time.Date != workshops.PresentableWorkshops[i + 1].Time.Date)
+                        textContent =  textContent + "---------------------------------------------------------------------------------------------------------";
+
+                    if (workshops.PresentableWorkshops[i].Type == "Showcase" && workshops.PresentableWorkshops[i-1].Type != "Showcase")
+                        textContent = "\n\n*Showcases:*\n" + textContent;
+                    slackMessage.Blocks[i + 2] = new SlackMessage.ButtonlessSectionBlock()
+                    {
+                        Text = new SlackMessage.SectionBlockText
+                        {
+                            Type = "mrkdwn",
+                            Text = textContent
+                        }
+                    };
+                }
+                
             }
 
             return slackMessage;

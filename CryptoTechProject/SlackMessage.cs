@@ -45,6 +45,15 @@ namespace CryptoTechProject
 
             [JsonProperty("accessory")] public AccessoryBlock Accessory;
         }
+        
+        public class ButtonlessSectionBlock : SlackMessageBlock
+        {
+
+            [JsonProperty("type")] public string Type = "section";
+
+            [JsonProperty("text")] public SectionBlockText Text;
+
+        }
 
         [JsonProperty("blocks")] public SlackMessageBlock[] Blocks;
     }
