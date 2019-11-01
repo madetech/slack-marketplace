@@ -14,12 +14,13 @@ namespace CryptoTechProject
     public class DeliveryMechanism
     {
         HttpListener httpListener = new HttpListener();
-        
+
         private IToggleWorkshopAttendance _toggleWorkshopAttendance;
         private IGetWorkshops _getWorkshops;
         private readonly string _port;
 
-        public DeliveryMechanism(IToggleWorkshopAttendance toggleWorkshopAttendance, IGetWorkshops getWorkshops, string port)
+        public DeliveryMechanism(IToggleWorkshopAttendance toggleWorkshopAttendance, IGetWorkshops getWorkshops,
+            string port)
         {
             _toggleWorkshopAttendance = toggleWorkshopAttendance;
             _getWorkshops = getWorkshops;
@@ -46,10 +47,10 @@ namespace CryptoTechProject
                     var payload = new StreamReader(context.Request.InputStream).ReadToEnd();
                     var payloadString = HttpUtility.ParseQueryString(payload);
                     string user = payloadString.Get("user_name");
-                    
-                    new GetWorkshopController().GetWorkshops(response, _getWorkshops,user);
+
+                    new GetWorkshopController().GetWorkshops(response, _getWorkshops, user);
                 }
-                
+
                 response.KeepAlive = false;
                 response.Close();
             }
@@ -60,7 +61,7 @@ namespace CryptoTechProject
             public void GetWorkshops(HttpListenerResponse response, IGetWorkshops getWorkshops, string user)
             {
                 GetWorkshopsResponse workshops = getWorkshops.Execute();
-                var slackMessage = ToSlackMessage(workshops,user);
+                var slackMessage = ToSlackMessage(workshops, user);
                 string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
                 byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
                 response.AddHeader("Content-type", "application/json");
@@ -68,7 +69,7 @@ namespace CryptoTechProject
                 Console.WriteLine("no payload");
             }
         }
-        
+
 
         private void ToggleAttendance(HttpListenerContext context)
         {
@@ -81,8 +82,8 @@ namespace CryptoTechProject
                 .Keys
                 .Cast<string>()
                 .ToDictionary(k => k, k => payloadString[k]);
-            
-            
+
+
             SlackButtonPayload deserialisedPayload =
                 JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
             //Console.WriteLine(deserialisedPayload.Actions[0].Value);
@@ -94,11 +95,11 @@ namespace CryptoTechProject
             };
 
             string response_url = deserialisedPayload.ResponseURL;
-            
+
             _toggleWorkshopAttendance.Execute(toggleWorkshopAttendanceRequest);
-            
+
             GetWorkshopsResponse workshops = _getWorkshops.Execute();
-            var slackMessage = ToSlackMessage(workshops,toggleWorkshopAttendanceRequest.User);
+            var slackMessage = ToSlackMessage(workshops, toggleWorkshopAttendanceRequest.User);
             string jsonForSlack = JsonConvert.SerializeObject(slackMessage);
 
 
@@ -136,16 +137,24 @@ namespace CryptoTechProject
                     attendanceStatus = "Unattend";
                 }
 
+
                 if (workshops.PresentableWorkshops[i].Type == "Showcase")
                 {
+                    string showcaseText = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
+                                          $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
+                                          $"{workshops.PresentableWorkshops[i].Host}\n";
+
+                    if (i < workshops.PresentableWorkshops.Length - 1)
+                        if (workshops.PresentableWorkshops[i].Time.Day !=
+                            workshops.PresentableWorkshops[i + 1].Time.Day)
+                            showcaseText = showcaseText +
+                                           "---------------------------------------------------------------------------------------------------------\n";
                     slackMessage.Blocks[i + 2] = new SlackMessage.ShowcaseSectionBlock
                     {
                         Text = new SlackMessage.SectionBlockText
                         {
                             Type = "mrkdwn",
-                            Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
-                                   $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
-                                   $"{workshops.PresentableWorkshops[i].Host}\n"
+                            Text = showcaseText
                         }
                     };
                 }

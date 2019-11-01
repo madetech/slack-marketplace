@@ -131,7 +131,27 @@ namespace CryptoTechProject.Tests
         public void ShowcaseDoesNotContainAttendButtonAndNumberOfAttendees()
         {
             var started = false;
-            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysOneShowcase(), "5049");
+            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysOneShowcase(), "5056");
+            var thread = new Thread(() =>
+            {
+                deliveryMechanism.Run(() => { started = true; });
+            });
+            thread.Start();
+            SpinWait.SpinUntil(() => started);
+            var webClient = new WebClient();
+            var responseBody = webClient.DownloadString("http://localhost:5056/");
+
+            Assert.IsFalse(responseBody.Contains("button"));
+            Assert.IsFalse(responseBody.Contains("accessory"));
+            Assert.IsFalse(responseBody.Contains("Current number of attendees"));
+            Assert.AreEqual("application/json", webClient.ResponseHeaders["Content-Type"]);
+        }
+        
+        [Test]
+        public void LastShowcaseHasALineOfDashesAsADivider()
+        {
+            var started = false;
+            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysTwoShowcasesAndOneWorkshop(), "5049");
             var thread = new Thread(() =>
             {
                 deliveryMechanism.Run(() => { started = true; });
@@ -141,9 +161,8 @@ namespace CryptoTechProject.Tests
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5049/");
 
-            Assert.IsFalse(responseBody.Contains("button"));
-            Assert.IsFalse(responseBody.Contains("accessory"));
-            Assert.IsFalse(responseBody.Contains("Current number of attendees"));
+
+            Assert.AreEqual(responseBody, "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:30 AM\\n\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:45 AM\\n\\n---------------------------------------------------------------------------------------------------------\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n05/01/2019 04:30 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}");
             Assert.AreEqual("application/json", webClient.ResponseHeaders["Content-Type"]);
         }
     }
@@ -221,6 +240,36 @@ namespace CryptoTechProject.Tests
                     {
                         Type = "Showcase",
                         Time = new DateTimeOffset(2019, 1, 1, 4, 30, 1, TimeSpan.Zero),
+                        Attendees = new List<string>()
+                    },
+                }
+            };
+        }
+    } 
+    public class AlwaysTwoShowcasesAndOneWorkshop : IGetWorkshops
+    {
+        public GetWorkshopsResponse Execute()
+        {
+            return new GetWorkshopsResponse
+            {
+                PresentableWorkshops = new []
+                {
+                    new PresentableWorkshop
+                    {
+                        Type = "Showcase",
+                        Time = new DateTimeOffset(2019, 1, 1, 4, 30, 1, TimeSpan.Zero),
+                        Attendees = new List<string>()
+                    },
+                    new PresentableWorkshop
+                    {
+                        Type = "Showcase",
+                        Time = new DateTimeOffset(2019, 1, 1, 4, 45, 1, TimeSpan.Zero),
+                        Attendees = new List<string>()
+                    },
+                    new PresentableWorkshop
+                    {
+                        Type = "Workshop",
+                        Time = new DateTimeOffset(2019, 1, 5, 4, 30, 1, TimeSpan.Zero),
                         Attendees = new List<string>()
                     },
                 }
