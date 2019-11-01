@@ -38,7 +38,6 @@ namespace CryptoTechProject.Tests
                 responseBody
                 );
             Assert.AreEqual("application/json", webClient.ResponseHeaders["Content-Type"]);
-            
         }
         
         [Test]
@@ -127,6 +126,26 @@ namespace CryptoTechProject.Tests
             
             slackSimulator.Stop();
         }
+        
+        [Test]
+        public void ShowcaseDoesNotContainAttendButtonAndNumberOfAttendees()
+        {
+            var started = false;
+            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysOneShowcase(), "5049");
+            var thread = new Thread(() =>
+            {
+                deliveryMechanism.Run(() => { started = true; });
+            });
+            thread.Start();
+            SpinWait.SpinUntil(() => started);
+            var webClient = new WebClient();
+            var responseBody = webClient.DownloadString("http://localhost:5049/");
+
+            Assert.IsFalse(responseBody.Contains("button"));
+            Assert.IsFalse(responseBody.Contains("accessory"));
+            Assert.IsFalse(responseBody.Contains("Current number of attendees"));
+            Assert.AreEqual("application/json", webClient.ResponseHeaders["Content-Type"]);
+        }
     }
 
     public class SpyToggleWorkshopAttendance : IToggleWorkshopAttendance
@@ -190,6 +209,24 @@ namespace CryptoTechProject.Tests
         }
     }
     
+    public class AlwaysOneShowcase : IGetWorkshops
+    {
+        public GetWorkshopsResponse Execute()
+        {
+            return new GetWorkshopsResponse
+            {
+                PresentableWorkshops = new []
+                {
+                    new PresentableWorkshop
+                    {
+                        Type = "Showcase",
+                        Time = new DateTimeOffset(2019, 1, 1, 4, 30, 1, TimeSpan.Zero),
+                        Attendees = new List<string>()
+                    },
+                }
+            };
+        }
+    }
     public class AlwaysNoWorkshops : IGetWorkshops
     {
         public GetWorkshopsResponse Execute()

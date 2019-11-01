@@ -105,8 +105,6 @@ namespace CryptoTechProject
             WebClient webClient = new WebClient();
             webClient.Headers.Add("Content-type", "application/json");
             webClient.UploadString(response_url, "POST", jsonForSlack);
-
-            Console.WriteLine("but did it add?");
         }
 
         private static SlackMessage ToSlackMessage(GetWorkshopsResponse workshops, string user)
@@ -137,27 +135,43 @@ namespace CryptoTechProject
                 {
                     attendanceStatus = "Unattend";
                 }
-                slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
+
+                if (workshops.PresentableWorkshops[i].Type == "Showcase")
                 {
-                    Text = new SlackMessage.SectionBlockText
-                    {
-                        Type = "mrkdwn",
-                        Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
-                               $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
-                               $"{workshops.PresentableWorkshops[i].Host}\n" +
-                               $"Current number of attendees: {workshops.PresentableWorkshops[i].Attendees.Count}"
-                    },
-                    Accessory = new SlackMessage.SectionBlock.AccessoryBlock
+                    slackMessage.Blocks[i + 2] = new SlackMessage.ShowcaseSectionBlock
                     {
                         Text = new SlackMessage.SectionBlockText
                         {
-                            Type = "plain_text",
-                            Text = attendanceStatus
+                            Type = "mrkdwn",
+                            Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
+                                   $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
+                                   $"{workshops.PresentableWorkshops[i].Host}\n"
+                        }
+                    };
+                }
+                else
+                {
+                    slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
+                    {
+                        Text = new SlackMessage.SectionBlockText
+                        {
+                            Type = "mrkdwn",
+                            Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
+                                   $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
+                                   $"{workshops.PresentableWorkshops[i].Host}\n" +
+                                   $"Current number of attendees: {workshops.PresentableWorkshops[i].Attendees.Count}"
                         },
-
-                        Value = workshops.PresentableWorkshops[i].ID
-                    }
-                };
+                        Accessory = new SlackMessage.SectionBlock.AccessoryBlock
+                        {
+                            Text = new SlackMessage.SectionBlockText
+                            {
+                                Type = "plain_text",
+                                Text = attendanceStatus
+                            },
+                            Value = workshops.PresentableWorkshops[i].ID
+                        }
+                    };
+                }
             }
 
             return slackMessage;
