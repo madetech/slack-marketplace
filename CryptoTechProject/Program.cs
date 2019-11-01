@@ -15,8 +15,8 @@ namespace CryptoTechProject
         static void Main(string[] args)
         {
             var airtableGateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
-                System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_API_KEY"),
-                System.Environment.GetEnvironmentVariable("COPY_AIRTABLE_TABLE_ID"));
+                System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),
+                System.Environment.GetEnvironmentVariable("AIRTABLE_TABLE_ID"));
             new DeliveryMechanism(new ToggleWorkshopAttendance(airtableGateway, airtableGateway), new GetWorkshops(airtableGateway), System.Environment.GetEnvironmentVariable("PORT")).Run((() => Console.WriteLine("Server Started")));
         }
     }
