@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using CryptoTechProject.Boundary;
 using CryptoTechProject.Domain;
+using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -10,6 +11,13 @@ namespace CryptoTechProject.Tests
     [TestFixture]
     public class BookWorkshopAttendanceUnitTest
     {
+        private SpyGateway _spy;
+
+        public BookWorkshopAttendanceUnitTest()
+        {
+            _spy = new SpyGateway();
+        }
+
         public class SpyGateway : IUpdateWorkshopsGateway
         {
             public Workshop lastSavedWorkshop;
@@ -40,15 +48,16 @@ namespace CryptoTechProject.Tests
             {
                 attendees = new List<string>()
             };
-            SpyGateway spy = new SpyGateway();
-            ToggleWorkshopAttendance toggleAttendance = new ToggleWorkshopAttendance(spy, findSpyStub);
+            ToggleWorkshopAttendance toggleAttendance = new ToggleWorkshopAttendance(_spy, findSpyStub);
             ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
-            payload.User = "Seaweed";
-            payload.WorkshopId = "Seaweed on holiday";
+            payload.User = "Bogdan";
+            payload.WorkshopId = "idNum3029";
+            
             var response = toggleAttendance.Execute(payload);
-            Assert.AreEqual("Seaweed", spy.lastSavedWorkshop.attendees[0]);
-            Assert.AreEqual("Confirmed", response);
-            Assert.AreEqual("Seaweed on holiday", findSpyStub.lastWorkShopId);
+
+            _spy.lastSavedWorkshop.attendees[0].Should().Be("Bogdan");
+            findSpyStub.lastWorkShopId.Should().Be("idNum3029");
+            response.Should().Be("Confirmed");
         }
 
         [Test]
@@ -62,15 +71,17 @@ namespace CryptoTechProject.Tests
                     "Cait"
                 }
             };
-            SpyGateway spy = new SpyGateway();
-            ToggleWorkshopAttendance toggleAttendance = new ToggleWorkshopAttendance(spy, findSpyStub);
+            ToggleWorkshopAttendance toggleAttendance = new ToggleWorkshopAttendance(_spy, findSpyStub);
             ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
-            payload.User = "Seaweed";
-            payload.WorkshopId = "16";
+            payload.User = "Bogdan";
+            payload.WorkshopId = "id16";
             toggleAttendance.Execute(payload);
-            Assert.AreEqual("Seaweed", spy.lastSavedWorkshop.attendees[1]);
-            Assert.AreEqual("Cait", spy.lastSavedWorkshop.attendees[0]);
-            Assert.AreEqual("16", findSpyStub.lastWorkShopId);
+
+            var workshopAttendees = _spy.lastSavedWorkshop.attendees;
+            
+            workshopAttendees[0].Should().Be("Cait");
+            workshopAttendees[1].Should().Be("Bogdan");
+            findSpyStub.lastWorkShopId.Should().Be("id16");
         }
         
         [Test]
@@ -84,14 +95,14 @@ namespace CryptoTechProject.Tests
                     "Cait", "Maria"
                 }
             };
-            SpyGateway spy = new SpyGateway();
-            ToggleWorkshopAttendance toggleAttendance = new ToggleWorkshopAttendance(spy, findSpyStub);
+            ToggleWorkshopAttendance toggleAttendance = new ToggleWorkshopAttendance(_spy, findSpyStub);
             ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
             payload.User = "Maria";
             payload.WorkshopId = "16";
             toggleAttendance.Execute(payload);
-            Assert.IsFalse(spy.lastSavedWorkshop.attendees.Contains("Maria"));
-            Assert.AreEqual("16", findSpyStub.lastWorkShopId);
+
+            _spy.lastSavedWorkshop.attendees.Should().NotContain("Maria");
+            findSpyStub.lastWorkShopId.Should().Be("16");
         }
     }
 }
