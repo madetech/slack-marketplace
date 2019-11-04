@@ -50,7 +50,7 @@ namespace CryptoTechProject.Tests
                 .WithSessionType("Code Dojo")
                 .Build();
 
-            airtableSimulator.SetUpAll(TABLE_ID, AIRTABLE_API_KEY, expectedResponse);
+            airtableSimulator.SetUpAll(expectedResponse, TABLE_ID, AIRTABLE_API_KEY);
 
 
             AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
@@ -93,7 +93,7 @@ namespace CryptoTechProject.Tests
                 .WithSessionType("Workshop")
                 .Build();
 
-            airtableSimulator.SetUpAll(TABLE_ID, AIRTABLE_API_KEY, expectedResponse);
+            airtableSimulator.SetUpAll(expectedResponse, TABLE_ID, AIRTABLE_API_KEY);
 
             AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
             var workshops = airtableGateway.All();
