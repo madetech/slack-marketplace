@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Web;
 using CryptoTechProject.Boundary;
+using FluentAssertions;
 using NUnit.Framework;
 using FluentSim;
 using Newtonsoft.Json;
@@ -17,8 +18,6 @@ namespace CryptoTechProject.Tests
     {
         public FluentSimulator simulator;
         
-        
-        
         [Test]
         public void CanGetNoWorkshopsAsSlackMessage()
         {
@@ -30,59 +29,32 @@ namespace CryptoTechProject.Tests
             });
             thread.Start();
             SpinWait.SpinUntil(() => started);
+            
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5051/");
 
-            Assert.AreEqual(
-                "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"}]}",
-                responseBody
-                );
-            Assert.AreEqual("application/json", webClient.ResponseHeaders["Content-Type"]);
+            var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"}]}";
+            
+            responseBody.Should().Be(expectedJson);
+            webClient.ResponseHeaders["Content-Type"].Should().Be("application/json");
         }
-        
+
         [Test]
         public void CanGetThreeWorkshopsAsSlackMessage()
         {
             var started = false;
             var deliveryMechanism = new DeliveryMechanism(null, new AlwaysThreeWorkshops(), "5052");
-            var thread = new Thread(() =>
-            {
-                deliveryMechanism.Run(() => { started = true; });
-            });
+            var thread = new Thread(() => { deliveryMechanism.Run(() => { started = true; }); });
             thread.Start();
             SpinWait.SpinUntil(() => started);
+
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5052/");
-
-            Assert.AreEqual(
-                "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2017 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2015 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}",
-                responseBody
-            );
-        }
-        
-        [Ignore("Because")]
-        [Test]
-        public void CanBookAttendance()
-        {
-            var started = false;
-            var spyToggleWorkshopAttendance = new SpyToggleWorkshopAttendance();
-            var deliveryMechanism = new DeliveryMechanism(spyToggleWorkshopAttendance, null, "5053");
-            var thread = new Thread(() =>
-            {
-                deliveryMechanism.Run(() => { started = true; });
-            });
-            thread.Start();
-            SpinWait.SpinUntil(() => started);
             
-            var webClient = new WebClient();
-            webClient.UploadString("http://localhost:5053/attend","POST", "payload=%7B%22type%22%3A%22block_actions%22%2C%22team%22%3A%7B%22id%22%3A%22T0B0XJCTC%22%2C%22domain%22%3A%22madetechteam%22%7D%2C%22user%22%3A%7B%22id%22%3A%22UHN295AA0%22%2C%22username%22%3A%22tony%22%2C%22name%22%3A%22tony%22%2C%22team_id%22%3A%22T0B0XJCTC%22%7D%2C%22api_app_id%22%3A%22ANSD6N533%22%2C%22token%22%3A%22ceHc4m6dPr63SPqswlFQsfhD%22%2C%22container%22%3A%7B%22type%22%3A%22message%22%2C%22message_ts%22%3A%221572428564.002300%22%2C%22channel_id%22%3A%22CDCQLNMEF%22%2C%22is_ephemeral%22%3Atrue%7D%2C%22trigger_id%22%3A%22801820457346.11031624930.ef92ce73dd2d8e76340af4f241c28b1e%22%2C%22channel%22%3A%7B%22id%22%3A%22CDCQLNMEF%22%2C%22name%22%3A%22academy-2019-sum-aut%22%7D%2C%22response_url%22%3A%22https%3A%5C%2F%5C%2Fhooks.slack.com%5C%2Factions%5C%2FT0B0XJCTC%5C%2F814613123445%5C%2FYDP2bi3aPQWs2eFE3LKj58XC%22%2C%22actions%22%3A%5B%7B%22action_id%22%3A%22%3DtU%22%2C%22block_id%22%3A%223Yv%2Bu%22%2C%22text%22%3A%7B%22type%22%3A%22plain_text%22%2C%22text%22%3A%22Attend%22%2C%22emoji%22%3Atrue%7D%2C%22value%22%3A%22recWTcxEQVKjwpIIf%22%2C%22type%22%3A%22button%22%2C%22action_ts%22%3A%221572428585.731525%22%7D%5D%7D");
-
-            Assert.AreEqual("tony", spyToggleWorkshopAttendance._called.User);
-            Assert.AreEqual("recWTcxEQVKjwpIIf", spyToggleWorkshopAttendance._called.WorkshopId);
-
-
+            var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2017 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2015 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
+            responseBody.Should().Be(expectedJson);
         }
-        
+
         [Test]
         public void CanDeliverSlackMessageWithCorrectButton()
         {
@@ -115,14 +87,12 @@ namespace CryptoTechProject.Tests
             string firstjson = JsonConvert.SerializeObject(payload);
             var encoded = HttpUtility.UrlEncode(firstjson);
             
-            
             var fakeSlackWebClient = new WebClient();
             fakeSlackWebClient.UploadString("http://localhost:5054/attend", "POST", "payload="+encoded);
 
             var requestReceivedBySlack = slackSimulator.ReceivedRequests;
-            Assert.AreEqual("application/json",requestReceivedBySlack[0].ContentType);
-            Assert.IsTrue(requestReceivedBySlack[0].RequestBody.Contains("Unattend"));
-            
+            requestReceivedBySlack[0].ContentType.Should().Be("application/json");
+            requestReceivedBySlack[0].RequestBody.Should().Contain("Unattend");
             
             slackSimulator.Stop();
         }
@@ -138,13 +108,14 @@ namespace CryptoTechProject.Tests
             });
             thread.Start();
             SpinWait.SpinUntil(() => started);
+            
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5056/");
 
-            Assert.IsFalse(responseBody.Contains("button"));
-            Assert.IsFalse(responseBody.Contains("accessory"));
-            Assert.IsFalse(responseBody.Contains("Current number of attendees"));
-            Assert.AreEqual("application/json", webClient.ResponseHeaders["Content-Type"]);
+            responseBody.Should().NotContain("button");
+            responseBody.Should().NotContain("accessory");
+            responseBody.Should().NotContain("Current number of attendees");
+            webClient.ResponseHeaders["Content-Type"].Should().Be("application/json");
         }
         
         [Test]
@@ -158,12 +129,13 @@ namespace CryptoTechProject.Tests
             });
             thread.Start();
             SpinWait.SpinUntil(() => started);
+            
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5049/");
 
-
-            Assert.AreEqual(responseBody, "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:30 AM\\n\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:45 AM\\n\\n---------------------------------------------------------------------------------------------------------\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n05/01/2019 04:30 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}");
-            Assert.AreEqual("application/json", webClient.ResponseHeaders["Content-Type"]);
+            var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:30 AM\\n\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:45 AM\\n\\n---------------------------------------------------------------------------------------------------------\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n05/01/2019 04:30 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
+            responseBody.Should().Be(expectedJson);
+            webClient.ResponseHeaders["Content-Type"].Should().Be("application/json");
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CryptoTechProject.Domain;
+using FluentAssertions;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -22,7 +23,8 @@ namespace CryptoTechProject.Tests
             public void CanGetNoWorkshop()
             {
                 var response = new GetWorkshops(this).Execute();
-                Assert.IsEmpty(response.PresentableWorkshops);
+                
+                response.PresentableWorkshops.Should().BeEmpty();
             }
 
             [Test]
@@ -30,7 +32,8 @@ namespace CryptoTechProject.Tests
             {
                 _workshops.Add(new Workshop());
                 var response = new GetWorkshops(this).Execute();
-                Assert.IsNotEmpty(response.PresentableWorkshops);
+
+                response.PresentableWorkshops.Should().NotBeEmpty();
             }
 
             public List<Workshop> All()
@@ -40,7 +43,6 @@ namespace CryptoTechProject.Tests
 
             public void Update(Workshop workshop)
             {
-                throw new System.NotImplementedException();
             }
         }
     }
