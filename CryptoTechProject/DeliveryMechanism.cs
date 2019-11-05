@@ -18,7 +18,6 @@ namespace CryptoTechProject
         private IToggleWorkshopAttendance _toggleWorkshopAttendance;
         private IGetWorkshops _getWorkshops;
         private readonly string _port;
-
         public DeliveryMechanism(IToggleWorkshopAttendance toggleWorkshopAttendance, IGetWorkshops getWorkshops,
             string port)
         {
@@ -30,6 +29,7 @@ namespace CryptoTechProject
         public void Run(Action onStarted)
         {
             httpListener.Prefixes.Add($"http://+:{_port}/");
+           // httpListener.Prefixes.Add("http://*:443/");
             httpListener.Start();
             onStarted();
             while (true)
