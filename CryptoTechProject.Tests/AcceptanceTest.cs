@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CryptoTechProject.Boundary;
 using CryptoTechProject.Domain;
+using FluentAssertions;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -14,25 +15,34 @@ namespace CryptoTechProject.Tests
         private string TABLE_ID = "2";
         private string AIRTABLE_URL = "http://localhost:8080/";
 
-        AirtableSimulator airtableSimulator;
+        AirtableSimulator airtable;
+        private AirtableGateway _gateway;
+
+        private GetWorkshopsResponse GetWorkshops()
+        {
+            GetWorkshops getWorkshops = new GetWorkshops(_gateway);
+            GetWorkshopsResponse response = getWorkshops.Execute();
+            return response;
+        }
 
         [SetUp]
         public void SetUp()
         {
-            airtableSimulator = new AirtableSimulator();
-            airtableSimulator.Start();
+            airtable = new AirtableSimulator();
+            airtable.Start();
+            _gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
         }
 
         [TearDown]
         public void TearDown()
         {
-            airtableSimulator.Stop();
+            airtable.Stop();
         }
 
         [Test]
         public void CanGetTwoAirtableWorkshops()
         {
-            var expectedResponse = new AirtableResponseBuilder()
+            var getRecordsResponse = new AirtableResponseBuilder()
                 .AddRecord(
                     "rec4rdaOkafgV1Bqm",
                     new DateTime(2019, 8, 22, 8, 25, 28)
@@ -56,16 +66,9 @@ namespace CryptoTechProject.Tests
                 .WithSessionType("Workshop")
                 .Build();
 
-            airtableSimulator.SetUpAll(
-                TABLE_ID,
-                AIRTABLE_API_KEY,
-                expectedResponse
-            );
-
-
-            AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
-            GetWorkshops getWorkshops = new GetWorkshops(airtableGateway);
-            GetWorkshopsResponse response = getWorkshops.Execute();
+            airtable.SetUpAll(getRecordsResponse, TABLE_ID, AIRTABLE_API_KEY);
+            
+            var response = GetWorkshops();
 
             DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
             DateTimeOffset time = new DateTimeOffset(sourceDate,
@@ -78,20 +81,22 @@ namespace CryptoTechProject.Tests
 
             PresentableWorkshop[] presentableWorkshops = response.PresentableWorkshops;
 
-            Assert.AreEqual("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)",
-                presentableWorkshops[0].Name);
-            Assert.AreEqual("Barry", presentableWorkshops[0].Host);
-            Assert.AreEqual(time, presentableWorkshops[0].Time);
-            Assert.AreEqual("Everest, 2nd Foor", presentableWorkshops[0].Location);
-            Assert.AreEqual(60, presentableWorkshops[0].Duration);
-            Assert.AreEqual("Seminar", presentableWorkshops[0].Type);
-
-            Assert.AreEqual("Account Leadership - Roles & Responsibilities", response.PresentableWorkshops[1].Name);
-            Assert.AreEqual("Rory", presentableWorkshops[1].Host);
-            Assert.AreEqual(time2, presentableWorkshops[1].Time);
-            Assert.AreEqual("Everest", presentableWorkshops[1].Location);
-            Assert.AreEqual(60, presentableWorkshops[1].Duration);
-            Assert.AreEqual("Workshop", presentableWorkshops[1].Type);
+            var theFirstWorkshop = presentableWorkshops[0];
+            var theSecondWorkshop = presentableWorkshops[1];
+            
+            theFirstWorkshop.Name.Should().Be("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)");
+            theFirstWorkshop.Host.Should().Be("Barry");
+            theFirstWorkshop.Time.Should().Be(time);
+            theFirstWorkshop.Location.Should().Be("Everest, 2nd Foor");        
+            theFirstWorkshop.Duration.Should().Be(60);
+            theFirstWorkshop.Type.Should().Be("Seminar");
+            
+            theSecondWorkshop.Name.Should().Be("Account Leadership - Roles & Responsibilities");
+            theSecondWorkshop.Host.Should().Be("Rory");
+            theSecondWorkshop.Time.Should().Be(time2);
+            theSecondWorkshop.Location.Should().Be("Everest");
+            theSecondWorkshop.Duration.Should().Be(60);
+            theSecondWorkshop.Type.Should().Be("Workshop");
         }
 
         [Test]
@@ -111,21 +116,21 @@ namespace CryptoTechProject.Tests
                 .WithAttendees(new List<string>())
                 .Build();
 
-            airtableSimulator.SetUpFind(TABLE_ID, AIRTABLE_API_KEY, expectedResponse.Records[0], "ID000");
-            airtableSimulator.SetUpSave(TABLE_ID, AIRTABLE_API_KEY);
-
-            AirtableGateway gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
-            ToggleWorkshopAttendance attend = new ToggleWorkshopAttendance(gateway, gateway);
+            airtable.SetUpFind(TABLE_ID, AIRTABLE_API_KEY, expectedResponse.Records[0], "ID000");
+            airtable.SetUpSave(TABLE_ID, AIRTABLE_API_KEY);
+            
+            ToggleWorkshopAttendance attend = new ToggleWorkshopAttendance(_gateway, _gateway);
             ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
+            
             payload.User = "Maria";
             payload.WorkshopId = "ID000";
             attend.Execute(payload);
 
-            var requests = airtableSimulator.simulator.ReceivedRequests;
-            Console.WriteLine(requests);
-            var sentEmployee = requests[1].BodyAs<AirtableRequest>();
-
-            Assert.AreEqual("Maria", sentEmployee.Records[0].Fields.Attendees[0]);
+            var requests = airtable.simulator.ReceivedRequests;
+            var sentUser = requests[1].BodyAs<AirtableRequest>();
+            Fields fields = sentUser.Records[0].Fields;
+            
+            fields.Attendees[0].Should().Be("Maria");
         }
         
         [Test]
@@ -145,21 +150,21 @@ namespace CryptoTechProject.Tests
                 .WithAttendees(new List<string>(){"Maria", "Kat"})
                 .Build();
 
-            airtableSimulator.SetUpFind(TABLE_ID, AIRTABLE_API_KEY, expectedResponse.Records[0], "ID000");
-            airtableSimulator.SetUpSave(TABLE_ID, AIRTABLE_API_KEY);
+            airtable.SetUpFind(TABLE_ID, AIRTABLE_API_KEY, expectedResponse.Records[0], "ID000");
+            airtable.SetUpSave(TABLE_ID, AIRTABLE_API_KEY);
 
-            AirtableGateway gateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
-            ToggleWorkshopAttendance attend = new ToggleWorkshopAttendance(gateway, gateway);
+            ToggleWorkshopAttendance attend = new ToggleWorkshopAttendance(_gateway, _gateway);
             ToggleWorkshopAttendanceRequest payload = new ToggleWorkshopAttendanceRequest();
+            
             payload.User = "Maria";
             payload.WorkshopId = "ID000";
             attend.Execute(payload);
 
-            var requests = airtableSimulator.simulator.ReceivedRequests;
-            Console.WriteLine(requests);
-            var sentEmployee = requests[1].BodyAs<AirtableRequest>();
+            var requests = airtable.simulator.ReceivedRequests;
+            var sentUser = requests[1].BodyAs<AirtableRequest>();
+            Fields fields = sentUser.Records[0].Fields;
 
-            Assert.IsFalse(sentEmployee.Records[0].Fields.Attendees.Contains("Maria"));
+            fields.Attendees.Should().NotContain("Maria");
         }
     }
 }
