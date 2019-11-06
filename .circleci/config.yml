@@ -9,22 +9,21 @@ jobs:
       - image: microsoft/dotnet:3.0-sdk
     steps:
       - checkout
-      - run: dotnet restore
-      - run: dotnet build
+      - run: dotnet test
+      - run: dotnet build -c Release
       - setup_remote_docker:
           docker_layer_caching: true
 workflows:
   build-and-deploy:
     jobs:
       - aws-ecr/build-and-push-image:
-          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+          account-url: AWS_ACCOUNT_URL
           repo: "${AWS_RESOURCE_NAME_PREFIX}"
-          region: ${AWS_DEFAULT_REGION}
+          region: AWS_DEFAULT_REGION
           tag: "${CIRCLE_SHA1}"
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
-          aws-region: ${AWS_DEFAULT_REGION}
-          family: "${AWS_RESOURCE_NAME_PREFIX}-service"
-          cluster-name: "${AWS_RESOURCE_NAME_PREFIX}-cluster"
-          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}"
+          aws-region: AWS_DEFAULT_REGION
+          family: "marketplace-app-task"
+          cluster-name: "Marketplace"
