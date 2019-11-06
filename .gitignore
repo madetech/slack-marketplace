@@ -38,7 +38,7 @@ Desktop.ini
 .props
 .idea
 
-# Ninamma specific :D
+# Terraform things
 terraform.tfstate
 terraform.tfstate.backup
 .terraform/
