@@ -41,6 +41,6 @@ Desktop.ini
 # Terraform things
 terraform.tfstate
 terraform.tfstate.backup
-.terraform/
+.terraform/plugin/
 terraform/templates/
 
