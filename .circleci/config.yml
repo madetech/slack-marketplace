@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 orbs:
   aws-ecr: circleci/aws-ecr@6.5.0
   aws-ecs: circleci/aws-ecs@1.0.0
@@ -33,14 +32,3 @@ workflows:
           cluster-name: ''
           service-name: ''
           container-image-name-updates: ''
-=======
-version: 2
-jobs:
-  build:
-    docker:
-      - image: debian:stretch
-
-    steps:
-      - checkout
-      - run: echo "A first hello"
->>>>>>> a246e2336d45d2d5b2598e812b6e9302afc5b401
