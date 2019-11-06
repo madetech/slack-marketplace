@@ -37,3 +37,10 @@ Desktop.ini
 .assests.json
 .props
 .idea
+
+# Ninamma specific :D
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+terraform/templates/
+
