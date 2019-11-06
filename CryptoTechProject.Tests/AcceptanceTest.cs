@@ -166,5 +166,91 @@ namespace CryptoTechProject.Tests
 
             fields.Attendees.Should().NotContain("Maria");
         }
+        
+        [Test]
+        public void DoesNotShowOldWorkshops()
+        {
+            var getRecordsResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)")
+                .WithHost("Barry")
+                .WithCategories("Delivery")
+                .WithTime(2019, 10, 18, 13, 0, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                .AddRecord(
+                    "reca7W6WxWubIR7CK",
+                    new DateTime(2019, 9, 27, 5, 24, 25)
+                )
+                .WithName("Account Leadership - Roles & Responsibilities")
+                .WithHost("Rory")
+                .WithCategories("Sales", "Workshop", "Life Skills", "Business")
+                .WithTime(2020, 10, 18, 14, 30, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest")
+                .WithSessionType("Workshop")
+                .Build();
+
+            airtable.SetUpAll(getRecordsResponse, TABLE_ID, AIRTABLE_API_KEY);
+            
+            var response = GetWorkshops();
+
+            DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
+            DateTimeOffset time = new DateTimeOffset(sourceDate,
+                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
+
+
+            DateTime sourceDate2 = new DateTime(2020, 10, 18, 15, 30, 0);
+            DateTimeOffset time2 = new DateTimeOffset(sourceDate2,
+                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate2));
+
+            PresentableWorkshop[] presentableWorkshops = response.PresentableWorkshops;
+
+            var theFirstWorkshop = presentableWorkshops[0];
+            var theSecondWorkshop = presentableWorkshops[1];
+            
+            
+            theFirstWorkshop.Name.Should().Be("Account Leadership - Roles & Responsibilities");
+            theFirstWorkshop.Host.Should().Be("Rory");
+            theFirstWorkshop.Time.Should().Be(time2);
+            theFirstWorkshop.Location.Should().Be("Everest");
+            theFirstWorkshop.Duration.Should().Be(60);
+            theFirstWorkshop.Type.Should().Be("Workshop");
+
+            theFirstWorkshop.Should().BeNull();
+        }
+        
+        [Test]
+        public void DoesNotShowRecordsWithoutTitles()
+        {
+            var getRecordsResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                )
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                .AddRecord(
+                    "reca7W6WxWubIR7CK",
+                    new DateTime(2019, 9, 27, 5, 24, 25)
+                )
+                .Build();
+
+            airtable.SetUpAll(getRecordsResponse, TABLE_ID, AIRTABLE_API_KEY);
+            
+            var response = GetWorkshops();
+
+            PresentableWorkshop[] presentableWorkshops = response.PresentableWorkshops;
+
+            presentableWorkshops.Should().BeEmpty();
+
+        }
+        
+        
+
     }
 }

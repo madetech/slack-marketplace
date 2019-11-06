@@ -16,7 +16,6 @@ namespace CryptoTechProject.Tests
     public class DeliveryMechanismTest
     
     {
-        public FluentSimulator simulator;
         
         [Test]
         public void CanGetNoWorkshopsAsSlackMessage()
