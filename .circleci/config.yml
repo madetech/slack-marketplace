@@ -31,6 +31,8 @@ workflows:
   terraform:
     jobs:
       - terraform/plan:
-          working_directory: ./terraform
+          working_directory: /terraform
       - terraform/apply:
-          working_directory: ./terraform
+          requires:
+            - terraform/plan
+          working_directory: /terraform
