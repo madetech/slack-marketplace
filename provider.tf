@@ -1,12 +1,13 @@
 provider "aws" {
   version = "~> 2.34"
   region = var.aws_region
-  shared_credentials_file = "$HOME/.aws/credentials"
-  profile                 = "default"
+  skip_region_validation = true
+  shared_credentials_file = "~/.aws/credentials"
+  profile = "default"
 }
 
-resource "aws_s3_bucket" "terraform-state-storage-s3" {
-  bucket = "terraform-remote-state-storage-s3"
+resource "aws_s3_bucket" "terraform-state-storage-s3-3456789-marketplace-thing" {
+  bucket = "terraform-marketplace-storage-bucket-3334444555-adjfhfdjsalkjd"
 
   versioning {
     enabled = true
@@ -17,6 +18,15 @@ resource "aws_s3_bucket" "terraform-state-storage-s3" {
   }
 
   tags {
-    Name = "S3 Remote Terraform State Store"
+    Name = "S3 Remote Terraform State Store 45678888"
   }
+}
+
+terraform {
+  backend "s3" {
+encrypt = true
+bucket = "terraform-marketplace-storage-bucket-3334444555-adjfhfdjsalkjd"
+region = "eu-west-2"
+key = "terraform.tfstate"
+}
 }
