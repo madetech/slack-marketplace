@@ -1,11 +1,10 @@
+version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.5.0
   aws-ecs: circleci/aws-ecs@1.0.0
-  tf: ngs/terraform@0.0.1
-version: 2.1
+  terraform: axiamed/terraform@0.1.0
 jobs:
   build:
-    working_directory: terraform/
     docker:
       - image: microsoft/dotnet:3.0-sdk
     steps:
@@ -29,18 +28,9 @@ workflows:
           family: "marketplace-app-task"
           cluster-name: "Marketplace"
           container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=latest"
-  tf:
+  terraform:
     jobs:
-      - tf/validate:
-          name: validate
-      - tf/plan:
-          name: plan
-          requires:
-            - validate
-      - tf/apply:
-          name: apply
-          requires:
-            - plan
-          filters:
-            branches:
-              only: master
+      - terraform/plan:
+          working_directory: ./terraform
+      - terraform/apply:
+          working_directory: ./terraform
