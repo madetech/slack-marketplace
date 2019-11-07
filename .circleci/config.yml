@@ -5,7 +5,7 @@ orbs:
 version: 2.1
 jobs:
   build:
-    working_directory: ~/repos/crypto-tech
+    working_directory: terraform/
     docker:
       - image: microsoft/dotnet:3.0-sdk
     steps:
