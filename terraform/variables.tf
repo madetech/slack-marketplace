@@ -25,6 +25,7 @@ variable "app_image" {
 
 variable "app_port" {
   description = "Port exposed by the docker image to redirect traffic to"
+  type = number
   default     = 5000
 }
 
