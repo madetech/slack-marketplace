@@ -17,7 +17,7 @@ namespace CryptoTechProject.Tests
             simulator.Get("/v0/" + TABLE_ID + "/Marketplace")
                 .WithParameter("maxRecords", maxRecords)
                 .WithParameter("api_key", AIRTABLE_API_KEY)
-                .WithParameter("view", "Upcoming")
+                .WithParameter("view", "NOTOUCHY")
                 .Responds(expectedResponse);
         
         public void SetUpFind(string TABLE_ID, string AIRTABLE_API_KEY, AirtableResponse.WorkshopRecord expectedResponse, string workshopID) =>
