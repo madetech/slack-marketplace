@@ -2,7 +2,8 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.5.0
   aws-ecs: circleci/aws-ecs@1.0.0
-  terraform: axiamed/terraform@0.1.0
+  
+  
 jobs:
   build:
     docker:
@@ -13,6 +14,34 @@ jobs:
       - run: dotnet build -c Release
       - setup_remote_docker:
           docker_layer_caching: true
+          
+  plan_deployment:
+    docker:
+      - image: hashicorp/terraform:light
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: cd terraform && terraform init
+      - run: cd terraform && terraform plan -out terraform.plan
+      - run: mkdir -p workspace && cp terraform/terraform.plan workspace/terraform.plan
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - terraform.plan
+
+  action_deployment:
+    docker:
+      - image: hashicorp/terraform:light
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - attach_workspace:
+          at: workspace
+      - run: cp workspace/terraform.plan terraform/terraform.plan
+      - run: cd terraform && terraform init
+      - run: cd terraform && terraform apply -auto-approve terraform.plan        
+          
+          
 workflows:
   build-and-deploy:
     jobs:
@@ -31,13 +60,7 @@ workflows:
           container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}"
   terraform:
     jobs:
-      - terraform/plan:
-          pre-steps: 
-            - checkout
-          working_directory: ~/project/terraform
-      - terraform/apply:
-          pre-steps:
-            - checkout
+      - plan_deployment
+      - action_deployment:
           requires:
-            - terraform/plan
-          working_directory: ~/project/terraform
+            - plan_deployment
