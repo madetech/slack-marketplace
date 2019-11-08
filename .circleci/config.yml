@@ -20,14 +20,14 @@ workflows:
           account-url: AWS_ACCOUNT_URL
           repo: "${AWS_RESOURCE_NAME_PREFIX}"
           region: AWS_DEFAULT_REGION
-          tag: "latest"
+          tag: "${CIRCLE_SHA1}"
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
           aws-region: AWS_DEFAULT_REGION
           family: "marketplace-app-task"
           cluster-name: "Marketplace"
-          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=latest"
+          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}"
   terraform:
     jobs:
       - terraform/plan:
