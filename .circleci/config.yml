@@ -51,16 +51,10 @@ workflows:
           repo: "${AWS_RESOURCE_NAME_PREFIX}"
           region: AWS_DEFAULT_REGION
           tag: "${CIRCLE_SHA1}"
-      - aws-ecs/deploy-service-update:
+      - plan_deployment:
           requires:
+            - build
             - aws-ecr/build-and-push-image
-          aws-region: AWS_DEFAULT_REGION
-          family: "marketplace-app-task"
-          cluster-name: "Marketplace"
-          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}"
-  terraform:
-    jobs:
-      - plan_deployment
       - action_deployment:
           requires:
             - plan_deployment
