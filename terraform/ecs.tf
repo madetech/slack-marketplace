@@ -11,6 +11,8 @@ data "template_file" "marketplace_app" {
     fargate_cpu    = var.fargate_cpu
     fargate_memory = var.fargate_memory
     aws_region     = var.aws_region
+    AIRTABLE_API_KEY = var.airtable_api_key
+    AIRTABLE_TABLE_ID = var.airtable_table_id
   }
 }
 

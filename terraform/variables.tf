@@ -46,3 +46,13 @@ variable "fargate_memory" {
   description = "Fargate instance memory to provision (in MiB)"
   default     = "2048"
 }
+
+variable "airtable_table_id" {
+  description = "Airtable table id"
+  type = string
+}
+
+variable "airtable_api_key" {
+  description = "Airtable api key"
+  type = string
+}
