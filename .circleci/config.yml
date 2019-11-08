@@ -22,7 +22,7 @@ jobs:
     steps:
       - checkout
       - run: cd terraform && terraform init
-      - run: cd terraform && terraform plan -var app_image="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}" -out terraform.plan
+      - run: cd terraform && terraform plan -var image_tag="${CIRCLE_SHA1}" -out terraform.plan
       - run: mkdir -p workspace && cp terraform/terraform.plan workspace/terraform.plan
       - persist_to_workspace:
           root: workspace
