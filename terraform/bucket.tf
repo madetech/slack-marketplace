@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "terraform-cryptotech-marketplace-storage-bucket" {
   bucket = "terraform-cryptotech-marketplace-storage-bucket"
-  acl = "private"
+  acl    = "private"
   region = "eu-west-2"
 
   versioning {

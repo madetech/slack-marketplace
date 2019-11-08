@@ -6,12 +6,12 @@ data "template_file" "marketplace_app" {
   template = file("./templates/ecs/marketplace_app.json.tpl")
 
   vars = {
-    app_image      = var.app_image
-    app_port       = var.app_port
-    fargate_cpu    = var.fargate_cpu
-    fargate_memory = var.fargate_memory
-    aws_region     = var.aws_region
-    AIRTABLE_API_KEY = var.airtable_api_key
+    app_image         = var.app_image
+    app_port          = var.app_port
+    fargate_cpu       = var.fargate_cpu
+    fargate_memory    = var.fargate_memory
+    aws_region        = var.aws_region
+    AIRTABLE_API_KEY  = var.airtable_api_key
     AIRTABLE_TABLE_ID = var.airtable_table_id
   }
 }

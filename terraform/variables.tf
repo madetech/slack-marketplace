@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "ecs_task_execution_role_name" {
   description = "ECS task execution role name"
-  default = "task_execution_role"
+  default     = "task_execution_role"
 }
 
 //variable "ecs_auto_scale_role_name" {
@@ -39,20 +39,22 @@ variable "health_check_path" {
 
 variable "fargate_cpu" {
   description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
-  default     = "1024"
+  type        = number
+  default     = 1024
 }
 
 variable "fargate_memory" {
   description = "Fargate instance memory to provision (in MiB)"
-  default     = "2048"
+  type        = number
+  default     = 2048
 }
 
 variable "airtable_table_id" {
   description = "Airtable table id"
-  type = string
+  type        = string
 }
 
 variable "airtable_api_key" {
   description = "Airtable api key"
-  type = string
+  type        = string
 }
