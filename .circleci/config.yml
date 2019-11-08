@@ -22,7 +22,7 @@ jobs:
     steps:
       - checkout
       - run: cd terraform && terraform init
-      - run: cd terraform && terraform plan -out terraform.plan
+      - run: cd terraform && terraform plan -var app_image="${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}" -out terraform.plan
       - run: mkdir -p workspace && cp terraform/terraform.plan workspace/terraform.plan
       - persist_to_workspace:
           root: workspace
@@ -39,7 +39,7 @@ jobs:
           at: workspace
       - run: cp workspace/terraform.plan terraform/terraform.plan
       - run: cd terraform && terraform init
-      - run: cd terraform && terraform apply -auto-approve -var app_image="${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}" terraform.plan        
+      - run: cd terraform && terraform apply -auto-approve terraform.plan        
           
           
 workflows:
