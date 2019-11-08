@@ -32,8 +32,12 @@ workflows:
   terraform:
     jobs:
       - terraform/plan:
+          pre-steps: 
+            - checkout
           working_directory: ~/project/terraform
       - terraform/apply:
+          pre-steps:
+            - checkout
           requires:
             - terraform/plan
           working_directory: ~/project/terraform
