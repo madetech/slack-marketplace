@@ -18,8 +18,8 @@ variable "az_count" {
   default     = "2"
 }
 
-variable "app_image" {
-  description = "Docker image to run in the ECS cluster"
+variable "image_tag" {
+  description = "Docker image to deploy to the cluster"
   type        = string
 }
 
