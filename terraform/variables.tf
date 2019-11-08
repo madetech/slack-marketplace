@@ -20,12 +20,12 @@ variable "az_count" {
 
 variable "app_image" {
   description = "Docker image to run in the ECS cluster"
-  default     = "164244126891.dkr.ecr.eu-west-2.amazonaws.com/ninamma-trial:latest"
+  type        = string
 }
 
 variable "app_port" {
   description = "Port exposed by the docker image to redirect traffic to"
-  type = number
+  type        = number
   default     = 5000
 }
 

@@ -39,7 +39,7 @@ jobs:
           at: workspace
       - run: cp workspace/terraform.plan terraform/terraform.plan
       - run: cd terraform && terraform init
-      - run: cd terraform && terraform apply -auto-approve terraform.plan        
+      - run: cd terraform && terraform apply -auto-approve -var app_image="${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}" terraform.plan        
           
           
 workflows:
