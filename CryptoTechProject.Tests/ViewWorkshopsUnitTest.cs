@@ -13,6 +13,16 @@ namespace CryptoTechProject.Tests
         public class WorkshopsUnitTest : IWorkshopsGateway
         {
             private List<Workshop> _workshops;
+            
+            public List<Workshop> All()
+            {
+                return _workshops;
+            }
+            
+
+            public void Update(Workshop workshop)
+            {
+            }
 
             [SetUp]
             public void Setup()
@@ -38,31 +48,6 @@ namespace CryptoTechProject.Tests
                 var response = new GetWorkshops(this).Execute();
 
                 response.PresentableWorkshops.Should().NotBeEmpty();
-            }
-
-            [Test]
-            public void ReturnsWorkshopsWithADate()
-            {
-                _workshops.Add(item: new Workshop()
-                    {
-                        name = "Something",
-                        host = "somethingelse"
-                    }
-                );
-
-                var response = new GetWorkshops(this).Execute();
-
-                response.PresentableWorkshops.Should().BeNull();
-            }
-
-            public List<Workshop> All()
-            {
-                return _workshops;
-            }
-            
-
-            public void Update(Workshop workshop)
-            {
             }
         }
     }

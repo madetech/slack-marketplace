@@ -218,7 +218,6 @@ namespace CryptoTechProject.Tests
                 .WithName("Account Leadership - Roles & Responsibilities")
                 .WithHost("Rory")
                 .WithCategories("Sales", "Workshop", "Life Skills", "Business")
-                .WithTime(2019, 10, 18, 14, 30, 0)
                 .WithDurationInSeconds(3600)
                 .WithLocation("Everest")
                 .WithSessionType("Workshop")
@@ -228,9 +227,8 @@ namespace CryptoTechProject.Tests
 
             AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
             var workshops = airtableGateway.All();
-
+            workshops.Count.Should().Be(1);
             workshops[0].name.Should().Be("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)");
-            workshops[1].name.Should().Be("Account Leadership - Roles & Responsibilities");
         }
         
     }

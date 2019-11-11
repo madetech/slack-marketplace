@@ -168,7 +168,7 @@ namespace CryptoTechProject.Tests
         }
 
         [Test]
-        public void doesntReturnAWorkshopWithNoDate()
+        public void WillNotReturnAWorkshopWithoutDate()
         {
             var getRecordsResponse = new AirtableResponseBuilder()
                 .AddRecord(
@@ -197,7 +197,7 @@ namespace CryptoTechProject.Tests
             
             var response = GetWorkshops();
             
-            DateTime sourceDate = new DateTime(2019, 10, 18, 13, 00, 0);
+            DateTime sourceDate = new DateTime(2019, 10, 18, 14, 00, 0);
             DateTimeOffset time = new DateTimeOffset(sourceDate,
                 TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
 

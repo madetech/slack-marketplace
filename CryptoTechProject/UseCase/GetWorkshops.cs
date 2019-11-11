@@ -30,11 +30,6 @@ namespace CryptoTechProject
             };
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].time == DateTime.MinValue)
-                {
-                    continue;
-                }
-                
                 getWorkshopsResponse.PresentableWorkshops[i] = new PresentableWorkshop()
                 {
                     ID = list[i].id,

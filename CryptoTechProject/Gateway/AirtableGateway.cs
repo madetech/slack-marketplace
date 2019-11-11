@@ -39,6 +39,11 @@ namespace CryptoTechProject
 
             for (int i = 0; i < airtableResponse.Records.Length; i++)
             {
+                if (airtableResponse.Records[i].Fields.Time == DateTime.MinValue)
+                {
+                    continue;
+                }
+
                 Workshop workshop = new Workshop()
                 {
                     id = airtableResponse.Records[i].ID,
