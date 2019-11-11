@@ -197,5 +197,41 @@ namespace CryptoTechProject.Tests
             requests[0].Headers["Authorization"].Should().Be("Bearer " + AIRTABLE_API_KEY);
         }
         
+        [Test]
+        public void CanOnlyGetWorkshopsWithDates()
+        {
+            var expectedResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)")
+                .WithHost("Barry")
+                .WithCategories("Delivery")
+                .WithTime(2019, 10, 18, 13, 0, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                .AddRecord(
+                    "reca7W6WxWubIR7CK",
+                    new DateTime(2019, 8, 27, 5, 24, 25)
+                )
+                .WithName("Account Leadership - Roles & Responsibilities")
+                .WithHost("Rory")
+                .WithCategories("Sales", "Workshop", "Life Skills", "Business")
+                .WithTime(2019, 10, 18, 14, 30, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest")
+                .WithSessionType("Workshop")
+                .Build();
+
+            airtableSimulator.SetUpAll(expectedResponse, TABLE_ID, AIRTABLE_API_KEY);
+
+            AirtableGateway airtableGateway = new AirtableGateway(AIRTABLE_URL, AIRTABLE_API_KEY, TABLE_ID);
+            var workshops = airtableGateway.All();
+
+            workshops[0].name.Should().Be("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)");
+            workshops[1].name.Should().Be("Account Leadership - Roles & Responsibilities");
+        }
+        
     }
 }

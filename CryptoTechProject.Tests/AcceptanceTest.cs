@@ -166,5 +166,54 @@ namespace CryptoTechProject.Tests
 
             fields.Attendees.Should().NotContain("Maria");
         }
+
+        [Test]
+        public void doesntReturnAWorkshopWithNoDate()
+        {
+            var getRecordsResponse = new AirtableResponseBuilder()
+                .AddRecord(
+                    "rec4rdaOkafgV1Bqm",
+                    new DateTime(2019, 8, 22, 8, 25, 28)
+                ).WithName("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)")
+                .WithHost("Barry")
+                .WithCategories("Delivery")
+                .WithTime(2019, 10, 18, 13, 0, 0)
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest, 2nd Foor")
+                .WithSessionType("Seminar")
+                .AddRecord(
+                    "reca7W6WxWubIR7CK",
+                    new DateTime(2019, 8, 27, 5, 24, 25)
+                )
+                .WithName("Account Leadership - Roles & Responsibilities")
+                .WithHost("Santa")
+                .WithCategories("Sales", "Workshop", "Life Skills", "Business")
+                .WithDurationInSeconds(3600)
+                .WithLocation("Everest")
+                .WithSessionType("Workshop")
+                .Build();
+
+            airtable.SetUpAll(getRecordsResponse, TABLE_ID, AIRTABLE_API_KEY);
+            
+            var response = GetWorkshops();
+            
+            DateTime sourceDate = new DateTime(2019, 10, 18, 13, 00, 0);
+            DateTimeOffset time = new DateTimeOffset(sourceDate,
+                TimeZoneInfo.FindSystemTimeZoneById("Europe/London").GetUtcOffset(sourceDate));
+
+            PresentableWorkshop[] presentableWorkshops = response.PresentableWorkshops;
+
+            var theFirstWorkshop = presentableWorkshops[0];
+
+            presentableWorkshops.Length.Should().Be(1);
+            
+            theFirstWorkshop.Name.Should().Be("Team Performance: Team Agile-Lean maturity 'measures' in practice (at DfE and Hackney)");
+            theFirstWorkshop.Host.Should().Be("Barry");
+            theFirstWorkshop.Time.Should().Be(time);
+            theFirstWorkshop.Location.Should().Be("Everest, 2nd Foor");        
+            theFirstWorkshop.Duration.Should().Be(60);
+            theFirstWorkshop.Type.Should().Be("Seminar");
+            
+        }
     }
 }

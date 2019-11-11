@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CryptoTechProject.Domain;
 using FluentAssertions;
@@ -30,16 +31,35 @@ namespace CryptoTechProject.Tests
             [Test]
             public void CanGetAWorkshop()
             {
-                _workshops.Add(new Workshop());
+                _workshops.Add(new Workshop()
+                {
+                    time = DateTime.Now
+                });
                 var response = new GetWorkshops(this).Execute();
 
                 response.PresentableWorkshops.Should().NotBeEmpty();
+            }
+
+            [Test]
+            public void ReturnsWorkshopsWithADate()
+            {
+                _workshops.Add(item: new Workshop()
+                    {
+                        name = "Something",
+                        host = "somethingelse"
+                    }
+                );
+
+                var response = new GetWorkshops(this).Execute();
+
+                response.PresentableWorkshops.Should().BeNull();
             }
 
             public List<Workshop> All()
             {
                 return _workshops;
             }
+            
 
             public void Update(Workshop workshop)
             {
