@@ -78,7 +78,6 @@ namespace CryptoTechProject
                 }
             };
             string jsonPatchData = JsonConvert.SerializeObject(patchData);
-            Console.WriteLine(jsonPatchData);
             WebClient client = new WebClient();
             client.Encoding = System.Text.Encoding.UTF8;
             client.Headers.Add("Authorization", "Bearer " + _apiKey);
