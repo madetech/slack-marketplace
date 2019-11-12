@@ -35,6 +35,10 @@
       {
         "name": "AIRTABLE_URL",
         "value": "https://api.airtable.com/"
+      },
+      {
+        "name": "SENTRY_DSN",
+        "value": "${SENTRY_DSN}"
       }
     ]
   }

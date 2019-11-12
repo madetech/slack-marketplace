@@ -59,3 +59,8 @@ variable "airtable_api_key" {
   description = "Airtable api key"
   type        = string
 }
+
+variable "sentry_dsn" {
+  description = "Sentry DSN"
+  type        = string
+}
