@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace CryptoTechProject.Tests
 {
-    public class ViewWorkshopsTest
+    public class GetWorkshopsTest
     {
         [TestFixture]
         public class WorkshopsUnitTest : IWorkshopsGateway

@@ -18,6 +18,7 @@ namespace CryptoTechProject
         private IToggleWorkshopAttendance _toggleWorkshopAttendance;
         private IGetWorkshops _getWorkshops;
         private readonly string _port;
+
         public DeliveryMechanism(IToggleWorkshopAttendance toggleWorkshopAttendance, IGetWorkshops getWorkshops,
             string port)
         {
@@ -29,7 +30,6 @@ namespace CryptoTechProject
         public void Run(Action onStarted)
         {
             httpListener.Prefixes.Add($"http://+:{_port}/");
-           // httpListener.Prefixes.Add("http://*:443/");
             httpListener.Start();
             onStarted();
             while (true)
@@ -109,7 +109,7 @@ namespace CryptoTechProject
         private static SlackMessage ToSlackMessage(GetWorkshopsResponse workshops, string user)
         {
             var sessions = workshops.PresentableWorkshops;
-            
+
             SlackMessage slackMessage = new SlackMessage
             {
                 Blocks = new List<SlackMessage.SlackMessageBlock>()
@@ -120,7 +120,7 @@ namespace CryptoTechProject
                 Text = new SlackMessage.SectionBlockText
                 {
                     Type = "mrkdwn",
-                    Text = "*Workshops*"
+                    Text = "*Sessions*"
                 }
             });
 
@@ -145,7 +145,7 @@ namespace CryptoTechProject
             {
                 DateTimeOffset sessionEndTime =
                     sessions[i].Time.AddMinutes(sessions[i].Duration);
-                
+
                 string attendanceStatus = "Attend";
                 if (sessions[i].Attendees.Contains(user))
                 {
@@ -166,7 +166,6 @@ namespace CryptoTechProject
                             Text = showcaseText
                         }
                     });
-                    
                 }
                 else
                 {
@@ -176,7 +175,7 @@ namespace CryptoTechProject
                         {
                             Type = "mrkdwn",
                             Text = $"*{sessions[i].Name}*\n" +
-                                   $"{sessions[i].Time.ToString( "HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
+                                   $"{sessions[i].Time.ToString("HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
                                    $"{sessions[i].Host}\n" +
                                    $"Current number of attendees: {sessions[i].Attendees.Count}"
                         },
@@ -194,7 +193,7 @@ namespace CryptoTechProject
 
                 if (i < (sessions.Length - 1))
                 {
-                    if (sessions[i].Time.Date != sessions[i+1].Time.Date)
+                    if (sessions[i].Time.Date != sessions[i + 1].Time.Date)
                     {
                         slackMessage.Blocks.Add(new SlackMessage.DividerBlock
                         {
@@ -205,7 +204,7 @@ namespace CryptoTechProject
                             Text = new SlackMessage.SectionBlockText
                             {
                                 Type = "mrkdwn",
-                                Text = $"*{sessions[i+1].Time.ToString("dd/MM/yyyy")}*"
+                                Text = $"*{sessions[i + 1].Time.ToString("dd/MM/yyyy")}*"
                             }
                         });
                     }
