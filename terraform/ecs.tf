@@ -13,6 +13,7 @@ data "template_file" "marketplace_app" {
     aws_region        = var.aws_region
     AIRTABLE_API_KEY  = var.airtable_api_key
     AIRTABLE_TABLE_ID = var.airtable_table_id
+    SENTRY_DSN        = var.sentry_dsn
   }
 }
 
