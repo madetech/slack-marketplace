@@ -108,9 +108,11 @@ namespace CryptoTechProject
 
         private static SlackMessage ToSlackMessage(GetWorkshopsResponse workshops, string user)
         {
+            var sessions = workshops.PresentableWorkshops;
+            
             SlackMessage slackMessage = new SlackMessage
             {
-                Blocks = new SlackMessage.SlackMessageBlock[workshops.PresentableWorkshops.Length + 2]
+                Blocks = new SlackMessage.SlackMessageBlock[sessions.Length + 2]
             };
 
             slackMessage.Blocks[0] = new SlackMessage.TitleSectionBlock
@@ -127,24 +129,27 @@ namespace CryptoTechProject
                 Type = "divider"
             };
 
-            for (int i = 0; i < workshops.PresentableWorkshops.Length; i++)
+            for (int i = 0; i < sessions.Length; i++)
             {
+                DateTimeOffset sessionEndTime =
+                    sessions[i].Time.AddMinutes(sessions[i].Duration);
+                
                 string attendanceStatus = "Attend";
-                if (workshops.PresentableWorkshops[i].Attendees.Contains(user))
+                if (sessions[i].Attendees.Contains(user))
                 {
                     attendanceStatus = "Unattend";
                 }
+                
 
-
-                if (workshops.PresentableWorkshops[i].Type == "Showcase")
+                if (sessions[i].Type == "Showcase")
                 {
-                    string showcaseText = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
-                                          $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
-                                          $"{workshops.PresentableWorkshops[i].Host}\n";
+                    string showcaseText = $"*{sessions[i].Name}*\n" +
+                                          $"{sessions[i].Time.ToString("dd/MM/yyyy HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
+                                          $"{sessions[i].Host}\n";
 
-                    if (i < workshops.PresentableWorkshops.Length - 1)
-                        if (workshops.PresentableWorkshops[i].Time.Day !=
-                            workshops.PresentableWorkshops[i + 1].Time.Day)
+                    if (i < sessions.Length - 1)
+                        if (sessions[i].Time.Day !=
+                            sessions[i + 1].Time.Day)
                             showcaseText = showcaseText +
                                            "---------------------------------------------------------------------------------------------------------\n";
                     slackMessage.Blocks[i + 2] = new SlackMessage.ShowcaseSectionBlock
@@ -158,15 +163,17 @@ namespace CryptoTechProject
                 }
                 else
                 {
+                    
+
                     slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
                     {
                         Text = new SlackMessage.SectionBlockText
                         {
                             Type = "mrkdwn",
-                            Text = $"*{workshops.PresentableWorkshops[i].Name}*\n" +
-                                   $"{workshops.PresentableWorkshops[i].Time.ToString("dd/MM/yyyy hh:mm tt")}\n" +
-                                   $"{workshops.PresentableWorkshops[i].Host}\n" +
-                                   $"Current number of attendees: {workshops.PresentableWorkshops[i].Attendees.Count}"
+                            Text = $"*{sessions[i].Name}*\n" +
+                                   $"{sessions[i].Time.ToString("dd/MM/yyyy HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
+                                   $"{sessions[i].Host}\n" +
+                                   $"Current number of attendees: {sessions[i].Attendees.Count}"
                         },
                         Accessory = new SlackMessage.SectionBlock.AccessoryBlock
                         {
@@ -175,7 +182,7 @@ namespace CryptoTechProject
                                 Type = "plain_text",
                                 Text = attendanceStatus
                             },
-                            Value = workshops.PresentableWorkshops[i].ID
+                            Value = sessions[i].ID
                         }
                     };
                 }

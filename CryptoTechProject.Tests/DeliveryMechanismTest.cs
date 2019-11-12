@@ -51,7 +51,7 @@ namespace CryptoTechProject.Tests
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5052/");
             
-            var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2017 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2015 01:01 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
+            var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2017 01:01 - 01:02\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 01:01 - 02:01\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2015 01:01 - 03:01\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
             responseBody.Should().Be(expectedJson);
         }
 
@@ -133,7 +133,7 @@ namespace CryptoTechProject.Tests
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5049/");
 
-            var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:30 AM\\n\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:45 AM\\n\\n---------------------------------------------------------------------------------------------------------\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n05/01/2019 04:30 AM\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
+            var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Workshops*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:30 - 05:30\\n\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01/01/2019 04:45 - 05:45\\n\\n---------------------------------------------------------------------------------------------------------\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n05/01/2019 04:30 - 05:30\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
             responseBody.Should().Be(expectedJson);
             webClient.ResponseHeaders["Content-Type"].Should().Be("application/json");
         }
@@ -183,16 +183,19 @@ namespace CryptoTechProject.Tests
                     new PresentableWorkshop
                     {
                         Time = new DateTimeOffset(2017, 1, 1, 1, 1, 1, TimeSpan.Zero),
+                        Duration = 1,
                         Attendees = new List<string>()
                     },
                     new PresentableWorkshop
                     {
                         Time = new DateTimeOffset(2019, 1, 1, 1, 1, 1, TimeSpan.Zero),
+                        Duration = 60,
                         Attendees = new List<string>()
                     },
                     new PresentableWorkshop
                     {
                         Time = new DateTimeOffset(2015, 1, 1, 1, 1, 1, TimeSpan.Zero),
+                        Duration = 120,
                         Attendees = new List<string>()
                     }
                 }
@@ -230,18 +233,21 @@ namespace CryptoTechProject.Tests
                     {
                         Type = "Showcase",
                         Time = new DateTimeOffset(2019, 1, 1, 4, 30, 1, TimeSpan.Zero),
+                        Duration = 60,
                         Attendees = new List<string>()
                     },
                     new PresentableWorkshop
                     {
                         Type = "Showcase",
                         Time = new DateTimeOffset(2019, 1, 1, 4, 45, 1, TimeSpan.Zero),
+                        Duration = 60,
                         Attendees = new List<string>()
                     },
                     new PresentableWorkshop
                     {
                         Type = "Workshop",
                         Time = new DateTimeOffset(2019, 1, 5, 4, 30, 1, TimeSpan.Zero),
+                        Duration = 60,
                         Attendees = new List<string>()
                     },
                 }
