@@ -66,7 +66,6 @@ namespace CryptoTechProject
                 byte[] responseArray = Encoding.UTF8.GetBytes(jsonForSlack);
                 response.AddHeader("Content-type", "application/json");
                 response.OutputStream.Write(responseArray, 0, responseArray.Length);
-                Console.WriteLine("no payload");
             }
         }
 
@@ -86,7 +85,6 @@ namespace CryptoTechProject
 
             SlackButtonPayload deserialisedPayload =
                 JsonConvert.DeserializeObject<SlackButtonPayload>(dictionary["payload"]);
-            //Console.WriteLine(deserialisedPayload.Actions[0].Value);
 
             ToggleWorkshopAttendanceRequest toggleWorkshopAttendanceRequest = new ToggleWorkshopAttendanceRequest()
             {

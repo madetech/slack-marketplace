@@ -39,6 +39,11 @@ namespace CryptoTechProject
 
             for (int i = 0; i < airtableResponse.Records.Length; i++)
             {
+                if (airtableResponse.Records[i].Fields.Time == DateTime.MinValue)
+                {
+                    continue;
+                }
+
                 Workshop workshop = new Workshop()
                 {
                     id = airtableResponse.Records[i].ID,
@@ -73,7 +78,6 @@ namespace CryptoTechProject
                 }
             };
             string jsonPatchData = JsonConvert.SerializeObject(patchData);
-            Console.WriteLine(jsonPatchData);
             WebClient client = new WebClient();
             client.Encoding = System.Text.Encoding.UTF8;
             client.Headers.Add("Authorization", "Bearer " + _apiKey);

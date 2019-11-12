@@ -16,7 +16,7 @@ namespace CryptoTechProject
         static void Main(string[] args)
 
         {
-            using (SentrySdk.Init("https://c5002188520c4a20ace4b35e6d826e0e@sentry.io/1806644"))
+            using (SentrySdk.Init(Environment.GetEnvironmentVariable("SENTRY_DSN")))
             {
                 var airtableGateway = new AirtableGateway(System.Environment.GetEnvironmentVariable("AIRTABLE_URL"),
                     System.Environment.GetEnvironmentVariable("AIRTABLE_API_KEY"),

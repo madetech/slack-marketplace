@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CryptoTechProject.Domain;
 using FluentAssertions;
@@ -12,6 +13,16 @@ namespace CryptoTechProject.Tests
         public class WorkshopsUnitTest : IWorkshopsGateway
         {
             private List<Workshop> _workshops;
+            
+            public List<Workshop> All()
+            {
+                return _workshops;
+            }
+            
+
+            public void Update(Workshop workshop)
+            {
+            }
 
             [SetUp]
             public void Setup()
@@ -30,19 +41,13 @@ namespace CryptoTechProject.Tests
             [Test]
             public void CanGetAWorkshop()
             {
-                _workshops.Add(new Workshop());
+                _workshops.Add(new Workshop()
+                {
+                    time = DateTime.Now
+                });
                 var response = new GetWorkshops(this).Execute();
 
                 response.PresentableWorkshops.Should().NotBeEmpty();
-            }
-
-            public List<Workshop> All()
-            {
-                return _workshops;
-            }
-
-            public void Update(Workshop workshop)
-            {
             }
         }
     }
