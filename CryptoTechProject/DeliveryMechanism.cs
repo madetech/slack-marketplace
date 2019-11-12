@@ -129,6 +129,18 @@ namespace CryptoTechProject
                 Type = "divider"
             });
 
+            if (sessions.Length != 0)
+            {
+                slackMessage.Blocks.Add(new SlackMessage.TitleSectionBlock
+                {
+                    Text = new SlackMessage.SectionBlockText
+                    {
+                        Type = "mrkdwn",
+                        Text = $"*{sessions[0].Time.ToString("dd/MM/yyyy")}*"
+                    }
+                });
+            }
+
             for (int i = 0; i < sessions.Length; i++)
             {
                 DateTimeOffset sessionEndTime =
@@ -143,7 +155,7 @@ namespace CryptoTechProject
                 if (sessions[i].Type == "Showcase")
                 {
                     string showcaseText = $"*{sessions[i].Name}*\n" +
-                                          $"{sessions[i].Time.ToString("dd/MM/yyyy HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
+                                          $"{sessions[i].Time.ToString("HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
                                           $"{sessions[i].Host}\n";
 
                     slackMessage.Blocks.Add(new SlackMessage.ShowcaseSectionBlock
@@ -164,7 +176,7 @@ namespace CryptoTechProject
                         {
                             Type = "mrkdwn",
                             Text = $"*{sessions[i].Name}*\n" +
-                                   $"{sessions[i].Time.ToString("dd/MM/yyyy HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
+                                   $"{sessions[i].Time.ToString( "HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
                                    $"{sessions[i].Host}\n" +
                                    $"Current number of attendees: {sessions[i].Attendees.Count}"
                         },
@@ -187,6 +199,14 @@ namespace CryptoTechProject
                         slackMessage.Blocks.Add(new SlackMessage.DividerBlock
                         {
                             Type = "divider"
+                        });
+                        slackMessage.Blocks.Add(new SlackMessage.TitleSectionBlock()
+                        {
+                            Text = new SlackMessage.SectionBlockText
+                            {
+                                Type = "mrkdwn",
+                                Text = $"*{sessions[i+1].Time.ToString("dd/MM/yyyy")}*"
+                            }
                         });
                     }
                 }
