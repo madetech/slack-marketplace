@@ -139,7 +139,6 @@ namespace CryptoTechProject
                 {
                     attendanceStatus = "Unattend";
                 }
-                
 
                 if (sessions[i].Type == "Showcase")
                 {
@@ -147,11 +146,6 @@ namespace CryptoTechProject
                                           $"{sessions[i].Time.ToString("dd/MM/yyyy HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
                                           $"{sessions[i].Host}\n";
 
-                    if (i < sessions.Length - 1)
-                        if (sessions[i].Time.Day !=
-                            sessions[i + 1].Time.Day)
-                            showcaseText = showcaseText +
-                                           "---------------------------------------------------------------------------------------------------------\n";
                     slackMessage.Blocks.Add(new SlackMessage.ShowcaseSectionBlock
                     {
                         Text = new SlackMessage.SectionBlockText
@@ -160,6 +154,7 @@ namespace CryptoTechProject
                             Text = showcaseText
                         }
                     });
+                    
                 }
                 else
                 {
@@ -183,6 +178,17 @@ namespace CryptoTechProject
                             Value = sessions[i].ID
                         }
                     });
+                }
+
+                if (i < (sessions.Length - 1))
+                {
+                    if (sessions[i].Time.Date != sessions[i+1].Time.Date)
+                    {
+                        slackMessage.Blocks.Add(new SlackMessage.DividerBlock
+                        {
+                            Type = "divider"
+                        });
+                    }
                 }
             }
 
