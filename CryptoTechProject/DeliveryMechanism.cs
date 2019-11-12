@@ -112,22 +112,22 @@ namespace CryptoTechProject
             
             SlackMessage slackMessage = new SlackMessage
             {
-                Blocks = new SlackMessage.SlackMessageBlock[sessions.Length + 2]
+                Blocks = new List<SlackMessage.SlackMessageBlock>()
             };
 
-            slackMessage.Blocks[0] = new SlackMessage.TitleSectionBlock
+            slackMessage.Blocks.Add(new SlackMessage.TitleSectionBlock
             {
                 Text = new SlackMessage.SectionBlockText
                 {
                     Type = "mrkdwn",
                     Text = "*Workshops*"
                 }
-            };
+            });
 
-            slackMessage.Blocks[1] = new SlackMessage.DividerBlock
+            slackMessage.Blocks.Add(new SlackMessage.DividerBlock
             {
                 Type = "divider"
-            };
+            });
 
             for (int i = 0; i < sessions.Length; i++)
             {
@@ -152,20 +152,18 @@ namespace CryptoTechProject
                             sessions[i + 1].Time.Day)
                             showcaseText = showcaseText +
                                            "---------------------------------------------------------------------------------------------------------\n";
-                    slackMessage.Blocks[i + 2] = new SlackMessage.ShowcaseSectionBlock
+                    slackMessage.Blocks.Add(new SlackMessage.ShowcaseSectionBlock
                     {
                         Text = new SlackMessage.SectionBlockText
                         {
                             Type = "mrkdwn",
                             Text = showcaseText
                         }
-                    };
+                    });
                 }
                 else
                 {
-                    
-
-                    slackMessage.Blocks[i + 2] = new SlackMessage.SectionBlock
+                    slackMessage.Blocks.Add(new SlackMessage.SectionBlock
                     {
                         Text = new SlackMessage.SectionBlockText
                         {
@@ -184,7 +182,7 @@ namespace CryptoTechProject
                             },
                             Value = sessions[i].ID
                         }
-                    };
+                    });
                 }
             }
 

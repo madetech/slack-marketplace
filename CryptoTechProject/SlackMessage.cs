@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace CryptoTechProject
@@ -53,6 +54,6 @@ namespace CryptoTechProject
             [JsonProperty("text")] public SectionBlockText Text;
         }
 
-        [JsonProperty("blocks")] public SlackMessageBlock[] Blocks;
+        [JsonProperty("blocks")] public List<SlackMessageBlock> Blocks;
     }
 }
