@@ -8,7 +8,7 @@ namespace CryptoTechProject
 {
     public partial class DeliveryMechanism
     {
-        HttpListener httpListener = new HttpListener();
+        public HttpListener httpListener;
 
         private IToggleWorkshopAttendance _toggleWorkshopAttendance;
         private IGetWorkshops _getWorkshops;
@@ -17,6 +17,7 @@ namespace CryptoTechProject
         public DeliveryMechanism(IToggleWorkshopAttendance toggleWorkshopAttendance, IGetWorkshops getWorkshops,
             string port)
         {
+            httpListener = new HttpListener();
             _toggleWorkshopAttendance = toggleWorkshopAttendance;
             _getWorkshops = getWorkshops;
             _port = port;
@@ -31,17 +32,17 @@ namespace CryptoTechProject
 
             void ProcessRequest(IAsyncResult result)
             {
-                HttpListener listener = (HttpListener)result.AsyncState;
-
                 try
                 {
                     //If we are not listening this line throws a ObjectDisposedException.
-                    HttpListenerContext context = listener.EndGetContext(result);
+                    HttpListenerContext context = ((HttpListener) result.AsyncState).EndGetContext(result);
 
                     /// aah
                     HttpListenerRequest request = context.Request;
                     HttpListenerResponse response = context.Response;
-
+                    
+                    
+                    
                     if (request.Url.ToString().Contains("attend"))
                     {
                         new ToggleAttendanceController().ToggleAttendance(context, _toggleWorkshopAttendance,
@@ -61,7 +62,7 @@ namespace CryptoTechProject
                     // end of aaah
 
                     context.Response.Close();
-                    listener.BeginGetContext(ProcessRequest, listener);
+                    httpListener.BeginGetContext(ProcessRequest, httpListener);
                 }
                 catch (ObjectDisposedException)
                 {
