@@ -124,21 +124,11 @@ namespace CryptoTechProject
                 }
             });
 
-            slackMessage.Blocks.Add(new SlackMessage.DividerBlock
-            {
-                Type = "divider"
-            });
+            AddDivider(slackMessage);
 
             if (sessions.Length != 0)
             {
-                slackMessage.Blocks.Add(new SlackMessage.TitleSectionBlock
-                {
-                    Text = new SlackMessage.SectionBlockText
-                    {
-                        Type = "mrkdwn",
-                        Text = $"*{sessions[0].Time.ToString("dd/MM/yyyy")}*"
-                    }
-                });
+                AddDateHeader(slackMessage, sessions, -1);
             }
 
             for (int i = 0; i < sessions.Length; i++)
@@ -195,23 +185,33 @@ namespace CryptoTechProject
                 {
                     if (sessions[i].Time.Date != sessions[i + 1].Time.Date)
                     {
-                        slackMessage.Blocks.Add(new SlackMessage.DividerBlock
-                        {
-                            Type = "divider"
-                        });
-                        slackMessage.Blocks.Add(new SlackMessage.TitleSectionBlock()
-                        {
-                            Text = new SlackMessage.SectionBlockText
-                            {
-                                Type = "mrkdwn",
-                                Text = $"*{sessions[i + 1].Time.ToString("dd/MM/yyyy")}*"
-                            }
-                        });
+                        AddDivider(slackMessage);
+                        AddDateHeader(slackMessage, sessions, i);
                     }
                 }
             }
 
             return slackMessage;
+        }
+
+        private static void AddDateHeader(SlackMessage slackMessage, PresentableWorkshop[] sessions, int i)
+        {
+            slackMessage.Blocks.Add(new SlackMessage.TitleSectionBlock()
+            {
+                Text = new SlackMessage.SectionBlockText
+                {
+                    Type = "mrkdwn",
+                    Text = $"*{sessions[i + 1].Time.ToString("dd/MM/yyyy")}*"
+                }
+            });
+        }
+
+        private static void AddDivider(SlackMessage slackMessage)
+        {
+            slackMessage.Blocks.Add(new SlackMessage.DividerBlock
+            {
+                Type = "divider"
+            });
         }
     }
 }
