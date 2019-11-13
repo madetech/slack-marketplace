@@ -16,20 +16,20 @@ namespace CryptoTechProject.Tests
     public class DeliveryMechanismTest
     
     {
-        public FluentSimulator simulator;
-        
+        private static void StartServer(string port, IGetWorkshops stub)
+        {
+            var started = false;
+            var deliveryMechanism = new DeliveryMechanism(null, stub, port);
+            var thread = new Thread(() => { deliveryMechanism.Run(() => { started = true; }); });
+            thread.Start();
+            SpinWait.SpinUntil(() => started);
+        }
+
         [Test]
         public void CanGetNoWorkshopsAsSlackMessage()
         {
-            var started = false;
-            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysNoWorkshops(), "5051");
-            var thread = new Thread(() =>
-            {
-                deliveryMechanism.Run(() => { started = true; });
-            });
-            thread.Start();
-            SpinWait.SpinUntil(() => started);
-            
+            StartServer("5051", new AlwaysNoWorkshops());
+
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5051/");
 
@@ -42,11 +42,7 @@ namespace CryptoTechProject.Tests
         [Test]
         public void CanGetThreeWorkshopsAsSlackMessage()
         {
-            var started = false;
-            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysThreeWorkshops(), "5052");
-            var thread = new Thread(() => { deliveryMechanism.Run(() => { started = true; }); });
-            thread.Start();
-            SpinWait.SpinUntil(() => started);
+            StartServer("5052", new AlwaysThreeWorkshops());
 
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5052/");
@@ -68,14 +64,15 @@ namespace CryptoTechProject.Tests
             var spyToggleWorkshopAttendance = new SpyToggleWorkshopAttendance();
             var spyGetWorkshop = new StubGetWorkshop();
             spyGetWorkshop.attendees.Add("Bing");
-            var deliveryMechanism = new DeliveryMechanism(spyToggleWorkshopAttendance, spyGetWorkshop, "5054");
-                        
+            
+             var deliveryMechanism = new DeliveryMechanism(spyToggleWorkshopAttendance, spyGetWorkshop, "5054");
+                         
              var thread = new Thread(() =>
-            {
-                deliveryMechanism.Run(() => { started = true; });
-            });
-            thread.Start();
-            SpinWait.SpinUntil(() => started);
+             {
+                 deliveryMechanism.Run(() => { started = true; });
+             });
+             thread.Start();
+             SpinWait.SpinUntil(() => started);
 
             SlackButtonPayload payload = new SlackButtonPayload()
             {
@@ -100,15 +97,8 @@ namespace CryptoTechProject.Tests
         [Test]
         public void ShowcaseDoesNotContainAttendButtonAndNumberOfAttendees()
         {
-            var started = false;
-            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysOneShowcase(), "5056");
-            var thread = new Thread(() =>
-            {
-                deliveryMechanism.Run(() => { started = true; });
-            });
-            thread.Start();
-            SpinWait.SpinUntil(() => started);
-            
+            StartServer("5056", new AlwaysOneShowcase());
+
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5056/");
 
@@ -121,15 +111,8 @@ namespace CryptoTechProject.Tests
         [Test]
         public void CheckHasDividerBetweenTwoSessionsWithDifferentDates()
         {
-            var started = false;
-            var deliveryMechanism = new DeliveryMechanism(null, new AlwaysTwoShowcasesAndOneWorkshop(), "5049");
-            var thread = new Thread(() =>
-            {
-                deliveryMechanism.Run(() => { started = true; });
-            });
-            thread.Start();
-            SpinWait.SpinUntil(() => started);
-            
+            StartServer("5049", new AlwaysTwoShowcasesAndOneWorkshop());
+
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5049/");
 
