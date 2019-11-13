@@ -181,13 +181,10 @@ namespace CryptoTechProject
                     });
                 }
 
-                if (i < (sessions.Length - 1))
+                if (i < (sessions.Length - 1) && sessions[i].Time.Date != sessions[i + 1].Time.Date)
                 {
-                    if (sessions[i].Time.Date != sessions[i + 1].Time.Date)
-                    {
-                        AddDivider(slackMessage);
-                        AddDateHeader(slackMessage, sessions, i);
-                    }
+                    AddDivider(slackMessage);
+                    AddDateHeader(slackMessage, sessions, i);
                 }
             }
 
