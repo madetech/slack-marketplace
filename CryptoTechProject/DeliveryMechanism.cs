@@ -128,7 +128,7 @@ namespace CryptoTechProject
 
             if (sessions.Length != 0)
             {
-                AddDateHeader(slackMessage, sessions, -1);
+                AddDateHeader(slackMessage, sessions, 0);
             }
 
             for (int i = 0; i < sessions.Length; i++)
@@ -184,21 +184,21 @@ namespace CryptoTechProject
                 if (i < (sessions.Length - 1) && sessions[i].Time.Date != sessions[i + 1].Time.Date)
                 {
                     AddDivider(slackMessage);
-                    AddDateHeader(slackMessage, sessions, i);
+                    AddDateHeader(slackMessage, sessions, i + 1);
                 }
             }
 
             return slackMessage;
         }
 
-        private static void AddDateHeader(SlackMessage slackMessage, PresentableWorkshop[] sessions, int i)
+        private static void AddDateHeader(SlackMessage slackMessage, PresentableWorkshop[] sessions, int sessionIndex)
         {
             slackMessage.Blocks.Add(new SlackMessage.TitleSectionBlock()
             {
                 Text = new SlackMessage.SectionBlockText
                 {
                     Type = "mrkdwn",
-                    Text = $"*{sessions[i + 1].Time.ToString("dd/MM/yyyy")}*"
+                    Text = $"*{sessions[sessionIndex].Time.ToString("dd/MM/yyyy")}*"
                 }
             });
         }
