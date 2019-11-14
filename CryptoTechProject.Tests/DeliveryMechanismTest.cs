@@ -16,17 +16,19 @@ namespace CryptoTechProject.Tests
     public class DeliveryMechanismTest
     
     {
-        private static DeliveryMechanism StartServer(string port, IGetWorkshops stub)
+        private static void StartServer(string port, IGetWorkshops stub)
         {
+            var started = false;
             var deliveryMechanism = new DeliveryMechanism(null, stub, port);
-            deliveryMechanism.Run(() => {  });
-            return deliveryMechanism;
+            var thread = new Thread(() => { deliveryMechanism.Run(() => { started = true; }); });
+            thread.Start();
+            SpinWait.SpinUntil(() => started);
         }
 
         [Test]
         public void CanGetNoWorkshopsAsSlackMessage()
         {
-            var deliveryMechanism = StartServer("5051", new AlwaysNoWorkshops());
+            StartServer("5051", new AlwaysNoWorkshops());
 
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5051/");
@@ -35,8 +37,6 @@ namespace CryptoTechProject.Tests
             
             responseBody.Should().Be(expectedJson);
             webClient.ResponseHeaders["Content-Type"].Should().Be("application/json");
-            
-            deliveryMechanism.httpListener.Stop();
         }
 
         [Test]
