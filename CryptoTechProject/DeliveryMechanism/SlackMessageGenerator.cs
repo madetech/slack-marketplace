@@ -66,7 +66,7 @@ namespace CryptoTechProject
                                 Type = "mrkdwn",
                                 Text = $"*{sessions[i].Name}*\n" +
                                        $"{sessions[i].Time.ToString("HH:mm")} - {sessionEndTime.ToString("HH:mm")}\n" +
-                                       $"{sessions[i].Host}\n" +
+                                       $"{sessions[i].Host} in {sessions[i].Location}\n" +
                                        $"Current number of attendees: {sessions[i].Attendees.Count}"
                             },
                             Accessory = new SlackMessage.SectionBlock.AccessoryBlock
