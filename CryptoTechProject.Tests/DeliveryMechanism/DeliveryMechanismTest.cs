@@ -47,7 +47,7 @@ namespace CryptoTechProject.Tests
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5052/");
             
-            var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Sessions*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*01/01/2017*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01:01 - 01:02\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*01/01/2019*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01:01 - 02:01\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*01/01/2015*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01:01 - 03:01\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
+           var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Sessions*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*01/01/2017*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01:01 - 01:02\\nRory in Everest\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*01/01/2019*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01:01 - 02:01\\nRory in Everest\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*01/01/2015*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n01:01 - 03:01\\nRory in Everest\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
             responseBody.Should().Be(expectedJson);
         }
 
@@ -116,7 +116,8 @@ namespace CryptoTechProject.Tests
             var webClient = new WebClient();
             var responseBody = webClient.DownloadString("http://localhost:5049/");
 
-            var expectedJson = "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Sessions*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*01/01/2019*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n04:30 - 05:30\\n\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n04:45 - 05:45\\n\\n\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*05/01/2019*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n04:30 - 05:30\\n\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
+            var expectedJson =
+                "{\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Sessions*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*01/01/2019*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n04:30 - 05:30\\nRory\\n\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n04:45 - 05:45\\nRory\\n\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*05/01/2019*\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"**\\n04:30 - 05:30\\nRory in Everest\\nCurrent number of attendees: 0\"},\"accessory\":{\"type\":\"button\",\"text\":{\"type\":\"plain_text\",\"text\":\"Attend\"},\"value\":null}}]}";
             responseBody.Should().Be(expectedJson);
             webClient.ResponseHeaders["Content-Type"].Should().Be("application/json");
         }
@@ -167,19 +168,25 @@ namespace CryptoTechProject.Tests
                     {
                         Time = new DateTimeOffset(2017, 1, 1, 1, 1, 1, TimeSpan.Zero),
                         Duration = 1,
-                        Attendees = new List<string>()
+                        Attendees = new List<string>(),
+                        Host = "Rory",
+                        Location = "Everest"
                     },
                     new PresentableWorkshop
                     {
                         Time = new DateTimeOffset(2019, 1, 1, 1, 1, 1, TimeSpan.Zero),
                         Duration = 60,
-                        Attendees = new List<string>()
+                        Attendees = new List<string>(),
+                        Host = "Rory",
+                        Location = "Everest"
                     },
                     new PresentableWorkshop
                     {
                         Time = new DateTimeOffset(2015, 1, 1, 1, 1, 1, TimeSpan.Zero),
                         Duration = 120,
-                        Attendees = new List<string>()
+                        Attendees = new List<string>(),
+                        Host = "Rory",
+                        Location = "Everest"
                     }
                 }
             };
@@ -217,21 +224,27 @@ namespace CryptoTechProject.Tests
                         Type = "Showcase",
                         Time = new DateTimeOffset(2019, 1, 1, 4, 30, 1, TimeSpan.Zero),
                         Duration = 60,
-                        Attendees = new List<string>()
+                        Attendees = new List<string>(),
+                        Host = "Rory",
+                        Location = "Everest"
                     },
                     new PresentableWorkshop
                     {
                         Type = "Showcase",
                         Time = new DateTimeOffset(2019, 1, 1, 4, 45, 1, TimeSpan.Zero),
                         Duration = 60,
-                        Attendees = new List<string>()
+                        Attendees = new List<string>(),
+                        Host = "Rory",
+                        Location = "Everest"
                     },
                     new PresentableWorkshop
                     {
                         Type = "Workshop",
                         Time = new DateTimeOffset(2019, 1, 5, 4, 30, 1, TimeSpan.Zero),
                         Duration = 60,
-                        Attendees = new List<string>()
+                        Attendees = new List<string>(),
+                        Host = "Rory",
+                        Location = "Everest"
                     },
                 }
             };
